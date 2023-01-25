@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections;
 using InfimaGames.LowPolyShooterPack;
 using Random = UnityEngine.Random;
+using FishNet;
+using FishNet.Connection;
 //using Unity.Netcode;
 public class Projectile : MonoBehaviour {
 
@@ -22,8 +24,9 @@ public class Projectile : MonoBehaviour {
 	public Transform [] dirtImpactPrefabs;
 	public Transform []	concreteImpactPrefabs;
 	Rigidbody rb;
+    private NetworkConnection ownerConnection;
 
-	private void Awake ()
+    private void Awake ()
 	{
 		
 		//Grab the game mode service, we need it to access the player character!
@@ -86,11 +89,12 @@ public class Projectile : MonoBehaviour {
 				Transform VFX = Instantiate(bloodImpactPrefabs[Random.Range
 					(0, bloodImpactPrefabs.Length)], transform.position,
 					Quaternion.LookRotation(collision.contacts[0].normal));
-				//VFX.GetComponent<NetworkObject>().Spawn();
-				//Instantiate random impact prefab from array
+				InstanceFinder.ServerManager.Spawn(VFX.gameObject);
+			//VFX.GetComponent<NetworkObject>().Spawn();
+			//Instantiate random impact prefab from array
 
-				//Destroy bullet object
-				Destroy(gameObject);
+			//Destroy bullet object
+			Destroy(gameObject);
 			}
 
 			//If bullet collides with "Metal" tag
@@ -118,12 +122,13 @@ public class Projectile : MonoBehaviour {
 			//If bullet collides with "Concrete" tag
 			if (collision.transform.tag == "Concrete")
 			{
-				//Instantiate random impact prefab from array
-				Instantiate(concreteImpactPrefabs[Random.Range
+			//Instantiate random impact prefab from array
+			Transform VFX = Instantiate(concreteImpactPrefabs[Random.Range
 					(0, bloodImpactPrefabs.Length)], transform.position,
 					Quaternion.LookRotation(collision.contacts[0].normal));
-				//Destroy bullet object
-				Destroy(gameObject);
+			InstanceFinder.ServerManager.Spawn(VFX.gameObject);
+			//Destroy bullet object
+			Destroy(gameObject);
 			}
 
 			//If bullet collides with "Target" tag
@@ -158,7 +163,7 @@ public class Projectile : MonoBehaviour {
 		//}
 		
 	}
-
+	
 	private IEnumerator DestroyTimer () 
 	{
 		//Wait random time based on min and max values
