@@ -6,6 +6,8 @@ using StarterAssets;
 using UnityEngine.InputSystem;
 using FishNet.Object;
 using UnityEngine.Animations.Rigging;
+using FishNet;
+
 public class ShooterController : NetworkBehaviour
 {
     //Aim Settings  
@@ -15,8 +17,7 @@ public class ShooterController : NetworkBehaviour
     [SerializeField] Transform debugTransform;
 
     //Bullet Content
-    [SerializeField] GameObject bulletPrefab;
-    [SerializeField] float projectileImpulse = 400.0f;
+    [SerializeField] GameObject bulletPrefab;   
     [SerializeField] AudioClip audioClipFire;
     [SerializeField] GameObject flashPrefab;
     [SerializeField] GameObject prefabFlashLight;
@@ -52,6 +53,8 @@ public class ShooterController : NetworkBehaviour
     private ThirdPersonController thirdPersonController;
     private Animator animator;
     private AudioSource audioSource;
+    
+    public GameObject spawnedObject;
     private void Awake()
     {
         //References
@@ -152,14 +155,17 @@ public class ShooterController : NetworkBehaviour
     {
         if (starterAssetsInputs.shoot)
         {
-
+            if (!base.IsOwner)
+                return;
             Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(aimDir, Vector3.up);
 
             //if(IsServer)
             //    SpawnBulletClientRPC(aimDir, rotation);
             //if (IsClient)
-                SpawnBulletServerRPC(aimDir, rotation);
+            
+            SpawnBulletServerRPC(aimDir, rotation,this);
+            //SpawnBulletServer(aimDir, rotation);
             //Show Flash
             particles.Emit(5);
             flashLight.enabled = true;
@@ -175,30 +181,29 @@ public class ShooterController : NetworkBehaviour
             flashPrefab.SetActive(false);
         }       
     }
-    //[ServerRpc(RequireOwnership = false)]
-    public void SpawnBulletServerRPC(Vector3 aimDir, Quaternion rotation)
-    {
-        
-        //Instansiate Bullet
-        GameObject projectile = Instantiate(bulletPrefab, spawnBulletPosition.position, rotation);
-        //Add velocity to the projectile.
-        
-        //projectile.GetComponent<NetworkObject>().Spawn();
-        projectile.GetComponent<Rigidbody>().velocity = projectile.transform.forward * projectileImpulse;
-
-    }
-   // [ClientRpc]
-    public void SpawnBulletClientRPC(Vector3 aimDir, Quaternion rotation)
+    [ServerRpc]
+    public void SpawnBulletServerRPC(Vector3 aimDir, Quaternion rotation, ShooterController script)
     {
 
         //Instansiate Bullet
         GameObject projectile = Instantiate(bulletPrefab, spawnBulletPosition.position, rotation);
-        //Add velocity to the projectile.
-
-        //projectile.GetComponent<NetworkObject>().Spawn();
-        projectile.GetComponent<Rigidbody>().velocity = projectile.transform.forward * projectileImpulse;
-
+        ServerManager.Spawn(projectile);
+        SetSpawnBullet(projectile, script);
     }
+    
+    [ObserversRpc]
+    public void SetSpawnBullet(GameObject spawned, ShooterController script)
+    {
+        script.spawnedObject = spawned;
+       
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DespawnBullet()
+    {
+        ServerManager.Despawn(spawnedObject);
+    }
+
     public void FPSModeCheck(bool state)
     {
         FPSMode = state;
