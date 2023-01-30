@@ -11,6 +11,8 @@ public class CameraSwitch : NetworkBehaviour
 
     [SerializeField] CinemachineVirtualCamera fpsCamera;
     [SerializeField] GameObject FPSplayer;
+    [SerializeField] GameObject player;
+    [SerializeField] GameObject[] playerGears;
 
     private GameObject m_FollowCamera;
     private GameObject m_AimCamera;
@@ -22,6 +24,7 @@ public class CameraSwitch : NetworkBehaviour
     ThirdPersonController thirdPersonController;
     ShooterController shooterController;
 
+
     private void Awake()
     {
         m_FollowCamera = GameObject.FindWithTag("Follow Camera");
@@ -32,9 +35,26 @@ public class CameraSwitch : NetworkBehaviour
         shooterController = GetComponent<ShooterController>();
 
         cameraSwitched = true;
+        
+    }
+    private void Start()
+    {
+        
     }
     void Update()
     {
+        if (base.IsOwner)
+        {
+            //playerGears = GetComponentsInChildren<GameObject>();
+            player.layer = LayerMask.NameToLayer("HideItself");          
+            foreach (GameObject gears in playerGears)
+            {
+                gears.layer = LayerMask.NameToLayer("HideItself");
+                //gears.GetComponentInChildren<GameObject>().layer = LayerMask.NameToLayer("HideItself");
+
+            }
+
+        }
         if (!base.IsOwner)
             return;
         if (!inFPSMode)
@@ -48,8 +68,7 @@ public class CameraSwitch : NetworkBehaviour
                 inFPSMode = true;
                 shooterController.FPSModeCheck(cameraSwitched);
 
-                MainCamera.cullingMask = LayerMask.GetMask("Default", "TransparentFX", "Ignore Raycast", "PostProcessing", "Water", "UI", "Player", "Ground and Walls", "PhysicalAmmo", "FirstPersonWeapon", "Projectile");
-
+                MainCamera.cullingMask = LayerMask.GetMask("Default", "TransparentFX", "Ignore Raycast", "PostProcessing", "Water", "UI", "Player", "Ground and Walls", "PhysicalAmmo", "FirstPersonWeapon", "Projectile", "OtherPlayers");               
                 fpsCamera.enabled = true;
                 FPSplayer.SetActive(true);
                 m_FollowCamera.SetActive(false);
@@ -63,7 +82,7 @@ public class CameraSwitch : NetworkBehaviour
                 inFPSMode = false;
                 shooterController.FPSModeCheck(cameraSwitched);
 
-                MainCamera.cullingMask = LayerMask.GetMask("Default", "TransparentFX", "Ignore Raycast", "HideItself", "PostProcessing", "Water", "UI", "Player", "Ground and Walls", "PhysicalAmmo", "FirstPersonWeapon", "Projectile");
+                MainCamera.cullingMask = LayerMask.GetMask("Default", "TransparentFX", "Ignore Raycast", "HideItself", "PostProcessing", "Water", "UI", "Player", "Ground and Walls", "PhysicalAmmo", "FirstPersonWeapon", "Projectile", "OtherPlayers");
 
                 fpsCamera.enabled = false;
                 FPSplayer.SetActive(false);

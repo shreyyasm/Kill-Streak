@@ -1332,7 +1332,7 @@ GameObject:
   - component: {fileID: 7509555901313006590}
   - component: {fileID: 7509555901313006588}
   - component: {fileID: 7509555901313006589}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: SM_Wep_Pistol_Heavy_Slide_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2717,7 +2717,7 @@ GameObject:
   - component: {fileID: 7509555901479695923}
   - component: {fileID: 7509555901479695921}
   - component: {fileID: 7509555901479695922}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: SM_Wep_Pistol_Heavy_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2862,7 +2862,7 @@ GameObject:
   - component: {fileID: 7509555901533593532}
   - component: {fileID: 7509555901533593522}
   - component: {fileID: 7509555901533593523}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: SM_Wep_Pistol_Heavy_Mag_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3901,7 +3901,7 @@ GameObject:
   - component: {fileID: 7509555901769117605}
   - component: {fileID: 7509555901769117606}
   - component: {fileID: 7509555901769117607}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: SM_Chr_Attach_Female_Hair_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5401,7 +5401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7509555902111554536}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: SpawnBulletPosition
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -5935,7 +5935,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7509555902184957798}
   - component: {fileID: 7509555902184957797}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: Character_GothFemale_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6732,7 +6732,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7509555902306490228}
   - component: {fileID: 7509555902306490219}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: SM_Char_Attach_Female_Armor_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7281,7 +7281,7 @@ GameObject:
   - component: {fileID: 7509555902415722144}
   - component: {fileID: 7509555902415722145}
   - component: {fileID: 7509555902415722146}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: SM_PickUp_Bag_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8039,7 +8039,6 @@ MonoBehaviour:
   debugTransform: {fileID: 7509555901402259350}
   bulletPrefab: {fileID: 1086664671600574, guid: 1a6074b0bafe0a944914eba0b6d6abfd,
     type: 3}
-  projectileImpulse: 400
   audioClipFire: {fileID: 8300000, guid: 0addcc409a57b4a43b86a3d2310ac5b4, type: 3}
   flashPrefab: {fileID: 4834526503407549940, guid: 2735bebe54c1f5a4096f5134a96f7e77,
     type: 3}
@@ -8053,6 +8052,7 @@ MonoBehaviour:
   fPSController: {fileID: 7509555902915336734}
   vfxSpawnOffset: {x: 0.43, y: 0.31, z: 0}
   offset: {x: 0, y: -0.1, z: 0}
+  spawnedObject: {fileID: 0}
 --- !u!114 &7509555902541147428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8070,6 +8070,17 @@ MonoBehaviour:
   _networkObjectCache: {fileID: 4037452333637863939}
   fpsCamera: {fileID: 7509555901273642719}
   FPSplayer: {fileID: 7509555902632160664}
+  player: {fileID: 7509555902184957799}
+  playerGears:
+  - {fileID: 7509555902184957799}
+  - {fileID: 7509555902306490229}
+  - {fileID: 7509555901769117601}
+  - {fileID: 7509555902773123230}
+  - {fileID: 7509555901533593533}
+  - {fileID: 7509555901313006591}
+  - {fileID: 7509555901479695932}
+  - {fileID: 7509555902415722156}
+  - {fileID: 7509555902813098806}
   cameraSwitched: 0
 --- !u!143 &7509555902541147429
 CharacterController:
@@ -9847,7 +9858,7 @@ GameObject:
   - component: {fileID: 7509555902773123218}
   - component: {fileID: 7509555902773123219}
   - component: {fileID: 7509555902773123228}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10044,7 +10055,7 @@ GameObject:
   - component: {fileID: 7509555902813098805}
   - component: {fileID: 7509555902813098795}
   - component: {fileID: 7509555902813098804}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: SM_Wep_Pistol_Heavy_Hammer_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12840,7 +12851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7999244631078065964}
   - component: {fileID: 7999244631078065965}
-  m_Layer: 8
+  m_Layer: 16
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -16,6 +16,9 @@ TagManager:
   - Blood
   - Projectile
   - UI
+  - ExplosiveBarrel
+  - GasTank
+  - Metal
   layers:
   - Default
   - TransparentFX
@@ -33,7 +36,7 @@ TagManager:
   - Player
   - HideItself
   - Projectile
-  - 
+  - OtherPlayers
   - 
   - 
   - 
