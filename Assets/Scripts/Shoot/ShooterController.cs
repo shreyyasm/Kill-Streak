@@ -187,7 +187,7 @@ public class ShooterController : NetworkBehaviour
 
         //Instansiate Bullet
         GameObject projectile = Instantiate(bulletPrefab, spawnBulletPosition.position, rotation);
-        ServerManager.Spawn(projectile);
+        ServerManager.Spawn(projectile, base.Owner);
         SetSpawnBullet(projectile, script);
     }
     

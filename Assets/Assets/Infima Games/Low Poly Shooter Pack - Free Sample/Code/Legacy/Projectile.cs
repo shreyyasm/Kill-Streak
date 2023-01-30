@@ -29,7 +29,10 @@ public class Projectile : NetworkBehaviour {
 	BoxCollider boxCollider;
 	TrailRenderer trail;
 	[SerializeField] GameObject bulletParticle;
-	private void Awake ()
+
+	[HideInInspector]
+	public GameObject ObjectVFX;
+    private void Awake ()
 	{
 		
 		//Grab the game mode service, we need it to access the player character!
@@ -37,7 +40,8 @@ public class Projectile : NetworkBehaviour {
 		//Ignore the main player character's collision. A little hacky, but it should work.
 		//Physics.IgnoreCollision(gameModeService.GetPlayerCharacter().GetComponent<Collider>(), GetComponent<Collider>());
 		boxCollider = GetComponent<BoxCollider>();
-		trail = GetComponent<TrailRenderer>();
+		trail = GetComponent<TrailRenderer>();		
+		//ownerConnection = GetComponent<NetworkConnection>();
 		//Start destroy timer
 		StartCoroutine (DestroyAfter ());
 		
@@ -54,9 +58,11 @@ public class Projectile : NetworkBehaviour {
     //If the bullet collides with anything
     private void OnCollisionEnter (Collision collision)
 	{
+
+		boxCollider.enabled = false;
 		bulletParticle.SetActive(false);
-		trail.emitting = false;		
-		boxCollider.enabled = false;	
+		StartCoroutine(DestroyTrailAfter());	
+			
 		//Ignore collisions with other projectiles.
 		if (collision.gameObject.GetComponent<Projectile>() != null)
 			return;
@@ -93,7 +99,7 @@ public class Projectile : NetworkBehaviour {
 			Transform VFX = Instantiate(bloodImpactPrefabs[Random.Range
 				(0, bloodImpactPrefabs.Length)], transform.position,
 				Quaternion.LookRotation(collision.contacts[0].normal));
-
+			SpawnVFX(VFX.gameObject, this);
 			DespawnBullet();
 
 		}
@@ -125,11 +131,10 @@ public class Projectile : NetworkBehaviour {
 		//If bullet collides with "Concrete" tag
 		if (collision.transform.tag == "Concrete")
 		{
-			//Instantiate random impact prefab from array
-			Transform VFX = Instantiate(concreteImpactPrefabs[Random.Range
-					(0, bloodImpactPrefabs.Length)], transform.position,
-					Quaternion.LookRotation(collision.contacts[0].normal));
-
+			Transform VFX = Instantiate(bloodImpactPrefabs[Random.Range
+				(0, bloodImpactPrefabs.Length)], transform.position,
+				Quaternion.LookRotation(collision.contacts[0].normal));
+			SpawnVFX(VFX.gameObject, this);
 			DespawnBullet();
 
 		}
@@ -141,10 +146,10 @@ public class Projectile : NetworkBehaviour {
 			//collision.transform.gameObject.GetComponent
 			//	<TargetScript>().isHit = true;
 			//Instantiate random impact prefab from array
-			Transform VFX = Instantiate(concreteImpactPrefabs[Random.Range
-					(0, bloodImpactPrefabs.Length)], transform.position,
-					Quaternion.LookRotation(collision.contacts[0].normal));
-
+			Transform VFX = Instantiate(bloodImpactPrefabs[Random.Range
+				(0, bloodImpactPrefabs.Length)], transform.position,
+				Quaternion.LookRotation(collision.contacts[0].normal));
+			SpawnVFX(VFX.gameObject, this);
 			DespawnBullet();
 
 		}
@@ -192,4 +197,23 @@ public class Projectile : NetworkBehaviour {
 	{		
 		ServerManager.Despawn(gameObject);
 	}
+	private IEnumerator DestroyTrailAfter()
+	{
+		//Wait for set amount of time
+		yield return new WaitForSeconds(0.005f);
+		trail.emitting = false;
+
+	}
+	[ServerRpc(RequireOwnership = false)]
+	public void SpawnVFX(GameObject VFX, Projectile script)
+    {
+		base.Spawn(VFX, base.Owner);
+		SetVFX(VFX, script);
+	}
+	[ObserversRpc]
+    public void SetVFX(GameObject spawned, Projectile script)
+    {
+		script.ObjectVFX = spawned;
+    }
+
 }
