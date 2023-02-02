@@ -8072,15 +8072,11 @@ MonoBehaviour:
   FPSplayer: {fileID: 7509555902632160664}
   player: {fileID: 7509555902184957799}
   playerGears:
-  - {fileID: 7509555902184957799}
-  - {fileID: 7509555902306490229}
-  - {fileID: 7509555901769117601}
-  - {fileID: 7509555902773123230}
-  - {fileID: 7509555901533593533}
-  - {fileID: 7509555901313006591}
-  - {fileID: 7509555901479695932}
-  - {fileID: 7509555902415722156}
-  - {fileID: 7509555902813098806}
+  - {fileID: 7509555902184957798}
+  - {fileID: 7509555902306490228}
+  - {fileID: 7509555902773123229}
+  - {fileID: 7509555902415722147}
+  - {fileID: 7509555901769117600}
   cameraSwitched: 0
 --- !u!143 &7509555902541147429
 CharacterController:
@@ -8769,7 +8765,7 @@ MonoBehaviour:
   _predictedSpawningType: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 7
+  <PrefabId>k__BackingField: 8
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0

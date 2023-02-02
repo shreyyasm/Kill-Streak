@@ -11,8 +11,7 @@ public class CameraSwitch : NetworkBehaviour
 
     [SerializeField] CinemachineVirtualCamera fpsCamera;
     [SerializeField] GameObject FPSplayer;
-    [SerializeField] GameObject player;
-    [SerializeField] GameObject[] playerGears;
+    [SerializeField] Transform[] playerGears;
 
     private GameObject m_FollowCamera;
     private GameObject m_AimCamera;
@@ -29,36 +28,28 @@ public class CameraSwitch : NetworkBehaviour
     {
         m_FollowCamera = GameObject.FindWithTag("Follow Camera");
         m_AimCamera = GameObject.FindWithTag("Aim Camera");
-        MainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-
+        MainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();       
         thirdPersonController = GetComponent<ThirdPersonController>();
         shooterController = GetComponent<ShooterController>();
-
         cameraSwitched = true;
         
     }
-    private void Start()
-    {
-        
-    }
     void Update()
-    {
-        if (base.IsOwner)
-        {
-            //playerGears = GetComponentsInChildren<GameObject>();
-            player.layer = LayerMask.NameToLayer("HideItself");          
-            foreach (GameObject gears in playerGears)
-            {
-                gears.layer = LayerMask.NameToLayer("HideItself");
-                //gears.GetComponentInChildren<GameObject>().layer = LayerMask.NameToLayer("HideItself");
-
-            }
-
-        }
+    {  
         if (!base.IsOwner)
             return;
+
         if (!inFPSMode)
             fpsCamera.transform.rotation = MainCamera.transform.rotation;
+
+        foreach (Transform gears in playerGears)
+        {
+            var childGameObjects = gears.GetComponentsInChildren<Transform>();
+            foreach (Transform allObjects in childGameObjects)
+            {
+                allObjects.gameObject.layer = LayerMask.NameToLayer("HideItself");
+            }          
+        }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -92,6 +83,7 @@ public class CameraSwitch : NetworkBehaviour
                 cameraSwitched = true;
             }
         }
+              
     }
 
 }

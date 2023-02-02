@@ -159,13 +159,9 @@ public class ShooterController : NetworkBehaviour
                 return;
             Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(aimDir, Vector3.up);
-
-            //if(IsServer)
-            //    SpawnBulletClientRPC(aimDir, rotation);
-            //if (IsClient)
             
             SpawnBulletServerRPC(aimDir, rotation,this);
-            //SpawnBulletServer(aimDir, rotation);
+
             //Show Flash
             particles.Emit(5);
             flashLight.enabled = true;
