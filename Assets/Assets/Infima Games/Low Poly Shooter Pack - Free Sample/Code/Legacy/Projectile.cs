@@ -103,6 +103,16 @@ public class Projectile : NetworkBehaviour {
 			DespawnBullet();
 
 		}
+		//If bullet collides with "Blood" tag
+		if (collision.transform.tag == "Player")
+		{
+			Transform VFX = Instantiate(bloodImpactPrefabs[Random.Range
+				(0, bloodImpactPrefabs.Length)], transform.position,
+				Quaternion.LookRotation(collision.contacts[0].normal));
+			SpawnVFX(VFX.gameObject, this);
+			DespawnBullet();
+
+		}
 
 		//If bullet collides with "Metal" tag
 		if (collision.transform.tag == "Metal")

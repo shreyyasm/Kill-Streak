@@ -42,7 +42,7 @@ public class ShooterController : NetworkBehaviour
     bool Aiming = false;
 
     //Camera's Reference
-    GameObject fpsVirtualCamera;
+    public GameObject fpsVirtualCamera;
     GameObject aimVirtualCamera;
     GameObject followVirtualCamera;
 
@@ -63,7 +63,7 @@ public class ShooterController : NetworkBehaviour
         animator = GetComponent<Animator>();
         aimVirtualCamera = GameObject.FindWithTag("Aim Camera");
         followVirtualCamera = GameObject.FindWithTag("Follow Camera");
-        fpsVirtualCamera = GameObject.FindWithTag("FPS Camera");
+        
 
         //Instansiate Flash 
         audioSource = GetComponent<AudioSource>();
@@ -155,8 +155,7 @@ public class ShooterController : NetworkBehaviour
     {
         if (starterAssetsInputs.shoot)
         {
-            if (!base.IsOwner)
-                return;
+            
             Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(aimDir, Vector3.up);
             
