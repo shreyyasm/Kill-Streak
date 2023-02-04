@@ -55,6 +55,7 @@ public class ShooterController : NetworkBehaviour
     private AudioSource audioSource;
     
     public GameObject spawnedObject;
+    public WeaponManager weaponManager;
     private void Awake()
     {
         //References
@@ -159,8 +160,8 @@ public class ShooterController : NetworkBehaviour
             Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(aimDir, Vector3.up);
             
-            SpawnBulletServerRPC(aimDir, rotation,this);
-
+            //SpawnBulletServerRPC(aimDir, rotation,this);
+            weaponManager.Fire();
             //Show Flash
             particles.Emit(5);
             flashLight.enabled = true;
