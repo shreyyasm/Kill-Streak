@@ -58,14 +58,15 @@ public class Projectile : NetworkBehaviour {
     //If the bullet collides with anything
     private void OnCollisionEnter (Collision collision)
 	{
-
-		boxCollider.enabled = false;
-		bulletParticle.SetActive(false);
-		StartCoroutine(DestroyTrailAfter());	
+		
+			boxCollider.enabled = false;
+			StartCoroutine(DestroyTrailAfter());			
+			bulletParticle.SetActive(false);
+		
 			
 		//Ignore collisions with other projectiles.
-		if (collision.gameObject.GetComponent<Projectile>() != null)
-			return;
+		//if (collision.gameObject.GetComponent<Projectile>() != null)
+		//	return;
 
 		// //Ignore collision if bullet collides with "Player" tag
 		// if (collision.gameObject.CompareTag("Player")) 
@@ -184,6 +185,7 @@ public class Projectile : NetworkBehaviour {
 
 			DespawnBullet();
 		}
+		
 	}
 	
 	private IEnumerator DestroyTimer () 
@@ -210,7 +212,8 @@ public class Projectile : NetworkBehaviour {
 	private IEnumerator DestroyTrailAfter()
 	{
 		//Wait for set amount of time
-		yield return new WaitForSeconds(0.005f);
+		yield return new WaitForSeconds(0.003f);
+		
 		trail.emitting = false;
 
 	}

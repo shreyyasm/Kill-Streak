@@ -1,267 +1,145 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FishNet;
+using FishNet.Object;
+using TMPro;
 
-public class WeaponManager : MonoBehaviour
+public class WeaponManager : NetworkBehaviour
 {
-   
-
-    [Header("Firing")]
-
-    [Tooltip("Is this weapon automatic? If yes, then holding down the firing button will continuously fire.")]
-    [SerializeField]
-    private bool automatic;
-
-    [Tooltip("How fast the projectiles are.")]
-    [SerializeField]
-    private float projectileImpulse = 400.0f;
-
-    [Tooltip("Amount of shots this weapon can shoot in a minute. It determines how fast the weapon shoots.")]
-    [SerializeField]
-    private int roundsPerMinutes = 200;
-
-    [Tooltip("Mask of things recognized when firing.")]
-    [SerializeField]
-    private LayerMask mask;
-
-    [Tooltip("Maximum distance at which this weapon can fire accurately. Shots beyond this distance will not use linetracing for accuracy.")]
-    [SerializeField]
-    private float maximumDistance = 500.0f;
-
-    [Header("Animation")]
-
-    [Tooltip("Transform that represents the weapon's ejection port, meaning the part of the weapon that casings shoot from.")]
-    [SerializeField]
-    private Transform socketEjection;
-
-    [Header("Resources")]
-
-    [Tooltip("Casing Prefab.")]
-    [SerializeField]
-    private GameObject prefabCasing;
-
     [Tooltip("Projectile Prefab. This is the prefab spawned when the weapon shoots.")]
     [SerializeField]
     private GameObject prefabProjectile;
 
-    [Tooltip("Weapon Body Texture.")]
-    [SerializeField]
-    private Sprite spriteBody;
-
-    [Header("Audio Clips Holster")]
-
-    [Tooltip("Holster Audio Clip.")]
-    [SerializeField]
-    private AudioClip audioClipHolster;
-
-    [Tooltip("Unholster Audio Clip.")]
-    [SerializeField]
-    private AudioClip audioClipUnholster;
-
-    [Header("Audio Clips Reloads")]
-
-    [Tooltip("Reload Audio Clip.")]
-    [SerializeField]
-    private AudioClip audioClipReload;
-
-    [Tooltip("Reload Empty Audio Clip.")]
-    [SerializeField]
-    private AudioClip audioClipReloadEmpty;
-
-    [Header("Audio Clips Other")]
-
-    [Tooltip("AudioClip played when this weapon is fired without any ammunition.")]
-    [SerializeField]
-    private AudioClip audioClipFireEmpty;
-
-
-
-
-    [Header("Settings")]
-
-    [Tooltip("Total Ammunition.")]
-    [SerializeField]
-    private int ammunitionTotal = 10;
-
-    [Header("Interface")]
-
-    [Tooltip("Interface Sprite.")]
-    [SerializeField]
-    private Sprite sprite;
-
-    [Tooltip("Socket at the tip of the Muzzle. Commonly used as a firing point.")]
-    [SerializeField]
-    private Transform socket;
-
-    #region FIELDS
-
-    /// <summary>
-    /// Weapon Animator.
-    /// </summary>
-    private Animator animator;
-    /// <summary>
-    /// Attachment Manager.
-    /// </summary>
-   // private WeaponAttachmentManagerBehaviour attachmentManager;
-
-    /// <summary>
-    /// Amount of ammunition left.
-    /// </summary>
-    private int ammunitionCurrent;
-
-    #region Attachment Behaviours
-
-    /// <summary>
-    /// Equipped Magazine Reference.
-    /// </summary>
-    //private MagazineBehaviour magazineBehaviour;
-    /// <summary>
-    /// Equipped Muzzle Reference.
-    /// </summary>
-    //private MuzzleBehaviour muzzleBehaviour;
-
-    #endregion
-
-    /// <summary>
-    /// The GameModeService used in this game!
-    /// </summary>
-    //private IGameModeService gameModeService;
-    /// <summary>
-    /// The main player character behaviour component.
-    /// </summary>
-    //private CharacterBehaviour characterBehaviour;
-
-    /// <summary>
-    /// The player character's camera.
-    /// </summary>
-    private Transform playerCamera;
-
-    #endregion
-
-    #region UNITY
-
-    void Awake()
-    {
-        playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<Transform>();
-        //Get Animator.
-        animator = GetComponent<Animator>();
-        //Get Attachment Manager.
-        //attachmentManager = GetComponent<WeaponAttachmentManagerBehaviour>();
-
-        //Cache the game mode service. We only need this right here, but we'll cache it in case we ever need it again.
-        //gameModeService = ServiceLocator.Current.Get<IGameModeService>();
-        //Cache the player character.
-        //characterBehaviour = gameModeService.GetPlayerCharacter();
-        //Cache the world camera. We use this in line traces.
-        //playerCamera = characterBehaviour.GetCameraWorld().transform;
-    }
-    void Start()
-    {
-        #region Cache Attachment References
-
-        //Get Magazine.
-        //magazineBehaviour = attachmentManager.GetEquippedMagazine();
-        //Get Muzzle.
-        //muzzleBehaviour = attachmentManager.GetEquippedMuzzle();
-
-        #endregion
-
-        //Max Out Ammo.
-        ammunitionCurrent = ammunitionTotal;
-    }
-
-    #endregion
-
-    #region GETTERS
-
-    public  Animator GetAnimator() => animator;
-
-    public Sprite GetSpriteBody() => spriteBody;
-
-    public AudioClip GetAudioClipHolster() => audioClipHolster;
-    public AudioClip GetAudioClipUnholster() => audioClipUnholster;
-
-    public AudioClip GetAudioClipReload() => audioClipReload;
-    public AudioClip GetAudioClipReloadEmpty() => audioClipReloadEmpty;
-
-    public AudioClip GetAudioClipFireEmpty() => audioClipFireEmpty;
-
-    //public AudioClip GetAudioClipFire() => muzzleBehaviour.GetAudioClipFire();
-
-    public int GetAmmunitionCurrent() => ammunitionCurrent;
-
-    public int GetAmmunitionTotal() => ammunitionTotal;
-
-    public bool IsAutomatic() => automatic;
-    public float GetRateOfFire() => roundsPerMinutes;
-
-    public bool IsFull() => ammunitionCurrent == ammunitionTotal;
-    public bool HasAmmunition() => ammunitionCurrent > 0;
-
-   // public RuntimeAnimatorController GetAnimatorController() => controller;
-   // public WeaponAttachmentManagerBehaviour GetAttachmentManager() => attachmentManager;
-
-    #endregion
-
-    #region METHODS
-
-    public void Reload()
-    {
-        //Play Reload Animation.
-        animator.Play(HasAmmunition() ? "Reload" : "Reload Empty", 0, 0.0f);
-    }
-    public void Fire(float spreadMultiplier = 1.0f)
-    {
-
-        //We need a muzzle in order to fire this weapon!
-        //if (muzzleBehaviour == null)
-           // return;
-
-        //Make sure that we have a camera cached, otherwise we don't really have the ability to perform traces.
-        if (playerCamera == null)
-            return;
-
-        //Get Muzzle Socket. This is the point we fire from.
-        Transform muzzleSocket = socket;
-
-        //Play the firing animation.
-       // const string stateName = "Fire";
-        //animator.Play(stateName, 0, 0.0f);
-
-        //Reduce ammunition! We just shot, so we need to get rid of one!
-        ammunitionCurrent = Mathf.Clamp(ammunitionCurrent - 1, 0, ammunitionTotal);
-
-        //Play all muzzle effects.
-        //muzzleBehaviour.Effect();
-
-        //Determine the rotation that we want to shoot our projectile in.
-        Quaternion rotation = Quaternion.LookRotation(playerCamera.forward * 1000.0f - muzzleSocket.position);
-
-        //If there's something blocking, then we can aim directly at that thing, which will result in more accurate shooting.
-        if (Physics.Raycast(new Ray(playerCamera.position, playerCamera.forward),
-            out RaycastHit hit, maximumDistance, mask))
-            rotation = Quaternion.LookRotation(hit.point - muzzleSocket.position);
-
-        //Spawn projectile from the projectile spawn point.
-        GameObject projectile = Instantiate(prefabProjectile, muzzleSocket.position, rotation);
-        //Add velocity to the projectile.
-        //projectile.GetComponent<Rigidbody>().velocity = projectile.transform.forward * projectileImpulse;
-    }
-
-    public void FillAmmunition(int amount)
-    {
-        //Update the value by a certain amount.
-        ammunitionCurrent = amount != 0 ? Mathf.Clamp(ammunitionCurrent + amount,
-            0, ammunitionTotal) : ammunitionTotal;
-    }
-
-    public void EjectCasing()
-    {
-        //Spawn casing prefab at spawn point.
-        if (prefabCasing != null && socketEjection != null)
-            Instantiate(prefabCasing, socketEjection.position, socketEjection.rotation);
-    }
-
     
-    #endregion
+    GameObject spawnedObject;
+    //Gun stats
+    public int damage;
+    public float timeBetweenShooting, spread, range, reloadTime, timeBetweenShots;
+    public int magazineSize, bulletsPerTap;
+    public bool allowButtonHold;
+    int bulletsLeft, bulletsShot;
+
+    //bools 
+    bool shooting, readyToShoot, reloading;
+
+    //Reference
+    public Camera mainCamera;
+    public Transform attackPoint;
+    public RaycastHit rayHit;
+    public LayerMask whatIsEnemy;
+
+    //Graphics
+    public GameObject muzzleFlash, bulletHoleGraphic;
+    //public CamShake camShake;
+    public float camShakeMagnitude, camShakeDuration;
+    public TextMeshProUGUI text;
+    Vector3 mouseWorldPosition;
+    Vector3 aimDir;
+    Quaternion rotation;
+    private void Awake()
+    {
+        bulletsLeft = magazineSize;
+        readyToShoot = true;
+    }
+    private void Update()
+    {
+        //MyInput();
+        mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        //SetText
+        //text.SetText(bulletsLeft + " / " + magazineSize);
+    }
+    public void MyInput(WeaponManager script)
+    {
+        if (allowButtonHold) shooting = Input.GetMouseButton(0);
+        else shooting = Input.GetMouseButtonDown(0);
+
+        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
+
+        //Shoot
+        if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
+        {
+            bulletsShot = bulletsPerTap;
+            Fire(script);
+            
+        }
+
+    }
+    private void ResetShot()
+    {
+        readyToShoot = true;
+    }
+    private void Reload()
+    {
+        reloading = true;
+        Invoke("ReloadFinished", reloadTime);
+    }
+    private void ReloadFinished()
+    {
+        bulletsLeft = magazineSize;
+        reloading = false;
+    }
+    [ServerRpc]
+    public void Fire(WeaponManager script)
+    {
+        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f))
+        {
+            //debugTransform.position = raycastHit.point;
+            mouseWorldPosition = raycastHit.point;
+        }
+        //mouseWorldPosition = Vector3.zero;
+        Vector3 worldAimTarget = mouseWorldPosition;
+        aimDir = (mouseWorldPosition - attackPoint.position).normalized;
+        rotation = Quaternion.LookRotation(aimDir, Vector3.up);
+
+        bulletsShot = bulletsPerTap;
+            Debug.Log("Work");
+            //Spawn projectile from the projectile spawn point.
+            GameObject projectile = Instantiate(prefabProjectile, attackPoint.position, rotation);
+            ServerManager.Spawn(projectile, base.Owner);
+            SetSpawnBullet(projectile, script);
+
+            readyToShoot = false;
+
+            //Spread
+            float x = Random.Range(-spread, spread);
+            float y = Random.Range(-spread, spread);
+
+            //Calculate Direction with Spread
+            Vector3 direction = mainCamera.transform.forward + new Vector3(x, y, 0);
+
+            //RayCast
+            if (Physics.Raycast(mainCamera.transform.position, direction, out rayHit, range, whatIsEnemy))
+            {
+                Debug.Log(rayHit.collider.name);
+
+                //if (rayHit.collider.CompareTag("Enemy"))
+                //rayHit.collider.GetComponent<ShootingAi>().TakeDamage(damage);
+            }
+
+            //ShakeCamera
+            //camShake.Shake(camShakeDuration, camShakeMagnitude);
+
+            //Graphics
+           // Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
+            //Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
+
+            bulletsLeft--;
+            bulletsShot--;
+
+            Invoke("ResetShot", timeBetweenShooting);
+
+            if (bulletsShot > 0 && bulletsLeft > 0)
+                Invoke("Fire", timeBetweenShots);
+            
+
+    }
+    [ObserversRpc]
+    public void SetSpawnBullet(GameObject spawned, WeaponManager script)
+    {
+        script.spawnedObject = spawned;
+    }
 }

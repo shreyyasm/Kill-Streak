@@ -35,6 +35,8 @@ public class ShooterController : NetworkBehaviour
     //Offsets
     public Vector3 vfxSpawnOffset;
     public Vector3 offset;
+    Vector3 aimDir;
+    Quaternion rotation;
     Vector3 mouseWorldPosition;
 
     //Conditions
@@ -55,7 +57,11 @@ public class ShooterController : NetworkBehaviour
     private AudioSource audioSource;
     
     public GameObject spawnedObject;
-    public WeaponManager weaponManager;
+    public WeaponManager equippedWeapon;
+
+    bool cursorLocked;
+    bool holdingButtonFire;
+    float lastShotTime;
     private void Awake()
     {
         //References
@@ -81,7 +87,7 @@ public class ShooterController : NetworkBehaviour
         flashLight.enabled = false;
 
         particles = flash.GetComponent<ParticleSystem>();
-        
+       
     }
 
     private void Update()
@@ -91,7 +97,8 @@ public class ShooterController : NetworkBehaviour
         
             Aim();
             Fire();
-        
+
+            equippedWeapon.MyInput(equippedWeapon);
     }
     public void Aim()
     {
@@ -154,28 +161,35 @@ public class ShooterController : NetworkBehaviour
 
     public void Fire()
     {
-        if (starterAssetsInputs.shoot)
+        if(Input.GetMouseButton(0))
         {
-            
-            Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
-            Quaternion rotation = Quaternion.LookRotation(aimDir, Vector3.up);
-            
-            //SpawnBulletServerRPC(aimDir, rotation,this);
-            weaponManager.Fire();
-            //Show Flash
-            particles.Emit(5);
-            flashLight.enabled = true;
-            StartCoroutine(nameof(DisableFlashLight));
-            audioSource.PlayOneShot(audioClipFire, 0.5f);
+            if (starterAssetsInputs.shoot)
+            {
+                
+                aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
+                rotation = Quaternion.LookRotation(aimDir, Vector3.up);
 
-            //Camera Shake
-            followVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
-            aimVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
-            fpsVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+                //SpawnBulletServerRPC(aimDir, rotation,this);
+                lastShotTime = Time.time;
+
+                //equippedWeapon.Fire(aimDir, rotation, spawnBulletPosition, equippedWeapon);
+                //Show Flash
+                particles.Emit(5);
+                flashLight.enabled = true;
+                StartCoroutine(nameof(DisableFlashLight));
+                audioSource.PlayOneShot(audioClipFire, 0.5f);
+
+                //Camera Shake
+                followVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+                aimVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+                fpsVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+
+                starterAssetsInputs.shoot = false;
+                flashPrefab.SetActive(false);
+
+            }
+        }
             
-            starterAssetsInputs.shoot = false;
-            flashPrefab.SetActive(false);
-        }       
     }
     [ServerRpc]
     public void SpawnBulletServerRPC(Vector3 aimDir, Quaternion rotation, ShooterController script)
@@ -211,4 +225,5 @@ public class ShooterController : NetworkBehaviour
         //Disable.
         flashLight.enabled = false;
     }
+    
 }

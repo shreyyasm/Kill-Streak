@@ -1546,26 +1546,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fac7bf2cbb2d7f49883bea46f043e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  automatic: 0
-  projectileImpulse: 400
-  roundsPerMinutes: 200
-  mask:
-    serializedVersion: 2
-    m_Bits: 0
-  maximumDistance: 500
-  socketEjection: {fileID: 0}
-  prefabCasing: {fileID: 0}
+  _componentIndexCache: 16
+  _addedNetworkObject: {fileID: 469287982392243728}
+  _networkObjectCache: {fileID: 469287982392243728}
   prefabProjectile: {fileID: 1086664671600574, guid: 1a6074b0bafe0a944914eba0b6d6abfd,
     type: 3}
-  spriteBody: {fileID: 0}
-  audioClipHolster: {fileID: 0}
-  audioClipUnholster: {fileID: 0}
-  audioClipReload: {fileID: 0}
-  audioClipReloadEmpty: {fileID: 0}
-  audioClipFireEmpty: {fileID: 0}
-  ammunitionTotal: 60
-  sprite: {fileID: 0}
-  socket: {fileID: 6247506575986780155}
+  damage: 30
+  timeBetweenShooting: 0.05
+  spread: 0.02
+  range: 10000
+  reloadTime: 1
+  timeBetweenShots: 0
+  magazineSize: 2000
+  bulletsPerTap: 1
+  allowButtonHold: 1
+  mainCamera: {fileID: 0}
+  attackPoint: {fileID: 6247506575986780155}
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 0
+  muzzleFlash: {fileID: 0}
+  bulletHoleGraphic: {fileID: 0}
+  camShakeMagnitude: 0
+  camShakeDuration: 0
+  text: {fileID: 0}
 --- !u!1 &6247506574792678886
 GameObject:
   m_ObjectHideFlags: 0
@@ -6087,7 +6091,7 @@ MonoBehaviour:
   offset: {x: 0, y: -0.1, z: 0}
   fpsVirtualCamera: {fileID: 6247506576287820489}
   spawnedObject: {fileID: 0}
-  weaponManager: {fileID: 1762409712}
+  equippedWeapon: {fileID: 1762409712}
 --- !u!114 &6247506575560331575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6155,7 +6159,39 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6bc1aaf4-b110-4ff7-891e-5b9fe6f32c4d
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2690c379-f54d-45be-a724-414123833eb4
+    m_ActionName: Player/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8c4abdf8-4099-493a-aa1a-129acec7c3df
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 980e881e-182c-404c-8cbf-3d09fdb48fef
+    m_ActionName: Player/Sprint[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 92ef5bf8-007a-42ea-9560-7a3ece4336b3
+    m_ActionName: Player/Aim[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fcba4b02-1228-47e1-a9b2-ecf0378abcb0
+    m_ActionName: Player/Shoot[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e7426727-fcca-4268-8fdb-32d00a58b86b
+    m_ActionName: Player/Switch[/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ba369bd6-8433-42c7-9c6b-884d3e84a317
+    m_ActionName: Player/Slide[/Keyboard/leftCtrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -6791,6 +6827,7 @@ MonoBehaviour:
   - {fileID: 6670017484283430876}
   - {fileID: 9175491886050388039}
   - {fileID: 2578793429747150268}
+  - {fileID: 1762409712}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
