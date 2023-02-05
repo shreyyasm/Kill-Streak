@@ -2,6 +2,7 @@
 //using Unity.Netcode;
 //using Unity.Netcode.Components;
 using FishNet.Object;
+using UnityEngine.InputSystem;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -246,14 +247,19 @@ namespace StarterAssets
 
         public void CameraRotation()
         {
+
+            float h = UltimateTouchpad.GetHorizontalAxis("Look");
+            float v = UltimateTouchpad.GetVerticalAxis("Look");
+            Vector3 direction = new Vector3(h, v, 0f).normalized;
+            Debug.Log(direction.x);
             // if there is an input and camera position is not fixed
-            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
+            if (direction.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
                 //Don't multiply mouse input by Time.deltaTime;
-                float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+                //float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * sensitivity;
-                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * sensitivity;
+                _cinemachineTargetYaw += direction.x * 1 *Time.deltaTime* sensitivity;
+                _cinemachineTargetPitch += -direction.y * 1* Time.deltaTime* sensitivity;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -267,6 +273,12 @@ namespace StarterAssets
 
         public void Move()
         {
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+            float h = UltimateJoystick.GetHorizontalAxis("Movement");
+            float v = UltimateJoystick.GetVerticalAxis("Movement");
+            Vector3 direction = new Vector3(h, 0f, v).normalized;
+            
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -274,13 +286,13 @@ namespace StarterAssets
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
-            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+            if (direction == Vector3.zero) targetSpeed = 0.0f;
 
             // a reference to the players current horizontal velocity
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
             float speedOffset = 0.1f;
-            float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+            //float inputMagnitude = _input.analogMovement ? direction.magnitude : 1f;
 
             // accelerate or decelerate to target speed
             if (currentHorizontalSpeed < targetSpeed - speedOffset ||
@@ -288,7 +300,7 @@ namespace StarterAssets
             {
                 // creates curved result rather than a linear one giving a more organic speed change
                 // note T in Lerp is clamped, so we don't need to clamp our speed
-                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
+                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * 1,
                     Time.deltaTime * SpeedChangeRate);
 
                 // round speed to 3 decimal places
@@ -304,13 +316,13 @@ namespace StarterAssets
             
 
             // normalise input direction
-            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            //Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is a move input rotate player when the player is moving
-            if (_input.move != Vector2.zero)
+            if (direction.magnitude >= 0.1f)
             {
-                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
+                _targetRotation = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg +
                                   _mainCamera.transform.eulerAngles.y;
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                     RotationSmoothTime);              

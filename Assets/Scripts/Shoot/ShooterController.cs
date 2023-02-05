@@ -96,15 +96,15 @@ public class ShooterController : NetworkBehaviour
             return;
         
             Aim();
-            Fire();
+            //Fire();
 
-            equippedWeapon.MyInput(equippedWeapon);
+           // equippedWeapon.MyInput(equippedWeapon);
     }
     public void Aim()
     {
         socket.transform.position = socketBeforePos.transform.position;
-        aimVirtualCamera.transform.position = followVirtualCamera.transform.position;
-        mouseWorldPosition = Vector3.zero;
+        //aimVirtualCamera.transform.position = followVirtualCamera.transform.position;
+        //mouseWorldPosition = Vector3.zero;
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);

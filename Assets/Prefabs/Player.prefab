@@ -8062,7 +8062,7 @@ GameObject:
   - component: {fileID: 6851145955077546325}
   - component: {fileID: 2653401366897478987}
   m_Layer: 8
-  m_Name: Player New
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8202,6 +8202,7 @@ MonoBehaviour:
   offset: {x: 0, y: -0.1, z: 0}
   fpsVirtualCamera: {fileID: 7509555901273642714}
   spawnedObject: {fileID: 0}
+  equippedWeapon: {fileID: 0}
 --- !u!114 &7509555902541147428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8913,11 +8914,11 @@ MonoBehaviour:
   _predictedSpawningType: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 8
+  <PrefabId>k__BackingField: 9
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 394288251
   <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 15891369391496135281
+  <AssetPathHash>k__BackingField: 7807759643866311769
   _sceneNetworkObjects: []
 --- !u!114 &4051201565946006689
 MonoBehaviour:

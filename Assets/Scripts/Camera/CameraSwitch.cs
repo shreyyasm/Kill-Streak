@@ -39,8 +39,8 @@ public class CameraSwitch : NetworkBehaviour
         if (!base.IsOwner)
             return;
 
-        if (!inFPSMode)
-            fpsCamera.transform.rotation = MainCamera.transform.rotation;
+        //if (!inFPSMode)
+        //    fpsCamera.transform.rotation = MainCamera.transform.rotation;
 
         foreach (Transform gears in playerGears)
         {
