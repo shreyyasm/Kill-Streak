@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 96448838451407516}
   - component: {fileID: 2986587061762363864}
   - component: {fileID: -7924792232329995711}
+  - component: {fileID: -5269166957839323444}
   m_Layer: 15
   m_Name: NewBullet
   m_TagString: Projectile
@@ -189,7 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
+  _addedNetworkObject: {fileID: -5269166957839323444}
   _networkObjectCache: {fileID: 0}
   destroyAfter: 5
   destroyOnImpact: 1
@@ -221,6 +222,35 @@ MonoBehaviour:
   vfxHitTarget: {fileID: 499110, guid: ecdafb27396ac3f4cbf24e6c76a1f363, type: 3}
   vfxHitNull: {fileID: 4836458910855560858, guid: f46d9be8451e32647a7ce1e53a69bb68,
     type: 3}
+--- !u!114 &-5269166957839323444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086664671600574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsNested>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 0
+  _networkBehaviours: []
+  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  <ChildNetworkObjects>k__BackingField: []
+  _isNetworked: 1
+  _isGlobal: 0
+  _initializeOrder: 0
+  _predictedSpawningType: 0
+  _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: -1
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 0
+  <SceneId>k__BackingField: 0
+  <AssetPathHash>k__BackingField: 15709011332279608463
+  _sceneNetworkObjects: []
 --- !u!1 &1231345400216816
 GameObject:
   m_ObjectHideFlags: 0

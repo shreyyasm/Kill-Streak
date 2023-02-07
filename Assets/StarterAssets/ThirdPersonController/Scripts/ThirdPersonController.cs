@@ -2,9 +2,8 @@
 //using Unity.Netcode;
 //using Unity.Netcode.Components;
 using FishNet.Object;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-using UnityEngine.InputSystem;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -14,7 +13,7 @@ namespace StarterAssets
 {
     [RequireComponent(typeof(CharacterController))]
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-    [RequireComponent(typeof(PlayerInput))]
+    //[RequireComponent(typeof(PlayerInput))]
 #endif
     public class ThirdPersonController :NetworkBehaviour
     {
@@ -108,15 +107,15 @@ namespace StarterAssets
 
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-        private PlayerInput _playerInput;
+       // private PlayerInput _playerInput;
 #endif
         private Animator _animator;
         //NetworkAnimator _networkAnimator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
-        public PlayerInput playerInput;
-        public InputActionAsset myActionAsset;
+       // public PlayerInput playerInput;
+       // public InputActionAsset myActionAsset;
         [SerializeField] GameObject cameraRoot;
 
         bool isAiming = false;
@@ -129,17 +128,17 @@ namespace StarterAssets
         private bool _hasAnimator;   
         public Vector2 move;
 
-        private bool IsCurrentDeviceMouse
-        {
-            get
-            {
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-                return _playerInput.currentControlScheme == "Any";
-#else
-				return false;
-#endif
-            }
-        }
+//        private bool IsCurrentDeviceMouse
+//        {
+//            get
+//            {
+//#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+//               // return _playerInput.currentControlScheme == "Any";
+//#else
+//				return false;
+//#endif
+//            }
+//        }
 
         //public override void OnNetworkSpawn()
         //{
@@ -166,8 +165,8 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
-            myActionAsset.bindingMask = new InputBinding { groups = "KeyboardMouse" };
-            playerInput.SwitchCurrentControlScheme(Keyboard.current, Mouse.current);
+          //  myActionAsset.bindingMask = new InputBinding { groups = "KeyboardMouse" };
+          //  playerInput.SwitchCurrentControlScheme(Keyboard.current, Mouse.current);
             
         }
 
@@ -179,9 +178,9 @@ namespace StarterAssets
             
             //_networkAnimator = gameObject.GetComponent<NetworkAnimator>();
             _controller = GetComponent<CharacterController>();
-            _input = GetComponent<StarterAssetsInputs>();
+           // _input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-            _playerInput = GetComponent<PlayerInput>();
+         // _playerInput = GetComponent<PlayerInput>();
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
@@ -198,7 +197,7 @@ namespace StarterAssets
             if (!base.IsOwner)
                 return;
             _hasAnimator = TryGetComponent(out _animator);
-            JumpAndGravity();
+            //JumpAndGravity();
             GroundedCheck();
             Move();
 
@@ -212,10 +211,10 @@ namespace StarterAssets
             CameraRotation();
  
         }
-        public void OnMove(InputValue value)
-        {
-            MoveInput(value.Get<Vector2>());
-        }
+        //public void OnMove(InputValue value)
+        //{
+        //    MoveInput(value.Get<Vector2>());
+        //}
         public void MoveInput(Vector2 newMoveDirection)
         {
             move = newMoveDirection;
@@ -280,7 +279,7 @@ namespace StarterAssets
             Vector3 direction = new Vector3(h, 0f, v).normalized;
             
             // set target speed based on move speed, sprint speed and if sprint is pressed
-            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            float targetSpeed = MoveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 

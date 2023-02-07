@@ -89,8 +89,7 @@ public class ShooterController : NetworkBehaviour
         particles = flash.GetComponent<ParticleSystem>();
        
     }
-
-    private void Update()
+    public void Update()
     {
         if (!base.IsOwner)
             return;
@@ -103,8 +102,8 @@ public class ShooterController : NetworkBehaviour
     public void Aim()
     {
         socket.transform.position = socketBeforePos.transform.position;
-        //aimVirtualCamera.transform.position = followVirtualCamera.transform.position;
-        //mouseWorldPosition = Vector3.zero;
+        aimVirtualCamera.transform.position = followVirtualCamera.transform.position;
+        mouseWorldPosition = Vector3.zero;
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
@@ -115,7 +114,7 @@ public class ShooterController : NetworkBehaviour
             mouseWorldPosition = raycastHit.point;
         }
 
-        if (starterAssetsInputs.aim)
+        if (Input.GetMouseButton(1))
         {
             Aiming = true;
             thirdPersonController.Aiming(true);

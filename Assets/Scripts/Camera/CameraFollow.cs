@@ -11,7 +11,7 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
-        //AttachCamera();
+        AttachCamera();
     }
     private void Update()
     {
@@ -21,14 +21,14 @@ public class CameraFollow : MonoBehaviour
     private void AttachCamera()
     {
         m_MainCamera = GameObject.FindWithTag("Follow Camera").GetComponent<CinemachineVirtualCamera>();
-        //m_AimCamera = GameObject.FindWithTag("Aim Camera").GetComponent<CinemachineVirtualCamera>();
+        m_AimCamera = GameObject.FindWithTag("Aim Camera").GetComponent<CinemachineVirtualCamera>();
         //Assert.IsNotNull(m_MainCamera, "CameraController.AttachCamera: Couldn't find gameplay freelook camera");
 
         if (m_MainCamera)
         {
             // camera body / aim
             m_MainCamera.Follow = transform;
-            //m_AimCamera.Follow = transform;
+            m_AimCamera.Follow = transform;
         }
 
     }
