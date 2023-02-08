@@ -97,7 +97,7 @@ public class ShooterController : NetworkBehaviour
             Aim();
             //Fire();
 
-           // equippedWeapon.MyInput(equippedWeapon);
+           //equippedWeapon.MyInput(equippedWeapon);
     }
     public void Aim()
     {
@@ -120,8 +120,8 @@ public class ShooterController : NetworkBehaviour
             thirdPersonController.Aiming(true);
             if (!FPSMode)
             {
-                aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = true;
-                thirdPersonController.SetSensitivity(aimSensitivity);
+                //aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = true;
+                //thirdPersonController.SetSensitivity(aimSensitivity);
 
                 Vector3 worldAimTarget = mouseWorldPosition;
                 worldAimTarget.y = transform.position.y;
@@ -142,8 +142,8 @@ public class ShooterController : NetworkBehaviour
             thirdPersonController.Aiming(false);
             if (!FPSMode)
             {
-                aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = false;
-                thirdPersonController.SetSensitivity(normalSensitivity);
+                //aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = false;
+                //thirdPersonController.SetSensitivity(normalSensitivity);
 
                 Vector3 worldAimTarget = mouseWorldPosition;
                 worldAimTarget.y = transform.position.y;

@@ -2,7 +2,7 @@
 //using Unity.Netcode;
 //using Unity.Netcode.Components;
 using FishNet.Object;
-//using UnityEngine.InputSystem;
+using UnityEngine.InputSystem;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 #endif
 
@@ -13,7 +13,7 @@ namespace StarterAssets
 {
     [RequireComponent(typeof(CharacterController))]
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-    //[RequireComponent(typeof(PlayerInput))]
+    [RequireComponent(typeof(PlayerInput))]
 #endif
     public class ThirdPersonController :NetworkBehaviour
     {
@@ -80,6 +80,7 @@ namespace StarterAssets
         public bool LockCameraPosition = false;
 
         public GameObject fPSController;
+        public FixedTouchField fixedTouchField;
       
         // cinemachine
         private float _cinemachineTargetYaw;
@@ -107,15 +108,15 @@ namespace StarterAssets
 
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-       // private PlayerInput _playerInput;
+        private PlayerInput _playerInput;
 #endif
         private Animator _animator;
         //NetworkAnimator _networkAnimator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
-       // public PlayerInput playerInput;
-       // public InputActionAsset myActionAsset;
+        public PlayerInput playerInput;
+        public InputActionAsset myActionAsset;
         [SerializeField] GameObject cameraRoot;
 
         bool isAiming = false;
@@ -128,17 +129,17 @@ namespace StarterAssets
         private bool _hasAnimator;   
         public Vector2 move;
 
-//        private bool IsCurrentDeviceMouse
-//        {
-//            get
-//            {
-//#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-//               // return _playerInput.currentControlScheme == "Any";
-//#else
-//				return false;
-//#endif
-//            }
-//        }
+        private bool IsCurrentDeviceMouse
+        {
+            get
+            {
+#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+                 return _playerInput.currentControlScheme == "Any";
+#else
+				return false;
+#endif
+            }
+        }
 
         //public override void OnNetworkSpawn()
         //{
@@ -158,6 +159,11 @@ namespace StarterAssets
             if (base.Owner.IsLocalClient)
                 cameraRoot.AddComponent<CameraFollow>();
         }
+        private void OnEnable()
+        {
+            //myActionAsset.bindingMask = new InputBinding { groups = "KeyboardMouse" };
+           // playerInput.SwitchCurrentControlScheme(Keyboard.current, Mouse.current);
+        }
         private void Awake()
         {
             // get a reference to our main camera
@@ -165,8 +171,7 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
-          //  myActionAsset.bindingMask = new InputBinding { groups = "KeyboardMouse" };
-          //  playerInput.SwitchCurrentControlScheme(Keyboard.current, Mouse.current);
+           
             
         }
 
@@ -178,9 +183,9 @@ namespace StarterAssets
             
             //_networkAnimator = gameObject.GetComponent<NetworkAnimator>();
             _controller = GetComponent<CharacterController>();
-           // _input = GetComponent<StarterAssetsInputs>();
+            _input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-         // _playerInput = GetComponent<PlayerInput>();
+           _playerInput = GetComponent<PlayerInput>();
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
@@ -197,7 +202,7 @@ namespace StarterAssets
             if (!base.IsOwner)
                 return;
             _hasAnimator = TryGetComponent(out _animator);
-            //JumpAndGravity();
+            JumpAndGravity();
             GroundedCheck();
             Move();
 
@@ -211,10 +216,10 @@ namespace StarterAssets
             CameraRotation();
  
         }
-        //public void OnMove(InputValue value)
-        //{
-        //    MoveInput(value.Get<Vector2>());
-        //}
+        public void OnMove(InputValue value)
+        {
+            MoveInput(value.Get<Vector2>());
+        }
         public void MoveInput(Vector2 newMoveDirection)
         {
             move = newMoveDirection;
@@ -247,18 +252,18 @@ namespace StarterAssets
         public void CameraRotation()
         {
 
-            float h = UltimateTouchpad.GetHorizontalAxis("Look");
-            float v = UltimateTouchpad.GetVerticalAxis("Look");
-            Vector3 direction = new Vector3(h, v, 0f).normalized;
-            Debug.Log(direction.x);
+            //float h = UltimateTouchpad.GetHorizontalAxis("Look");
+            //float v = UltimateTouchpad.GetVerticalAxis("Look");
+            //Vector3 direction = new Vector3(h, v, 0f).normalized;
+            //Debug.Log(direction.x);
             // if there is an input and camera position is not fixed
-            if (direction.sqrMagnitude >= _threshold && !LockCameraPosition)
+            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
                 //Don't multiply mouse input by Time.deltaTime;
-                //float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+                float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                _cinemachineTargetYaw += direction.x * 1 *Time.deltaTime* sensitivity;
-                _cinemachineTargetPitch += -direction.y * 1* Time.deltaTime* sensitivity;
+                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * sensitivity;
+                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * sensitivity;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -268,30 +273,25 @@ namespace StarterAssets
             // Cinemachine will follow this target
             CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
                 _cinemachineTargetYaw, 0.0f);
+
         }
 
         public void Move()
         {
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-            float h = UltimateJoystick.GetHorizontalAxis("Movement");
-            float v = UltimateJoystick.GetVerticalAxis("Movement");
-            Vector3 direction = new Vector3(h, 0f, v).normalized;
-            
             // set target speed based on move speed, sprint speed and if sprint is pressed
-            float targetSpeed = MoveSpeed;
+            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
-            if (direction == Vector3.zero) targetSpeed = 0.0f;
+            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
             // a reference to the players current horizontal velocity
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
             float speedOffset = 0.1f;
-            //float inputMagnitude = _input.analogMovement ? direction.magnitude : 1f;
+            float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
             // accelerate or decelerate to target speed
             if (currentHorizontalSpeed < targetSpeed - speedOffset ||
@@ -299,7 +299,7 @@ namespace StarterAssets
             {
                 // creates curved result rather than a linear one giving a more organic speed change
                 // note T in Lerp is clamped, so we don't need to clamp our speed
-                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * 1,
+                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
                     Time.deltaTime * SpeedChangeRate);
 
                 // round speed to 3 decimal places
@@ -312,19 +312,21 @@ namespace StarterAssets
 
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
             if (_animationBlend < 0.01f) _animationBlend = 0f;
-            
 
             // normalise input direction
-            //Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is a move input rotate player when the player is moving
-            if (direction.magnitude >= 0.1f)
+            if (_input.move != Vector2.zero)
             {
-                _targetRotation = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg +
+                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                   _mainCamera.transform.eulerAngles.y;
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
-                    RotationSmoothTime);              
+                    RotationSmoothTime);
+
+                // rotate to face input direction relative to camera position
+                //transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
 
 
