@@ -99,6 +99,7 @@ public class ShooterController : NetworkBehaviour
 
            //equippedWeapon.MyInput(equippedWeapon);
     }
+   
     public void Aim()
     {
         socket.transform.position = socketBeforePos.transform.position;
@@ -110,7 +111,10 @@ public class ShooterController : NetworkBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimcolliderLayerMask))
         {
-            debugTransform.position = raycastHit.point;
+            //debugTransform.position = raycastHit.point;
+            debugTransform.position = Vector3.Lerp(debugTransform.position,raycastHit.point,Time.deltaTime*20f);
+            
+
             mouseWorldPosition = raycastHit.point;
         }
 
@@ -127,14 +131,17 @@ public class ShooterController : NetworkBehaviour
                 worldAimTarget.y = transform.position.y;
                 Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
 
-                transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
+                transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 10f);
+                //Vector3 direction = (aimDir - transform.position).normalized;
+                //Quaternion rotGoal = Quaternion.LookRotation(aimDir);
+                //transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, 1);
             }
             if (FPSMode)
             {
                 socket.transform.localPosition = vfxSpawnOffset;
             }
 
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
+            //animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
         }
         else
         {
@@ -149,9 +156,12 @@ public class ShooterController : NetworkBehaviour
                 worldAimTarget.y = transform.position.y;
                 Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
                 transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
+                //Vector3 direction = (aimDir - transform.position).normalized;
+                //Quaternion rotGoal = Quaternion.LookRotation(aimDir);
+                //transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, 1);
             }
 
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
+            //animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
         }
 
         if (FPSMode)

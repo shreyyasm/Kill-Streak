@@ -49,9 +49,10 @@ public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandle
 
         Vector2 outputPosition = ApplyInversionFilter(position);
 
-        OutputPointerEventValue(outputPosition * magnitudeMultiplier);
+       // OutputPointerEventValue(outputPosition * magnitudeMultiplier);
+        OutputPointerEventValue(outputPosition);
 
-        if(handleRect)
+        if (handleRect)
         {
             UpdateHandleRectPosition(clampedPosition * joystickRange);
         }

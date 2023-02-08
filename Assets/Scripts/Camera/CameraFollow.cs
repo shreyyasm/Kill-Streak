@@ -7,7 +7,7 @@ public class CameraFollow : MonoBehaviour
 {
     private CinemachineVirtualCamera m_MainCamera;
     private CinemachineVirtualCamera m_AimCamera;
-
+    GameObject sphere;
 
     void Start()
     {
@@ -16,6 +16,7 @@ public class CameraFollow : MonoBehaviour
     private void Update()
     {
         AttachCamera();
+        //sphere = GameObject.FindGameObjectWithTag("Aim");
     }
 
     private void AttachCamera()
@@ -28,6 +29,7 @@ public class CameraFollow : MonoBehaviour
         {
             // camera body / aim
             m_MainCamera.Follow = transform;
+            //m_MainCamera.LookAt = sphere.transform;
             m_AimCamera.Follow = transform;
         }
 
