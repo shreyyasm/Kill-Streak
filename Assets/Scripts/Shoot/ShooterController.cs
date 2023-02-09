@@ -10,6 +10,9 @@ using FishNet;
 
 public class ShooterController : NetworkBehaviour
 {
+    [SerializeField] GameObject touchZone;
+    [SerializeField] GameObject touchStick;
+    public bool ChangedInput;
     //Aim Settings  
     [SerializeField] float normalSensitivity;
     [SerializeField] float aimSensitivity;
@@ -64,6 +67,7 @@ public class ShooterController : NetworkBehaviour
     float lastShotTime;
     private void Awake()
     {
+        ChangedInput = false;
         //References
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         thirdPersonController = GetComponent<ThirdPersonController>();
@@ -234,5 +238,21 @@ public class ShooterController : NetworkBehaviour
         //Disable.
         flashLight.enabled = false;
     }
-    
+    public void ChangeInput()
+    {
+        
+        if(!ChangedInput)
+        {
+            touchZone.SetActive(false);
+            touchStick.SetActive(true);
+            ChangedInput = true;
+        }
+        else
+        {
+            touchZone.SetActive(true);
+            touchStick.SetActive(false);
+            ChangedInput = false;
+        }
+        
+    }
 }

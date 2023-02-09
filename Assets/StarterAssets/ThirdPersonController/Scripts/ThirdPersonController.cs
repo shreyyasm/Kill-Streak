@@ -257,13 +257,15 @@ namespace StarterAssets
             //Vector3 direction = new Vector3(h, v, 0f).normalized;
             //Debug.Log(direction.x);
             // if there is an input and camera position is not fixed
-            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
+            if (fixedTouchField.TouchDist.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * sensitivity;
-                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * sensitivity;
+                //_cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * sensitivity;
+                //_cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * sensitivity;
+                _cinemachineTargetYaw += fixedTouchField.TouchDist.x * 0.2F;
+                _cinemachineTargetPitch += -fixedTouchField.TouchDist.y *0.2F;
             }
 
             // clamp our rotations so our values are limited 360 degrees

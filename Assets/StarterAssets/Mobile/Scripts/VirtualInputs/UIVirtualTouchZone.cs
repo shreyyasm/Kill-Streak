@@ -42,12 +42,14 @@ public class UIVirtualTouchZone : MonoBehaviour, IPointerDownHandler, IDragHandl
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(containerRect, eventData.position, eventData.pressEventCamera, out pointerDownPosition);
 
-        if(handleRect)
+        if (handleRect)
         {
             SetObjectActiveState(handleRect.gameObject, true);
             UpdateHandleRectPosition(pointerDownPosition);
         }
+        //OnDrag(eventData);
     }
+
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -60,7 +62,8 @@ public class UIVirtualTouchZone : MonoBehaviour, IPointerDownHandler, IDragHandl
         
         Vector2 outputPosition = ApplyInversionFilter(clampedPosition);
 
-        OutputPointerEventValue(outputPosition * magnitudeMultiplier);
+        //OutputPointerEventValue(outputPosition * magnitudeMultiplier);
+        OutputPointerEventValue(outputPosition);
     }
 
     public void OnPointerUp(PointerEventData eventData)
