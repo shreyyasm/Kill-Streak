@@ -23,7 +23,6 @@ public class FixedTouchField : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     {
         if (Pressed)
         {
-        
             if (PointerId >= 0 && PointerId < Input.touches.Length)
             {
                 TouchDist = Input.touches[PointerId].position - PointerOld;
@@ -43,15 +42,9 @@ public class FixedTouchField : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(!Pressed)
-        {
-            Pressed = true;
-            //if (Pressed)
-            //  return;
-            PointerId = eventData.pointerId;
-            PointerOld = eventData.position;
-        }
- 
+        Pressed = true;
+        PointerId = eventData.pointerId;
+        PointerOld = eventData.position;
     }
 
 

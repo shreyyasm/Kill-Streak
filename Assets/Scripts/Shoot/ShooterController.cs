@@ -165,7 +165,7 @@ public class ShooterController : NetworkBehaviour
                 //transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, 1);
             }
 
-            //animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
+           // animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
         }
 
         if (FPSMode)
