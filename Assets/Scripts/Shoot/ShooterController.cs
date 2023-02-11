@@ -34,6 +34,7 @@ public class ShooterController : NetworkBehaviour
     [SerializeField] private Rig aimRig;
     [SerializeField] private float aimRigWeight;
     [SerializeField] GameObject fPSController;
+    [SerializeField] ScreenTouch screenTouch;
 
     //Offsets
     public Vector3 vfxSpawnOffset;
@@ -97,14 +98,13 @@ public class ShooterController : NetworkBehaviour
     {
         if (!base.IsOwner)
             return;
-        
-            Aim();
+        AimMovenment();
+            //Aim();
             //Fire();
 
-           //equippedWeapon.MyInput(equippedWeapon);
+        //equippedWeapon.MyInput(equippedWeapon);
     }
-   
-    public void Aim()
+    public void AimMovenment()
     {
         socket.transform.position = socketBeforePos.transform.position;
         aimVirtualCamera.transform.position = followVirtualCamera.transform.position;
@@ -116,58 +116,50 @@ public class ShooterController : NetworkBehaviour
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimcolliderLayerMask))
         {
             //debugTransform.position = raycastHit.point;
-            debugTransform.position = Vector3.Lerp(debugTransform.position,raycastHit.point,Time.deltaTime*20f);
-            
+            debugTransform.position = Vector3.Lerp(debugTransform.position, raycastHit.point, Time.deltaTime * 20f);
+
 
             mouseWorldPosition = raycastHit.point;
         }
+        Vector3 worldAimTarget = mouseWorldPosition;
+        worldAimTarget.y = transform.position.y;
+        Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
 
-        if (Input.GetMouseButton(1))
-        {
+        transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 10f);
+    }
+    public void Aim()
+    {
+        if (!Aiming)
+        {            
             Aiming = true;
             thirdPersonController.Aiming(true);
             if (!FPSMode)
             {
-                //aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = true;
-                //thirdPersonController.SetSensitivity(aimSensitivity);
-
-                Vector3 worldAimTarget = mouseWorldPosition;
-                worldAimTarget.y = transform.position.y;
-                Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
-
-                transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 10f);
-                //Vector3 direction = (aimDir - transform.position).normalized;
-                //Quaternion rotGoal = Quaternion.LookRotation(aimDir);
-                //transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, 1);
+                aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = true;
+                thirdPersonController.SetSensitivity(aimSensitivity);
+                screenTouch.SetSensitivity(4);
             }
             if (FPSMode)
             {
                 socket.transform.localPosition = vfxSpawnOffset;
             }
 
-            //animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
+            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 100f));
         }
         else
-        {
+        {           
             Aiming = false;
             thirdPersonController.Aiming(false);
+            screenTouch.SetSensitivity(8);
             if (!FPSMode)
             {
-                //aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = false;
-                //thirdPersonController.SetSensitivity(normalSensitivity);
-
-                Vector3 worldAimTarget = mouseWorldPosition;
-                worldAimTarget.y = transform.position.y;
-                Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
-                transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
-                //Vector3 direction = (aimDir - transform.position).normalized;
-                //Quaternion rotGoal = Quaternion.LookRotation(aimDir);
-                //transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, 1);
+                aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = false;
+                thirdPersonController.SetSensitivity(normalSensitivity);
             }
 
-           // animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
+            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 100f));
         }
-
+        
         if (FPSMode)
             fPSController.GetComponent<FPSController>().AimFPS(Aiming);
     }

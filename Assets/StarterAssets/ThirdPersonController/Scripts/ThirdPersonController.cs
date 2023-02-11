@@ -300,7 +300,7 @@ namespace StarterAssets
             // set target speed based on move speed, sprint speed and if sprint is pressed
             //float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
            
-            if (direction.z > 0.2f)
+            if (direction.z > 0.2f & !isAiming)
             {
                 MoveSpeed = 6.5f;
             }
@@ -316,8 +316,7 @@ namespace StarterAssets
  
             if(direction == Vector3.zero)
             {
-                targetSpeed = 0.0f;
-                Debug.Log("Stoped");
+                targetSpeed = 0.0f;               
                 neutralize = 0f;
                 //transform.position = Vector3.zero;
             }
@@ -380,7 +379,7 @@ namespace StarterAssets
                 //Animations State
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetBool("Aim Walk", isAimWalking);
-                if(_animationBlend > 5.5f)
+                if(_animationBlend > 5.5f && !isAiming)
                 {
                     aimRig.weight = 0f;
                 }
