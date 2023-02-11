@@ -102,7 +102,7 @@ public class ShooterController : NetworkBehaviour
             //Aim();
             //Fire();
 
-        //equippedWeapon.MyInput(equippedWeapon);
+        
     }
     public void AimMovenment()
     {
@@ -166,35 +166,18 @@ public class ShooterController : NetworkBehaviour
 
     public void Fire()
     {
-        if(Input.GetMouseButton(0))
-        {
-            if (starterAssetsInputs.shoot)
-            {
-                
-                aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
-                rotation = Quaternion.LookRotation(aimDir, Vector3.up);
+        equippedWeapon.MyInput(FPSMode);
+        ////Show Flash
+        particles.Emit(5);
+        //flashLight.enabled = true;
+        //StartCoroutine(nameof(DisableFlashLight));
+        //audioSource.PlayOneShot(audioClipFire, 0.5f);
 
-                //SpawnBulletServerRPC(aimDir, rotation,this);
-                lastShotTime = Time.time;
-
-                //equippedWeapon.Fire(aimDir, rotation, spawnBulletPosition, equippedWeapon);
-                //Show Flash
-                particles.Emit(5);
-                flashLight.enabled = true;
-                StartCoroutine(nameof(DisableFlashLight));
-                audioSource.PlayOneShot(audioClipFire, 0.5f);
-
-                //Camera Shake
-                followVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
-                aimVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
-                fpsVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
-
-                starterAssetsInputs.shoot = false;
-                flashPrefab.SetActive(false);
-
-            }
-        }
-            
+        ////Camera Shake
+        //followVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+        //aimVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+        //fpsVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+        //flashPrefab.SetActive(false);
     }
     [ServerRpc]
     public void SpawnBulletServerRPC(Vector3 aimDir, Quaternion rotation, ShooterController script)

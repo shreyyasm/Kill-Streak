@@ -123,6 +123,7 @@ namespace StarterAssets
 
         bool isAiming = false;
         bool isAimWalking = false;
+        bool inFPSMode = false;
 
         public float sensitivity = 100f;
 
@@ -218,7 +219,8 @@ namespace StarterAssets
         {
             if (!base.IsOwner)
                 return;
-            CameraRotation();
+            if(!inFPSMode)
+                CameraRotation();
  
         }
         public void OnMove(InputValue value)
@@ -633,6 +635,10 @@ namespace StarterAssets
         {
             isAiming = state;
         }
-  
+        public void FPSMode(bool state)
+        {
+            inFPSMode = state;
+        }
+
     }
 }

@@ -376,6 +376,10 @@ PrefabInstance:
       value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 1360842838959182, guid: 3cadbc2079e210144b233760a219b095, type: 3}
+      propertyPath: m_TagString
+      value: Concrete
+      objectReference: {fileID: 0}
+    - target: {fileID: 1360842838959182, guid: 3cadbc2079e210144b233760a219b095, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1472,6 +1476,42 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1196328799}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &342924469 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 452016124174574654, guid: 01584a9bd73bb2743af9b54c1dba8fad,
+    type: 3}
+  m_PrefabInstance: {fileID: 452016125355453088}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &342924473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342924469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e501d18bb52cf8c40b1853ca4904654f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 131073
+  m_IgnoreTag: 
+  m_TransparentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_MinimumDistanceFromTarget: 0.1
+  m_AvoidObstacles: 1
+  m_DistanceLimit: 0
+  m_MinimumOcclusionTime: 0
+  m_CameraRadius: 0.1
+  m_Strategy: 1
+  m_MaximumEffort: 4
+  m_SmoothingTime: 0.67
+  m_Damping: 6.19
+  m_DampingWhenOccluded: 0
+  m_OptimalTargetDistance: 0
 --- !u!1001 &346089023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1893,6 +1933,10 @@ PrefabInstance:
     - target: {fileID: 1550947969119198, guid: 17a15b619ec1ddc4696479f73759de7c, type: 3}
       propertyPath: m_Layer
       value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550947969119198, guid: 17a15b619ec1ddc4696479f73759de7c, type: 3}
+      propertyPath: m_TagString
+      value: Concrete
       objectReference: {fileID: 0}
     - target: {fileID: 1550947969119198, guid: 17a15b619ec1ddc4696479f73759de7c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -4438,6 +4482,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1343484773080560, guid: 624418e581277da4297e7676c2157070, type: 3}
+      propertyPath: m_TagString
+      value: Concrete
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343484773080560, guid: 624418e581277da4297e7676c2157070, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -6269,6 +6317,10 @@ PrefabInstance:
       value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 1771269981955728, guid: f4bb022ab0d2a5c46b6af300deb95be5, type: 3}
+      propertyPath: m_TagString
+      value: Concrete
+      objectReference: {fileID: 0}
+    - target: {fileID: 1771269981955728, guid: f4bb022ab0d2a5c46b6af300deb95be5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -6412,6 +6464,10 @@ PrefabInstance:
     - target: {fileID: 1316948766749552, guid: 1f3a7fa169961a144ab0cb18f336c7b8, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316948766749552, guid: 1f3a7fa169961a144ab0cb18f336c7b8, type: 3}
+      propertyPath: m_TagString
+      value: Concrete
       objectReference: {fileID: 0}
     - target: {fileID: 1316948766749552, guid: 1f3a7fa169961a144ab0cb18f336c7b8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -13584,6 +13640,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8817566736566671937, guid: 184b4612bf079e9448e217b9d529922b,
+        type: 3}
+      propertyPath: field of view
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8817566736566671937, guid: 184b4612bf079e9448e217b9d529922b,
         type: 3}

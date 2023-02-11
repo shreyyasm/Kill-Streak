@@ -7,11 +7,13 @@ public class MouseLook : NetworkBehaviour
     public float mouseSensitivity = 100f;
     public Transform playerBody;
     float xRotation = 0f;
+    float mouseX, mouseY;
+    [SerializeField] ScreenTouch screenTouch;
 
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -19,14 +21,17 @@ public class MouseLook : NetworkBehaviour
     {
         if (!base.IsOwner)
             return;
-        float MouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float MouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        xRotation -= -MouseY;
+        mouseX = screenTouch.lookInput.x;
+        mouseY = screenTouch.lookInput.y;
+        
+
+        xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -30f, 60f);
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        playerBody.Rotate(Vector3.up * MouseX);
+        playerBody.Rotate(Vector3.up * mouseX);
 
     }
+
 }

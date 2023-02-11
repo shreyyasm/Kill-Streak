@@ -34,13 +34,13 @@ public class FPSController : MonoBehaviour
     {
         if(state)
         {
-            fpsAnimator.SetLayerWeight(1, Mathf.Lerp(fpsAnimator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
-            Mathf.Lerp(fpsCamera.m_Lens.FieldOfView = 40, fpsCamera.m_Lens.FieldOfView = 36, Time.deltaTime * 20f);       
+            fpsAnimator.SetLayerWeight(1, Mathf.Lerp(fpsAnimator.GetLayerWeight(1), 1f, Time.deltaTime * 100f));
+            Mathf.Lerp(fpsCamera.m_Lens.FieldOfView = 40, fpsCamera.m_Lens.FieldOfView = 36, Time.deltaTime * 100f);       
             Crosshair.SetActive(false);
         }
         else
         {
-            fpsAnimator.SetLayerWeight(1, Mathf.Lerp(fpsAnimator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
+            fpsAnimator.SetLayerWeight(1, Mathf.Lerp(fpsAnimator.GetLayerWeight(1), 0f, Time.deltaTime * 50f));
             Mathf.Lerp(fpsCamera.m_Lens.FieldOfView = 36, fpsCamera.m_Lens.FieldOfView = 40, Time.deltaTime * 20f);
             Crosshair.SetActive(true);
         }

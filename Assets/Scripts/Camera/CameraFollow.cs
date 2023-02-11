@@ -15,7 +15,7 @@ public class CameraFollow : MonoBehaviour
     }
     private void Update()
     {
-        AttachCamera();
+        //AttachCamera();
         //sphere = GameObject.FindGameObjectWithTag("Aim");
     }
 
@@ -31,6 +31,7 @@ public class CameraFollow : MonoBehaviour
             m_MainCamera.Follow = transform;
             m_MainCamera.LookAt = transform;
             m_AimCamera.Follow = transform;
+            m_AimCamera.LookAt = transform;
         }
 
     }

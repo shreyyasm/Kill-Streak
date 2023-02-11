@@ -212,7 +212,7 @@ public class Projectile : NetworkBehaviour {
 	private IEnumerator DestroyTrailAfter()
 	{
 		//Wait for set amount of time
-		yield return new WaitForSeconds(0.003f);
+		yield return new WaitForSeconds(0.002f);
 		
 		trail.emitting = false;
 
