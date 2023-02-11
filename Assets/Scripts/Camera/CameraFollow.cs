@@ -29,7 +29,7 @@ public class CameraFollow : MonoBehaviour
         {
             // camera body / aim
             m_MainCamera.Follow = transform;
-            //m_MainCamera.LookAt = sphere.transform;
+            m_MainCamera.LookAt = transform;
             m_AimCamera.Follow = transform;
         }
 

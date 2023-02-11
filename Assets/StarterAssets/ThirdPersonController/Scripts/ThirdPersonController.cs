@@ -128,8 +128,9 @@ namespace StarterAssets
 
         private const float _threshold = 0.01f;
 
-        private bool _hasAnimator;   
-        public Vector2 move;
+        private bool _hasAnimator;
+        public Vector3 direction;
+        Vector3 move;
         float mouseX , mouseY;
         private bool IsCurrentDeviceMouse
         {
@@ -286,12 +287,25 @@ namespace StarterAssets
 
         public void Move()
         {
-            float h = UltimateJoystick.GetHorizontalAxis("Movement");
-            float v = UltimateJoystick.GetVerticalAxis("Movement");
-            Vector3 direction = new Vector3(h, 0f, v).normalized;
-            Debug.Log(direction.x);
+            float x = UltimateJoystick.GetHorizontalAxis("Movement");
+            float z = UltimateJoystick.GetVerticalAxis("Movement");
+            direction = new Vector3(x, 0f, z).normalized;
+            float neutralize = 1f;
+            //Debug.Log(direction.x);
+            move.x = x;
+            move.z = z;
+            
+            _animator.SetFloat("MoveX", move.x);
+            _animator.SetFloat("MoveZ", move.z);
             // set target speed based on move speed, sprint speed and if sprint is pressed
             //float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+           
+            if (direction.z > 0.2f)
+            {
+                MoveSpeed = 6.5f;
+            }
+            else
+                MoveSpeed = 5;
             float targetSpeed = MoveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
@@ -299,8 +313,15 @@ namespace StarterAssets
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
             //if (_input.move == Vector2.zero) targetSpeed = 0.0f;
-            if (direction == Vector3.zero) targetSpeed = 0.0f;
-
+ 
+            if(direction == Vector3.zero)
+            {
+                targetSpeed = 0.0f;
+                Debug.Log("Stoped");
+                neutralize = 0f;
+                //transform.position = Vector3.zero;
+            }
+                
             // a reference to the players current horizontal velocity
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
@@ -323,7 +344,7 @@ namespace StarterAssets
             }
             else
             {
-                _speed = targetSpeed;
+               // _speed = targetSpeed;
             }
 
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
@@ -347,11 +368,10 @@ namespace StarterAssets
                 //transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
 
-
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
             // move the player
-            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
+            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) * neutralize +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
             // update animator if using character
@@ -379,18 +399,19 @@ namespace StarterAssets
                 isAimWalking = false;
             }
             
-            //Walk Backwards
-            if (move.y == -1)
-            {
-                _animator.SetFloat("Walk Back", -1);
-            }
-            else
-            {
-                _animator.SetFloat("Walk Back", 1);
-            }
+            ////Walk Backwards
+            //if (move.y == -1)
+            //{
+            //    _animator.SetFloat("Walk Back", -1);
+            //}
+            //else
+            //{
+            //    _animator.SetFloat("Walk Back", 1);
+            //}
         }
         private void MoveBasic()
         {
+          
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -442,7 +463,11 @@ namespace StarterAssets
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
 
+            move.x = inputDirection.x;
+            move.z = inputDirection.z;
 
+            _animator.SetFloat("MoveX", move.x);
+            _animator.SetFloat("MoveZ", move.z);
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
             // move the player
@@ -455,7 +480,7 @@ namespace StarterAssets
                 //Animations State
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetBool("Aim Walk", isAimWalking);
-                if (_animationBlend > 3)
+                if (_animationBlend > 5.5f)
                 {
                     aimRig.weight = 0f;
                 }

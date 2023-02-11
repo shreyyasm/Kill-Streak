@@ -2383,8 +2383,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7509555901402259350}
-  - component: {fileID: 7509555901402259348}
-  - component: {fileID: 7509555901402259349}
   - component: {fileID: 6494888751246303108}
   m_Layer: 0
   m_Name: Sphere
@@ -2408,56 +2406,6 @@ Transform:
   m_Father: {fileID: 7509555902541147480}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7509555901402259348
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7509555901402259351}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7509555901402259349
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7509555901402259351}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6494888751246303108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8254,7 +8202,7 @@ MonoBehaviour:
   MoveSpeed: 6
   SprintSpeed: 6
   RotationSmoothTime: 0.12
-  SpeedChangeRate: 3
+  SpeedChangeRate: 5
   LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
   FootstepAudioClips:
   - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
@@ -8279,8 +8227,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4608
   CinemachineCameraTarget: {fileID: 7509555902812762260}
-  TopClamp: 60
-  BottomClamp: -30
+  TopClamp: 80
+  BottomClamp: -60
   CameraAngleOverride: 5
   LockCameraPosition: 0
   fPSController: {fileID: 7509555902915336734}
@@ -8292,7 +8240,7 @@ MonoBehaviour:
     type: 3}
   cameraRoot: {fileID: 7509555902812762260}
   sensitivity: 100
-  move: {x: 0, y: 0}
+  direction: {x: 0, y: 0, z: 0}
 --- !u!114 &7509555902541147483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8315,7 +8263,7 @@ MonoBehaviour:
   aimSensitivity: 50
   aimcolliderLayerMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 4096
   debugTransform: {fileID: 7509555901402259350}
   bulletPrefab: {fileID: 1086664671600574, guid: 1a6074b0bafe0a944914eba0b6d6abfd,
     type: 3}
@@ -9051,7 +8999,7 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 3
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 394288251
+  _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 7807759643866311769
   _sceneNetworkObjects:
@@ -13301,6 +13249,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ultimate Joystick
       objectReference: {fileID: 0}
+    - target: {fileID: 9555834, guid: 1a5154ebeae449e4994357609381b281, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496818, guid: 1a5154ebeae449e4994357609381b281, type: 3}
+      propertyPath: gravity
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496818, guid: 1a5154ebeae449e4994357609381b281, type: 3}
+      propertyPath: extendRadius
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 11496818, guid: 1a5154ebeae449e4994357609381b281, type: 3}
       propertyPath: joystickName
       value: Movement
@@ -13547,6 +13507,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7509555902541147483}
+    - target: {fileID: 3203794612216329222, guid: 2f7f3dde7ae722a4aafffe20691ad702,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3304694216932853413, guid: 2f7f3dde7ae722a4aafffe20691ad702,
         type: 3}
       propertyPath: m_Color.a
