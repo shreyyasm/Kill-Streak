@@ -126,6 +126,7 @@ namespace StarterAssets
         bool isAimWalking = false;
         bool inFPSMode = false;
         public bool firedBullet = false;
+        public bool firing = false;
         float fireBulletTime = 0f;
 
         public float sensitivity = 100f;
@@ -214,7 +215,8 @@ namespace StarterAssets
             Move();
             if (firedBullet && fireBulletTime >= 0)
             {
-                fireBulletTime -= Time.deltaTime;
+                if(!firing)
+                    fireBulletTime -= Time.deltaTime;
                 if (fireBulletTime <= 0)
                 {
                     firedBullet = false;                   
@@ -647,8 +649,12 @@ namespace StarterAssets
         public void ShotFired(bool state)
         {
             fireBulletTime = 1.5f;
-            firedBullet = state;
+            firedBullet = state;            
             _animator.SetLayerWeight(1, 1);
+        }
+        public void FiringContinous(bool state)
+        {
+            firing = state;
         }
     }
 }

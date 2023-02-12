@@ -179,7 +179,7 @@ public class WeaponManager : NetworkBehaviour
             //Spawn projectile from the projectile spawn point.
             GameObject projectile = Instantiate(prefabProjectile, attackPoint.position, rotation);
             ServerManager.Spawn(projectile, base.Owner);
-            //SetSpawnBullet(projectile);
+            SetSpawnBullet(projectile,this);
 
             readyToShoot = false;
 

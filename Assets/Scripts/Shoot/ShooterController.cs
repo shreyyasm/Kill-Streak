@@ -178,10 +178,14 @@ public class ShooterController : NetworkBehaviour
     {
         //animator.SetLayerWeight(1, 1);
         equippedWeapon.MyInput(FPSMode,input);
-        thirdPersonController.ShotFired(true);
+        if(input == 1)
+            thirdPersonController.ShotFired(true); 
+            thirdPersonController.FiringContinous(true);
+        if(input == 0)
+            thirdPersonController.FiringContinous(false);
         ////Show Flash
         //particles.Emit(5);
-        
+
         //flashLight.enabled = true;
         //StartCoroutine(nameof(DisableFlashLight));
         //audioSource.PlayOneShot(audioClipFire, 0.5f);
