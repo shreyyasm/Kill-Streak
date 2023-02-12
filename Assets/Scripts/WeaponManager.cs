@@ -22,7 +22,7 @@ public class WeaponManager : NetworkBehaviour
     private AudioSource audioSource;
 
 
-
+    [SerializeField] GameObject socketBeforePos;
     [SerializeField] AudioClip audioClipFire;
     [SerializeField] GameObject flashPrefab;
     [SerializeField] GameObject prefabFlashLight;
@@ -54,7 +54,7 @@ public class WeaponManager : NetworkBehaviour
     Vector3 mouseWorldPosition;
     Vector3 aimDir;
     Quaternion rotation;
-
+    GameObject spawnedFlashLightPrefab;
     bool inFPSMode;
     private void Awake()
     {
@@ -71,7 +71,7 @@ public class WeaponManager : NetworkBehaviour
         flash.SetActive(true);
 
         //Instansiate FlashLight 
-        GameObject spawnedFlashLightPrefab = Instantiate(prefabFlashLight, attackPoint);
+        spawnedFlashLightPrefab = Instantiate(prefabFlashLight, attackPoint);
         spawnedFlashLightPrefab.transform.localPosition = offset;
         spawnedFlashLightPrefab.transform.localEulerAngles = default;
         flashLight = spawnedFlashLightPrefab.GetComponent<Light>();
@@ -82,25 +82,53 @@ public class WeaponManager : NetworkBehaviour
     }
     private void Update()
     {
+        spawnedFlashLightPrefab.transform.localPosition = offset; 
         //MyInput();
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        attackPoint.transform.position = socketBeforePos.transform.position;
+        if (inFPSMode)
+        {
+            attackPoint.transform.localPosition = vfxSpawnOffset;
+        }
         //SetText
         //text.SetText(bulletsLeft + " / " + magazineSize);
     }
-    public void MyInput(bool FPSMODE)
+    public void MyInput(bool FPSMODE,float input)
     {
         inFPSMode = FPSMODE;
         //if (allowButtonHold) shooting = Input.GetMouseButton(0);
         //else shooting = Input.GetMouseButtonDown(0);
 
         //if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
-        shooting = true;
+
         //Shoot
-        if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
+        if (allowButtonHold)
+        {
+            if (input == 1)
+                shooting = true;
+
+            if(input == 0)
+            {
+                shooting = false;
+                CancelInvoke();
+            }
+                
+        }
+        if (input == 1)
+            shooting = true;
+        else
+            shooting = false;
+
+        if (shooting && !reloading && bulletsLeft > 0)
         {
             bulletsShot = bulletsPerTap;
-            Fire(this);         
-            shooting = false;
+            if (allowButtonHold)
+                InvokeRepeating("Fire", 0f, 0.1f);
+            else
+            {
+                Fire();              
+            }
+                 
         }
 
     }
@@ -119,12 +147,9 @@ public class WeaponManager : NetworkBehaviour
         reloading = false;
     }
     [ServerRpc]
-    public void Fire(WeaponManager script)
+    public void Fire()
     {
-        if(inFPSMode)
-        {
-            attackPoint.transform.localPosition = vfxSpawnOffset;
-        }
+        
         //Show Flash
         particles.Emit(5);
         flashLight.enabled = true;
@@ -154,7 +179,7 @@ public class WeaponManager : NetworkBehaviour
             //Spawn projectile from the projectile spawn point.
             GameObject projectile = Instantiate(prefabProjectile, attackPoint.position, rotation);
             ServerManager.Spawn(projectile, base.Owner);
-            SetSpawnBullet(projectile, script);
+            //SetSpawnBullet(projectile);
 
             readyToShoot = false;
 

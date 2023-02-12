@@ -66,6 +66,7 @@ public class ShooterController : NetworkBehaviour
     bool cursorLocked;
     bool holdingButtonFire;
     float lastShotTime;
+    
     private void Awake()
     {
         ChangedInput = false;
@@ -107,7 +108,7 @@ public class ShooterController : NetworkBehaviour
     public void AimMovenment()
     {
         socket.transform.position = socketBeforePos.transform.position;
-        aimVirtualCamera.transform.position = followVirtualCamera.transform.position;
+        //aimVirtualCamera.transform.position = followVirtualCamera.transform.position;
         mouseWorldPosition = Vector3.zero;
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
@@ -121,11 +122,21 @@ public class ShooterController : NetworkBehaviour
 
             mouseWorldPosition = raycastHit.point;
         }
-        Vector3 worldAimTarget = mouseWorldPosition;
-        worldAimTarget.y = transform.position.y;
-        Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
-
-        transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 10f);
+        if(!FPSMode)
+        {
+            Vector3 worldAimTarget = mouseWorldPosition;
+            worldAimTarget.y = transform.position.y;
+            Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
+            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 10f);
+        }
+        if (FPSMode)
+        {
+            if (Aiming)
+                fPSController.GetComponent<FPSController>().AimFPS(Aiming);
+            else
+                fPSController.GetComponent<FPSController>().AimFPS(Aiming);
+        }
+           
     }
     public void Aim()
     {
@@ -160,15 +171,17 @@ public class ShooterController : NetworkBehaviour
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 100f));
         }
         
-        if (FPSMode)
-            fPSController.GetComponent<FPSController>().AimFPS(Aiming);
+        
     }
 
-    public void Fire()
+    public void Fire(float input)
     {
-        equippedWeapon.MyInput(FPSMode);
+        //animator.SetLayerWeight(1, 1);
+        equippedWeapon.MyInput(FPSMode,input);
+        thirdPersonController.ShotFired(true);
         ////Show Flash
-        particles.Emit(5);
+        //particles.Emit(5);
+        
         //flashLight.enabled = true;
         //StartCoroutine(nameof(DisableFlashLight));
         //audioSource.PlayOneShot(audioClipFire, 0.5f);
@@ -177,7 +190,7 @@ public class ShooterController : NetworkBehaviour
         //followVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
         //aimVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
         //fpsVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
-        //flashPrefab.SetActive(false);
+        //flashPrefab.SetActive(false);        
     }
     [ServerRpc]
     public void SpawnBulletServerRPC(Vector3 aimDir, Quaternion rotation, ShooterController script)
@@ -212,22 +225,6 @@ public class ShooterController : NetworkBehaviour
         yield return new WaitForSeconds(0.1f);
         //Disable.
         flashLight.enabled = false;
-    }
-    public void ChangeInput()
-    {
-        
-        if(!ChangedInput)
-        {
-            touchZone.SetActive(false);
-            touchStick.SetActive(true);
-            ChangedInput = true;
-        }
-        else
-        {
-            touchZone.SetActive(true);
-            touchStick.SetActive(false);
-            ChangedInput = false;
-        }
-        
-    }
+    }  
+   
 }

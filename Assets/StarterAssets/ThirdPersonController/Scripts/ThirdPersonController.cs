@@ -4,6 +4,7 @@
 using FishNet.Object;
 using UnityEngine.InputSystem;
 using UnityEngine.Animations.Rigging;
+using System.Collections;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 #endif
 
@@ -124,6 +125,8 @@ namespace StarterAssets
         bool isAiming = false;
         bool isAimWalking = false;
         bool inFPSMode = false;
+        public bool firedBullet = false;
+        float fireBulletTime = 0f;
 
         public float sensitivity = 100f;
 
@@ -209,10 +212,17 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            if (firedBullet && fireBulletTime >= 0)
+            {
+                fireBulletTime -= Time.deltaTime;
+                if (fireBulletTime <= 0)
+                {
+                    firedBullet = false;                   
+                }
+            }
             //MoveBasic();
-            //if(screenTouch.rightFingerID != -1)
-
-            aimRig.weight = Mathf.Lerp(aimRig.weight, aimRig.weight, Time.deltaTime * 30f);
+            //if(screenTouch.rightFingerID != -1)            
+            aimRig.weight = Mathf.Lerp(aimRig.weight, aimRig.weight, Time.deltaTime * 20f);
         }
 
         private void LateUpdate()
@@ -302,12 +312,17 @@ namespace StarterAssets
             // set target speed based on move speed, sprint speed and if sprint is pressed
             //float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
            
-            if (direction.z > 0.2f & !isAiming)
+            if (direction.z > 0.2f && !isAiming && !firedBullet)
             {
-                MoveSpeed = 6.5f;
+           
+                    MoveSpeed = 7f;               
             }
             else
                 MoveSpeed = 5;
+
+            if (!isAiming && !firedBullet)
+                _animator.SetLayerWeight(1, 0);
+
             float targetSpeed = MoveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
@@ -381,7 +396,7 @@ namespace StarterAssets
                 //Animations State
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetBool("Aim Walk", isAimWalking);
-                if(_animationBlend > 5.5f && !isAiming)
+                if(_animationBlend > 5f && !isAiming)
                 {
                     aimRig.weight = 0f;
                 }
@@ -398,17 +413,7 @@ namespace StarterAssets
             else
             {
                 isAimWalking = false;
-            }
-            
-            ////Walk Backwards
-            //if (move.y == -1)
-            //{
-            //    _animator.SetFloat("Walk Back", -1);
-            //}
-            //else
-            //{
-            //    _animator.SetFloat("Walk Back", 1);
-            //}
+            }                    
         }
         private void MoveBasic()
         {
@@ -639,6 +644,11 @@ namespace StarterAssets
         {
             inFPSMode = state;
         }
-
+        public void ShotFired(bool state)
+        {
+            fireBulletTime = 1.5f;
+            firedBullet = state;
+            _animator.SetLayerWeight(1, 1);
+        }
     }
 }
