@@ -229,4 +229,13 @@ public class WeaponManager : NetworkBehaviour
         //Disable.
         flashLight.enabled = false;
     }
+    public void ChangeGun()
+    {
+        if (!allowButtonHold)
+            allowButtonHold = true;
+
+        else
+            allowButtonHold = false;
+
+    }
 }
