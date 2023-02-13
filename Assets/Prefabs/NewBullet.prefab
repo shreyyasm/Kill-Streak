@@ -191,7 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: -5269166957839323444}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: -5269166957839323444}
   destroyAfter: 5
   destroyOnImpact: 1
   minDestroyTime: 0.01
@@ -207,6 +207,8 @@ MonoBehaviour:
   projectileImpulse: 400
   bulletParticle: {fileID: 1231345400216816}
   ObjectVFX: {fileID: 0}
+  usePool: 1
+  spawnAmount: 10
 --- !u!114 &-7924792232329995711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,7 +238,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <IsNested>k__BackingField: 0
   <ComponentIndex>k__BackingField: 0
-  _networkBehaviours: []
+  _networkBehaviours:
+  - {fileID: 2986587061762363864}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -245,7 +248,7 @@ MonoBehaviour:
   _predictedSpawningType: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: -1
+  <PrefabId>k__BackingField: 8
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0

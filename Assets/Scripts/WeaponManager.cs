@@ -10,6 +10,8 @@ public class WeaponManager : NetworkBehaviour
     [Tooltip("Projectile Prefab. This is the prefab spawned when the weapon shoots.")]
     [SerializeField]
     private GameObject prefabProjectile;
+    [Tooltip("Bullet Spawns from this position")]
+    [SerializeField] Transform bulletSpawnPosition;
 
     //Camera's Reference
     public GameObject fpsVirtualCamera;
@@ -22,7 +24,7 @@ public class WeaponManager : NetworkBehaviour
     private AudioSource audioSource;
 
 
-    [SerializeField] GameObject socketBeforePos;
+    [SerializeField] GameObject TPPspawnPosition;
     [SerializeField] AudioClip audioClipFire;
     [SerializeField] GameObject flashPrefab;
     [SerializeField] GameObject prefabFlashLight;
@@ -42,7 +44,7 @@ public class WeaponManager : NetworkBehaviour
     public Vector3 offset;
     public Vector3 vfxSpawnOffset;
     public Camera mainCamera;
-    public Transform attackPoint;
+    
     public RaycastHit rayHit;
     public LayerMask whatIsEnemy;
 
@@ -65,13 +67,13 @@ public class WeaponManager : NetworkBehaviour
 
         //Instansiate Flash 
         audioSource = GetComponent<AudioSource>();
-        GameObject flash = Instantiate(flashPrefab, attackPoint);
+        GameObject flash = Instantiate(flashPrefab, bulletSpawnPosition);
         flash.transform.localPosition = default;
         flash.transform.localEulerAngles = default;
         flash.SetActive(true);
 
         //Instansiate FlashLight 
-        spawnedFlashLightPrefab = Instantiate(prefabFlashLight, attackPoint);
+        spawnedFlashLightPrefab = Instantiate(prefabFlashLight, bulletSpawnPosition);
         spawnedFlashLightPrefab.transform.localPosition = offset;
         spawnedFlashLightPrefab.transform.localEulerAngles = default;
         flashLight = spawnedFlashLightPrefab.GetComponent<Light>();
@@ -85,15 +87,15 @@ public class WeaponManager : NetworkBehaviour
         spawnedFlashLightPrefab.transform.localPosition = offset; 
         //MyInput();
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-        attackPoint.transform.position = socketBeforePos.transform.position;
+        bulletSpawnPosition.transform.position = TPPspawnPosition.transform.position;
         if (inFPSMode)
         {
-            attackPoint.transform.localPosition = vfxSpawnOffset;
+            bulletSpawnPosition.transform.localPosition = vfxSpawnOffset;
         }
         //SetText
         //text.SetText(bulletsLeft + " / " + magazineSize);
     }
-    public void MyInput(bool FPSMODE,float input)
+    public void FireBullet(bool FPSMODE,float input)
     {
         inFPSMode = FPSMODE;
         //if (allowButtonHold) shooting = Input.GetMouseButton(0);
@@ -110,7 +112,8 @@ public class WeaponManager : NetworkBehaviour
             if(input == 0)
             {
                 shooting = false;
-                CancelInvoke();
+                CancelInvoke("Fire");
+                
             }
                 
         }
@@ -119,11 +122,11 @@ public class WeaponManager : NetworkBehaviour
         else
             shooting = false;
 
-        if (shooting && !reloading && bulletsLeft > 0)
+        if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
         {
             bulletsShot = bulletsPerTap;
             if (allowButtonHold)
-                InvokeRepeating("Fire", 0f, 0.1f);
+                InvokeRepeating("Fire", 0f, timeBetweenShooting);
             else
             {
                 Fire();              
@@ -171,13 +174,13 @@ public class WeaponManager : NetworkBehaviour
         }
         //mouseWorldPosition = Vector3.zero;
         Vector3 worldAimTarget = mouseWorldPosition;
-        aimDir = (mouseWorldPosition - attackPoint.position).normalized;
+        aimDir = (mouseWorldPosition - bulletSpawnPosition.position).normalized;
         rotation = Quaternion.LookRotation(aimDir, Vector3.up);
 
         bulletsShot = bulletsPerTap;
             Debug.Log("Work");
             //Spawn projectile from the projectile spawn point.
-            GameObject projectile = Instantiate(prefabProjectile, attackPoint.position, rotation);
+            GameObject projectile = Instantiate(prefabProjectile, bulletSpawnPosition.position, rotation);
             ServerManager.Spawn(projectile, base.Owner);
             SetSpawnBullet(projectile,this);
 
@@ -228,14 +231,5 @@ public class WeaponManager : NetworkBehaviour
         yield return new WaitForSeconds(0.1f);
         //Disable.
         flashLight.enabled = false;
-    }
-    public void ChangeGun()
-    {
-        if (!allowButtonHold)
-            allowButtonHold = true;
-
-        else
-            allowButtonHold = false;
-
-    }
+    }    
 }

@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Object;
+using UnityEngine.Pool;
 //using Unity.Netcode;
 public class Projectile : NetworkBehaviour {
 
@@ -34,7 +35,21 @@ public class Projectile : NetworkBehaviour {
 	public GameObject ObjectVFX;
     private void Awake ()
 	{
-		
+		//vfxPool = new ObjectPool<Transform>(() =>
+		//{
+		//	return Instantiate(bloodImpactPrefabs[Random.Range
+		//		(0, bloodImpactPrefabs.Length)]);
+		//}, vfx =>
+		//{
+		//	vfx.gameObject.SetActive(true);
+		//}, vfx =>
+		//{
+		//	vfx.gameObject.SetActive(false);
+		//}
+		//, vfx =>
+		//{
+		//	Destroy(vfx.gameObject);
+		//}, false, 10, 20);
 		//Grab the game mode service, we need it to access the player character!
 		var gameModeService = ServiceLocator.Current.Get<IGameModeService>();
 		//Ignore the main player character's collision. A little hacky, but it should work.
@@ -102,7 +117,6 @@ public class Projectile : NetworkBehaviour {
 				Quaternion.LookRotation(collision.contacts[0].normal));
 			SpawnVFX(VFX.gameObject, this);
 			DespawnBullet();
-
 		}
 		//If bullet collides with "Blood" tag
 		if (collision.transform.tag == "Player")
@@ -162,7 +176,7 @@ public class Projectile : NetworkBehaviour {
 				Quaternion.LookRotation(collision.contacts[0].normal));
 			SpawnVFX(VFX.gameObject, this);
 			DespawnBullet();
-
+			
 		}
 
 		//If bullet collides with "ExplosiveBarrel" tag
@@ -228,5 +242,5 @@ public class Projectile : NetworkBehaviour {
     {
 		script.ObjectVFX = spawned;
     }
-
+	
 }

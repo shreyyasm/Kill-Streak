@@ -10,9 +10,11 @@ using FishNet;
 
 public class ShooterController : NetworkBehaviour
 {
-    [SerializeField] GameObject touchZone;
-    [SerializeField] GameObject touchStick;
-    public bool ChangedInput;
+
+    [Tooltip("Inventory.")]
+    [SerializeField]
+    private WeaponInventory inventory;
+
     //Aim Settings  
     [SerializeField] float normalSensitivity;
     [SerializeField] float aimSensitivity;
@@ -61,15 +63,15 @@ public class ShooterController : NetworkBehaviour
     private AudioSource audioSource;
     
     public GameObject spawnedObject;
-    public WeaponManager equippedWeapon;
 
     bool cursorLocked;
     bool holdingButtonFire;
     float lastShotTime;
-    
+    private WeaponManager equippedWeapon;
+
+    public WeaponInventory GetInventory() => inventory;
     private void Awake()
     {
-        ChangedInput = false;
         //References
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         thirdPersonController = GetComponent<ThirdPersonController>();
@@ -93,17 +95,23 @@ public class ShooterController : NetworkBehaviour
         flashLight.enabled = false;
 
         particles = flash.GetComponent<ParticleSystem>();
-       
+        inventory.Init();
+        if ((equippedWeapon = inventory.GetEquipped()) == null)
+            return;
     }
     public void Update()
     {
         if (!base.IsOwner)
             return;
         AimMovenment();
-            //Aim();
-            //Fire();
+        //Aim();
+        //Fire();
+        equippedWeapon = GetInventory().GetEquipped();
 
-        
+    }
+    public void Equip(int index = 0)
+    {      
+        inventory.Equip(index);
     }
     public void AimMovenment()
     {
@@ -177,7 +185,7 @@ public class ShooterController : NetworkBehaviour
     public void Fire(float input)
     {
         //animator.SetLayerWeight(1, 1);
-        equippedWeapon.MyInput(FPSMode,input);
+        equippedWeapon.FireBullet(FPSMode,input);
         if(input == 1)
             thirdPersonController.ShotFired(true); 
             thirdPersonController.FiringContinous(true);

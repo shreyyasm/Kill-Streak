@@ -4,15 +4,79 @@ using UnityEngine;
 
 public class WeaponInventory : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    /// Array of all weapons. These are gotten in the order that they are parented to this object.
+    private WeaponManager[] weapons;
+
+    /// Currently equipped WeaponBehaviour.
+    private WeaponManager equipped;
+
+    /// Currently equipped index.
+    private int equippedIndex = -1;
+
+    public void Init(int equippedAtStart = 0)
     {
-        
+        //Cache all weapons. Beware that weapons need to be parented to the object this component is on!
+        weapons = GetComponentsInChildren<WeaponManager>(true);
+
+        //Disable all weapons. This makes it easier for us to only activate the one we need.
+        foreach (WeaponManager weapon in weapons)
+            weapon.gameObject.SetActive(false);
+
+        //Equip.
+        Equip(equippedAtStart);
     }
 
-    // Update is called once per frame
-    void Update()
+    public WeaponManager Equip(int index)
     {
-        
+        //If we have no weapons, we can't really equip anything.
+        if (weapons == null)
+            return equipped;
+
+        //The index needs to be within the array's bounds.
+        if (index > weapons.Length - 1)
+            return equipped;
+
+        //No point in allowing equipping the already-equipped weapon.
+        if (equippedIndex == index)
+            return equipped;
+
+        //Disable the currently equipped weapon, if we have one.
+        if (equipped != null)
+            equipped.gameObject.SetActive(false);
+
+        //Update index.
+        equippedIndex = index;
+        //Update equipped.
+        equipped = weapons[equippedIndex];
+        //Activate the newly-equipped weapon.
+        equipped.gameObject.SetActive(true);
+
+        //Return.
+        return equipped;
     }
+    public int GetLastIndex()
+    {
+        //Get last index with wrap around.
+        int newIndex = equippedIndex - 1;
+        if (newIndex < 0)
+            newIndex = weapons.Length - 1;
+
+        //Return.
+        return newIndex;
+    }
+
+    public int GetNextIndex()
+    {
+        //Get next index with wrap around.
+        int newIndex = equippedIndex + 1;
+        if (newIndex > weapons.Length - 1)
+            newIndex = 0;
+
+        //Return.
+        return newIndex;
+    }
+
+    public WeaponManager GetEquipped() => equipped;
+    public int GetEquippedIndex() => equippedIndex;
 }

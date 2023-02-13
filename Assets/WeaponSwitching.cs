@@ -6,7 +6,8 @@ public class WeaponSwitching : MonoBehaviour
 {
     //Index of selected weapon
     public int selectedWeapon;
-
+    [SerializeField] ShooterController shooterController;
+    bool gunChanged = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,39 +17,7 @@ public class WeaponSwitching : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int previousSelectedWeapon = selectedWeapon;
-
-        //When scroll Up
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-        {
-
-            if (selectedWeapon >= transform.childCount - 1)
-            {
-                selectedWeapon = 0;
-            }
-            else
-            {
-                selectedWeapon++;
-            }
-        }
-
-        //When scroll Down
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-        {
-            if (selectedWeapon <= transform.childCount - 1)
-            {
-                selectedWeapon = 0;
-            }
-            else
-            {
-                selectedWeapon--;
-            }
-        }
-
-        if (previousSelectedWeapon != selectedWeapon)
-        {
-            SelectedWeapon();
-        }
+       
     }
     void SelectedWeapon()
     {
@@ -67,4 +36,38 @@ public class WeaponSwitching : MonoBehaviour
             i++;
         }
     }
+    public void ChangeGunIndex()
+    {
+        int previousSelectedWeapon = selectedWeapon;
+        if (!gunChanged)
+        {
+            gunChanged = true;
+            if (selectedWeapon >= transform.childCount - 1)
+            {
+                selectedWeapon = 0;
+            }
+            else
+            {
+                selectedWeapon++;
+            }
+        }
+        else
+        {
+            gunChanged = false;
+            if (selectedWeapon <= transform.childCount - 1)
+            {
+                selectedWeapon = 0;
+            }
+            else
+            {
+                selectedWeapon--;
+            }
+        }
+        if (previousSelectedWeapon != selectedWeapon)
+        {
+            SelectedWeapon();
+        }
+        shooterController.Equip(selectedWeapon);
+    }
+    
 }
