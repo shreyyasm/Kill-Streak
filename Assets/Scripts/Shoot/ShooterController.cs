@@ -33,7 +33,6 @@ public class ShooterController : NetworkBehaviour
     [SerializeField] Transform spawnBulletPosition;
     
     //outer References
-    [SerializeField] private Rig aimRig;
     [SerializeField] private float aimRigWeight;
     [SerializeField] GameObject fPSController;
     [SerializeField] ScreenTouch screenTouch;

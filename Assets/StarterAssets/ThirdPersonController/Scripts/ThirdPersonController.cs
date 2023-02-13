@@ -84,7 +84,8 @@ namespace StarterAssets
         public GameObject fPSController;
         public FixedTouchField fixedTouchField;
         public ScreenTouch screenTouch;
-        [SerializeField] private Rig aimRig;
+        [SerializeField] private Rig pistolRig;
+        [SerializeField] private Rig rifleRig;
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -127,6 +128,7 @@ namespace StarterAssets
         bool inFPSMode = false;
         public bool firedBullet = false;
         public bool firing = false;
+        bool running;
         public int gunType;
         float fireBulletTime = 0f;
 
@@ -211,10 +213,14 @@ namespace StarterAssets
         {
             if (!base.IsOwner)
                 return;
-            _hasAnimator = TryGetComponent(out _animator);
+
+           
             JumpAndGravity();
             GroundedCheck();
-            Move();
+            
+    
+           
+
             if (firedBullet && fireBulletTime >= 0)
             {
                 if(!firing)
@@ -223,6 +229,25 @@ namespace StarterAssets
                 {
                     firedBullet = false;                   
                 }
+            }
+            Move();
+            if (shooterController.ReturnGuntype() == 0)
+            {
+                if (!running)
+                {
+                    pistolRig.weight = 1f;
+                    rifleRig.weight = 0f;
+                }
+            }
+
+            else
+            {
+                if (!running)
+                {
+                    rifleRig.weight = 1f;
+                    pistolRig.weight = 0f;
+                }
+
             }
             //MoveBasic();
             //if(screenTouch.rightFingerID != -1)
@@ -237,7 +262,8 @@ namespace StarterAssets
                 _animator.SetLayerWeight(0, 0);
             }
                 
-            aimRig.weight = Mathf.Lerp(aimRig.weight, aimRig.weight, Time.deltaTime * 20f);
+            pistolRig.weight = Mathf.Lerp(pistolRig.weight, pistolRig.weight, Time.deltaTime * 100f);
+            rifleRig.weight = Mathf.Lerp(rifleRig.weight, rifleRig.weight, Time.deltaTime * 100f);
         }
 
         private void LateUpdate()
@@ -420,15 +446,29 @@ namespace StarterAssets
                 //Animations State
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetBool("Aim Walk", isAimWalking);
-                if(_animationBlend > 5f && !isAiming)
+                if(targetSpeed > 5f && !isAiming)
                 {
-                    aimRig.weight = 0f;
+                    running = true;
+                    pistolRig.weight = 0f;
+                    rifleRig.weight = 0f;
+                   
                 }
                 else
-                    aimRig.weight = 1f;
+                {
+                    running = false;
+                    pistolRig.weight = 1f;
+                   // rifleRig.weight = 0f;
+                    //if(shooterController.ReturnGuntype() == 0)
+                    //    pistolRig.weight = 1f;
+
+                    //else
+                    //    rifleRig.weight = 1f;
+
+                }
+                    
                 fPSController.GetComponent<FPSController>().SetMovementSpeed(_animationBlend);            
             }
-
+           
             //Aim and Walking
             if (isAiming && _animationBlend > 1)
             {
@@ -512,10 +552,10 @@ namespace StarterAssets
                 _animator.SetBool("Aim Walk", isAimWalking);
                 if (_animationBlend > 5.5f)
                 {
-                    aimRig.weight = 0f;
+                    pistolRig.weight = 0f;
                 }
                 else
-                    aimRig.weight = 1f;
+                    pistolRig.weight = 1f;
                 fPSController.GetComponent<FPSController>().SetMovementSpeed(_animationBlend);
             }
 
