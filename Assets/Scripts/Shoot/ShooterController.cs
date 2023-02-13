@@ -162,8 +162,10 @@ public class ShooterController : NetworkBehaviour
             {
                 socket.transform.localPosition = vfxSpawnOffset;
             }
-
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 100f));
+            if(gunType == 0)
+                animator.SetLayerWeight(1, 1);
+            else
+                animator.SetLayerWeight(3, 1);
         }
         else
         {           
@@ -175,8 +177,10 @@ public class ShooterController : NetworkBehaviour
                 aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = false;
                 thirdPersonController.SetSensitivity(normalSensitivity);
             }
-
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 100f));
+            if (gunType == 0)
+                animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 100f));
+            else
+                animator.SetLayerWeight(3, Mathf.Lerp(animator.GetLayerWeight(3), 0f, Time.deltaTime * 100f));
         }
         
         
@@ -237,6 +241,14 @@ public class ShooterController : NetworkBehaviour
         yield return new WaitForSeconds(0.1f);
         //Disable.
         flashLight.enabled = false;
-    }  
-   
+    }
+    public int gunType;
+    public void GunType(int CurrentGunType)
+    {
+        gunType = CurrentGunType;       
+    }
+    public int ReturnGuntype()
+    {
+        return gunType;
+    }
 }

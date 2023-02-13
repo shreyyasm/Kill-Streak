@@ -127,6 +127,7 @@ namespace StarterAssets
         bool inFPSMode = false;
         public bool firedBullet = false;
         public bool firing = false;
+        public int gunType;
         float fireBulletTime = 0f;
 
         public float sensitivity = 100f;
@@ -137,6 +138,7 @@ namespace StarterAssets
         public Vector3 direction;
         Vector3 move;
         float mouseX , mouseY;
+        [SerializeField] ShooterController shooterController;
         private bool IsCurrentDeviceMouse
         {
             get
@@ -223,7 +225,18 @@ namespace StarterAssets
                 }
             }
             //MoveBasic();
-            //if(screenTouch.rightFingerID != -1)            
+            //if(screenTouch.rightFingerID != -1)
+            if (shooterController.ReturnGuntype() == 0)
+            {
+                _animator.SetLayerWeight(0, 1);
+                _animator.SetLayerWeight(2, 0);
+            }
+            else
+            {
+                _animator.SetLayerWeight(2, 1);
+                _animator.SetLayerWeight(0, 0);
+            }
+                
             aimRig.weight = Mathf.Lerp(aimRig.weight, aimRig.weight, Time.deltaTime * 20f);
         }
 
@@ -322,8 +335,17 @@ namespace StarterAssets
             else
                 MoveSpeed = 5;
 
-            if (!isAiming && !firedBullet)
-                _animator.SetLayerWeight(1, 0);
+            if (shooterController.ReturnGuntype() == 0)
+            {
+                if (!isAiming && !firedBullet)
+                    _animator.SetLayerWeight(1, 0);
+            }
+            else
+            {
+                if (!isAiming && !firedBullet)
+                    _animator.SetLayerWeight(3, 0);
+            }
+            
 
             float targetSpeed = MoveSpeed;
 
@@ -649,12 +671,23 @@ namespace StarterAssets
         public void ShotFired(bool state)
         {
             fireBulletTime = 1.5f;
-            firedBullet = state;            
-            _animator.SetLayerWeight(1, 1);
+            firedBullet = state;
+            if (shooterController.ReturnGuntype() == 0)
+            {
+                _animator.SetLayerWeight(1, 1);
+                _animator.SetLayerWeight(3, 0);
+            }
+            else
+            {
+                _animator.SetLayerWeight(3, 1);
+                _animator.SetLayerWeight(1, 0);
+            }
+                
         }
         public void FiringContinous(bool state)
         {
             firing = state;
         }
+        
     }
 }
