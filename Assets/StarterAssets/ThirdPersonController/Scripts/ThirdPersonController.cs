@@ -372,6 +372,11 @@ namespace StarterAssets
                     }
                     
                 }
+                else
+                {
+                    _animator.SetLayerWeight(1, 1);
+                    _animator.SetLayerWeight(3, 0);
+                }
                     
             }
             else
@@ -385,9 +390,15 @@ namespace StarterAssets
                     }
                        
                 }
-                   
+                else
+                {
+                    _animator.SetLayerWeight(3, 1);
+                    _animator.SetLayerWeight(1, 0);
+                    
+                }
+
             }
-            
+
 
             float targetSpeed = MoveSpeed;
 
@@ -466,22 +477,21 @@ namespace StarterAssets
                 {
                     running = true;
                     pistolRig.weight = 0f;
-                    rifleRig.weight = 0f;
+                   // rifleRig.weight = 0f;
                    
                 }
                 else
                 {
                     running = false;
-                    pistolRig.weight = 1f;
-                   // rifleRig.weight = 0f;
-                    //if(shooterController.ReturnGuntype() == 0)
-                    //    pistolRig.weight = 1f;
 
-                    //else
-                    //    rifleRig.weight = 1f;
+                    if (shooterController.ReturnGuntype() == 0)
+                        pistolRig.weight = 1f;
+
+                    else
+                        rifleRig.weight = 1f;
 
                 }
-                    
+
                 fPSController.GetComponent<FPSController>().SetMovementSpeed(_animationBlend);            
             }
            
@@ -726,7 +736,7 @@ namespace StarterAssets
         }
         public void ShotFired(bool state)
         {
-            fireBulletTime = 1.2f;
+            fireBulletTime = 1.3f;
             firedBullet = state;
             if (shooterController.ReturnGuntype() == 0)
             {
@@ -735,7 +745,7 @@ namespace StarterAssets
             }
             else
             {
-                _animator.SetLayerWeight(3, 1);
+                _animator.SetLayerWeight(3, 1); 
                 _animator.SetLayerWeight(1, 0);
             }
                 
@@ -743,6 +753,8 @@ namespace StarterAssets
         public void FiringContinous(bool state)
         {
             firing = state;
+            //if(_animationBlend <= 0)
+            //_animator.SetBool("Rifle Idle Firing", state);
         }
        
     }

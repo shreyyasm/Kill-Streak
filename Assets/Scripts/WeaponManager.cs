@@ -188,7 +188,7 @@ public class WeaponManager : NetworkBehaviour
             rotation = Quaternion.LookRotation(aimDir, Vector3.up);
 
             bulletsShot = bulletsPerTap;
-            Debug.Log("Work");
+            
             //Spawn projectile from the projectile spawn point.
             GameObject projectile = Instantiate(prefabProjectile, bulletSpawnPosition.position, rotation);
             ServerManager.Spawn(projectile, base.Owner);

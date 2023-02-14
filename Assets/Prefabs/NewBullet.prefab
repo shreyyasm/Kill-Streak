@@ -204,11 +204,9 @@ MonoBehaviour:
   - {fileID: 499110, guid: ecdafb27396ac3f4cbf24e6c76a1f363, type: 3}
   concreteImpactPrefabs:
   - {fileID: 499110, guid: ecdafb27396ac3f4cbf24e6c76a1f363, type: 3}
-  projectileImpulse: 400
+  projectileImpulse: 450
   bulletParticle: {fileID: 1231345400216816}
   ObjectVFX: {fileID: 0}
-  usePool: 1
-  spawnAmount: 10
 --- !u!114 &-7924792232329995711
 MonoBehaviour:
   m_ObjectHideFlags: 0
