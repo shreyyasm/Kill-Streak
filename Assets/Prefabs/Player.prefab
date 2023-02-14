@@ -921,11 +921,11 @@ GameObject:
   - component: {fileID: 369840954656545535}
   - component: {fileID: 369840954656545534}
   - component: {fileID: 150232534819116372}
-  - component: {fileID: 7860678204456308989}
   - component: {fileID: 6129773666652159440}
   - component: {fileID: 6137983469652884338}
   - component: {fileID: 3603607439789168262}
   - component: {fileID: 5315509052088990360}
+  - component: {fileID: 3537678574518900760}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -1317,8 +1317,6 @@ MonoBehaviour:
     m_Active: 1
   - m_Rig: {fileID: 7860678202927487248}
     m_Active: 1
-  - m_Rig: {fileID: 0}
-    m_Active: 1
   m_Effectors:
   - m_Transform: {fileID: 0}
     m_Style:
@@ -1432,7 +1430,133 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7860678204456308989
+--- !u!114 &6129773666652159440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369840954656545533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsNested>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 0
+  _networkBehaviours:
+  - {fileID: 369840954656545417}
+  - {fileID: 369840954656545416}
+  - {fileID: 369840954656545527}
+  - {fileID: 6137983469652884338}
+  - {fileID: 3603607439789168262}
+  - {fileID: 3978024022949603415}
+  - {fileID: 369840956138873099}
+  - {fileID: 3398218526400327406}
+  - {fileID: 4129737151347121418}
+  - {fileID: 1437071982601876175}
+  - {fileID: 6871826642579318230}
+  - {fileID: 3856415001731863788}
+  - {fileID: 3803920779314268428}
+  - {fileID: 1081642170216795164}
+  - {fileID: 3226704901451162503}
+  - {fileID: 8096307423543928444}
+  - {fileID: 1820235100822720574}
+  - {fileID: 7860678203009426200}
+  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  <ChildNetworkObjects>k__BackingField: []
+  _isNetworked: 1
+  _isGlobal: 0
+  _initializeOrder: 0
+  _predictedSpawningType: 0
+  _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: 3
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 394288251
+  <SceneId>k__BackingField: 0
+  <AssetPathHash>k__BackingField: 7807759643866311769
+  _sceneNetworkObjects:
+  - {fileID: 6129773666652159440}
+--- !u!114 &6137983469652884338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369840954656545533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 3
+  _addedNetworkObject: {fileID: 6129773666652159440}
+  _networkObjectCache: {fileID: 6129773666652159440}
+  _synchronizeParent: 0
+  _packing:
+    Position: 1
+    Rotation: 1
+    Scale: 0
+  _interpolation: 2
+  _extrapolation: 2
+  _enableTeleport: 0
+  _teleportThreshold: 1
+  _clientAuthoritative: 1
+  _sendToOwner: 1
+  _interval: 1
+  _synchronizePosition: 1
+  _positionSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+  _synchronizeRotation: 1
+  _rotationSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+  _synchronizeScale: 1
+  _scaleSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+--- !u!114 &3603607439789168262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369840954656545533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 4
+  _addedNetworkObject: {fileID: 6129773666652159440}
+  _networkObjectCache: {fileID: 6129773666652159440}
+  IgnoredParameters: []
+  _animator: {fileID: 369840954656545522}
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
+--- !u!114 &5315509052088990360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369840954656545533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 3
+  _updateHostVisibility: 1
+  _observerConditions: []
+--- !u!114 &3537678574518900760
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1494,19 +1618,37 @@ MonoBehaviour:
     1/Thumb_02 1
   - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Thumb_01
     1/Thumb_02 1/Thumb_03 1
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Pistol
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Pistol/SM_Wep_Pistol_Heavy_Mag_01
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Pistol/SM_Wep_Pistol_Heavy_Slide_01
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Pistol/SM_Wep_Pistol_Heavy_Slide_01/SM_Wep_Pistol_Heavy_Hammer_01
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Pistol/SM_Wep_Pistol_Heavy_Trigger_01
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Pistol/SpawnBulletPosition
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Pistol/GameObject
   - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Secon
     Hand Grab Weapon_target
   - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Secon
     Hand Grab Weapon_hint
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/SocketPOs
   - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/SOCKET_Muzzle
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SM_Wep_Pistol_Heavy_Mag_01
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SM_Wep_Pistol_Heavy_Slide_01
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SM_Wep_Pistol_Heavy_Slide_01/SM_Wep_Pistol_Heavy_Hammer_01
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SM_Wep_Pistol_Heavy_Trigger_01
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SpawnBulletPosition
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/GameObject
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/TPP
+    SpawnPosition
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04/SM_Wep_Rifle_Assault_Flash_04
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04/SM_Wep_Rifle_Assault_Mag_04
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04/SM_Wep_Rifle_Assault_Slide_04
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04/SM_Wep_Rifle_Assault_Stock_04
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04/SM_Wep_Rifle_Assault_Trigger_04
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04/Spawn
+    Bullet Position
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04/TPP
+    SpawnPosition
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Second
+    Hand Grab Weapon_target
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Second
+    Hand Grab Weapon_target 2
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Second
+    Hand Grab Weapon_hint 2
   - Root/Hips/Spine_01/Spine_02/Spine_03/Neck
   - Root/Hips/Spine_01/Spine_02/Spine_03/Neck/Head
   - Root/Hips/Spine_01/Spine_02/Spine_03/Neck/Head/Eyebrows
@@ -1545,12 +1687,21 @@ MonoBehaviour:
   - SM_Char_Attach_Male_Armor_02
   - SM_Char_Attach_Male_Armor_03
   - Sphere
-  - Rig 1
-  - Rig 1/BodyAim
-  - Rig 1/HeadRotate
-  - Rig 1/Right Hand
-  - Rig 1/Secon Hand Grab Weapon
-  - Rig 1/Aim
+  - Rig Main
+  - Rig Main/BodyAim
+  - Rig Main/HeadRotate
+  - Rig Main/Aim
+  - Rig Pistol
+  - Rig Pistol/Aim (1)
+  - Rig Pistol/Right Hand
+  - Rig Pistol/Secon Hand Grab Weapon
+  - Rig Rifle
+  - Rig Rifle/Body Aim
+  - Rig Rifle/HeadRotate
+  - Rig Rifle/Aim
+  - Rig Rifle/Aim (1)
+  - Rig Rifle/Right Hand
+  - Rig Rifle/Second Hand Grab Weapon
   - FPS Camera
   - FPS Camera/cm
   - FPS Camera/P_LPSP_FP_CH
@@ -1686,11 +1837,46 @@ MonoBehaviour:
   - FPS Camera/P_LPSP_FP_CH/SK_FP_CH_Default_Root/Armature/root/pelvis/thigh_r/calf_r/foot_r/ball_r
   - FPS Camera/P_LPSP_FP_CH/SK_FP_CH_Default_Root/Armature/root/pelvis/thigh_r/thigh_twist_01_r
   - FPS Camera/P_LPSP_FP_CH/SK_FP_CH_Default_Root/SK_FP_CH_Default
+  - FPS Camera/Camera
   - Crosshair
   - Crosshair/Image
-  showBones: 0000000004000000060000000700000008000000090000000a0000000b0000001700000018000000190000001a00000031000000320000003700000038000000390000003a0000003c0000003d0000003e0000003f000000
-  foldoutBones: d7000000d5000000d4000000d1000000cf000000ce000000cc000000cb000000ca000000c9000000c5000000c4000000c2000000c1000000bf000000be000000bc000000bb000000b9000000b8000000b7000000b6000000b5000000b4000000af000000ae000000ac000000ab000000a9000000a8000000a6000000a5000000a3000000a2000000a1000000a00000009f0000009e0000009d0000009c0000009b0000009a000000960000009400000091000000900000008f0000008b000000880000008700000085000000840000008200000081000000800000007c0000007b0000007a000000760000007400000072000000710000006f0000006e0000006d0000006c0000006a000000680000006700000066000000630000006200000061000000600000005f000000570000003f0000003e0000003d0000003c0000003a00000039000000380000003700000032000000310000002800000026000000240000002300000021000000200000001f0000001d0000001c0000001b0000001a00000019000000180000001700000015000000140000001200000011000000100000000e0000000d0000000c0000000b0000000a0000000900000008000000070000000600000004000000030000000200000000000000
-  mirrorBones: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1700000018000000190000001a0000001b0000001c0000001d000000ffffffff1f0000002000000021000000ffffffff23000000240000002500000008000000090000000a0000000b0000000c0000000d0000000e000000ffffffff100000001100000012000000ffffffff140000001500000016000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3c0000003d0000003e0000003f000000400000003700000038000000390000003a0000003b000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6500000064000000ffffffffffffffff6a0000006b0000006800000069000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffb4000000b5000000b6000000b7000000b8000000b9000000ba000000bb000000bc000000bd000000be000000bf000000c0000000c1000000c2000000c3000000c4000000c5000000c6000000ffffffffc7000000c80000009e0000009f000000a0000000a1000000a2000000a3000000a4000000a5000000a6000000a7000000a8000000a9000000aa000000ab000000ac000000ad000000ae000000af000000b0000000b2000000b3000000ffffffffffffffffffffffffffffffffffffffffd4000000d5000000d6000000d7000000d8000000d9000000ce000000cf000000d0000000d1000000d2000000d3000000ffffffffffffffffffffffff
+  - UI_Canvas_StarterAssetsInputs_Joysticks
+  - UI_Canvas_StarterAssetsInputs_Joysticks/TouchZone
+  - UI_Canvas_StarterAssetsInputs_Joysticks/UI_Virtual_TouchZone
+  - UI_Canvas_StarterAssetsInputs_Joysticks/UI_Virtual_TouchZone/Image_Handle
+  - UI_Canvas_StarterAssetsInputs_Joysticks/UI_Virtual_TouchZone/Image_Handle/Image_Icon
+  - UI_Canvas_StarterAssetsInputs_Joysticks/UI_Virtual_Joystick_Move
+  - UI_Canvas_StarterAssetsInputs_Joysticks/UI_Virtual_Joystick_Move/Image_Handle
+  - UI_Canvas_StarterAssetsInputs_Joysticks/UI_Virtual_Joystick_Move/Image_Handle/Image_Icon
+  - UI_Canvas_StarterAssetsInputs_Joysticks/UI_Virtual_Joystick_Look
+  - UI_Canvas_StarterAssetsInputs_Joysticks/UI_Virtual_Joystick_Look/Image_Handle
+  - UI_Canvas_StarterAssetsInputs_Joysticks/UI_Virtual_Joystick_Look/Image_Handle/Image_Icon
+  - UI_Canvas_StarterAssetsInputs_Joysticks/UI_Virtual_Button_Jump
+  - UI_Canvas_StarterAssetsInputs_Joysticks/UI_Virtual_Button_Jump/Image_Icon
+  - UI_Canvas_StarterAssetsInputs_Joysticks/Aim
+  - UI_Canvas_StarterAssetsInputs_Joysticks/Aim/Image_Icon
+  - UI_Canvas_StarterAssetsInputs_Joysticks/Change Gun
+  - UI_Canvas_StarterAssetsInputs_Joysticks/Change Gun/Text (Legacy)
+  - UI_Canvas_StarterAssetsInputs_Joysticks/Fire
+  - UI_Canvas_StarterAssetsInputs_Joysticks/Fire/Image_Icon
+  - UI_Canvas_StarterAssetsInputs_Joysticks/AR
+  - UI_Canvas_StarterAssetsInputs_Joysticks/AR/Text (Legacy)
+  - UI_Canvas_StarterAssetsInputs_Joysticks/Change Mode
+  - UI_Canvas_StarterAssetsInputs_Joysticks/Change Mode/Text (Legacy)
+  - Ultimate UI Canvas
+  - Ultimate UI Canvas/Ultimate Joystick
+  - Ultimate UI Canvas/Ultimate Joystick/JoystickSizeFolder
+  - Ultimate UI Canvas/Ultimate Joystick/JoystickSizeFolder/Base
+  - Ultimate UI Canvas/Ultimate Joystick/JoystickSizeFolder/TensionUp
+  - Ultimate UI Canvas/Ultimate Joystick/JoystickSizeFolder/TensionDown
+  - Ultimate UI Canvas/Ultimate Joystick/JoystickSizeFolder/TensionLeft
+  - Ultimate UI Canvas/Ultimate Joystick/JoystickSizeFolder/TensionRight
+  - Ultimate UI Canvas/Ultimate Joystick/JoystickSizeFolder/BaseHighlight
+  - Ultimate UI Canvas/Ultimate Joystick/JoystickSizeFolder/Joystick
+  - Ultimate UI Canvas/Ultimate Joystick/JoystickSizeFolder/JoystickHighlight
+  showBones: 0000000004000000060000000700000008000000090000000a0000000b0000001700000018000000190000001a0000003d0000003e0000004300000044000000450000004600000048000000490000004a0000004b000000
+  foldoutBones: ec000000ea000000e9000000e6000000e4000000e3000000e1000000e0000000df000000de000000da000000d9000000d7000000d6000000d4000000d3000000d1000000d0000000ce000000cd000000cc000000cb000000ca000000c9000000c4000000c3000000c1000000c0000000be000000bd000000bb000000ba000000b8000000b7000000b6000000b5000000b4000000b3000000b2000000b1000000b0000000af000000ab000000a9000000a6000000a5000000a4000000a00000009d0000009c0000009a0000009900000097000000960000009500000091000000900000008f0000008b000000890000008700000086000000840000008300000082000000810000007f0000007d0000007c0000007b00000078000000770000007600000075000000740000004b0000004a0000004900000048000000460000004500000044000000430000003e0000003d000000240000002300000021000000200000001f0000001d0000001c0000001b0000001a00000019000000180000001700000015000000140000001200000011000000100000000e0000000d0000000c0000000b0000000a0000000900000008000000070000000600000004000000030000000200000000000000
+  mirrorBones: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1700000018000000190000001a0000001b0000001c0000001d000000ffffffff1f0000002000000021000000ffffffff23000000240000002500000008000000090000000a0000000b0000000c0000000d0000000e000000ffffffff100000001100000012000000ffffffff140000001500000016000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff48000000490000004a0000004b0000004c0000004300000044000000450000004600000047000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7a00000079000000ffffffffffffffff7f000000800000007d0000007e000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc9000000ca000000cb000000cc000000cd000000ce000000cf000000d0000000d1000000d2000000d3000000d4000000d5000000d6000000d7000000d8000000d9000000da000000db000000ffffffffdc000000dd000000b3000000b4000000b5000000b6000000b7000000b8000000b9000000ba000000bb000000bc000000bd000000be000000bf000000c0000000c1000000c2000000c3000000c4000000c5000000c7000000c8000000ffffffffffffffffffffffffffffffffffffffffe9000000ea000000eb000000ec000000ed000000ee000000e3000000e4000000e5000000e6000000e7000000e8000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   mirrorBlendShape: []
   animatorIkData:
   - enable: 0
@@ -1755,135 +1941,10 @@ MonoBehaviour:
     parentPath: 
   originalIkData: []
   selectionData: []
-  lastSelectAnimationClip: {fileID: 7400000, guid: f7b11bae850059f4eb6280ed76ffd99f,
+  lastSelectAnimationClip: {fileID: 7400000, guid: cd9485d9e24f4cf488f27cb0ddfd34e5,
     type: 2}
   handPoseList: []
   blendShapeList: []
---- !u!114 &6129773666652159440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 369840954656545533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <IsNested>k__BackingField: 0
-  <ComponentIndex>k__BackingField: 0
-  _networkBehaviours:
-  - {fileID: 369840954656545417}
-  - {fileID: 369840954656545416}
-  - {fileID: 369840954656545527}
-  - {fileID: 6137983469652884338}
-  - {fileID: 3603607439789168262}
-  - {fileID: 3978024022949603415}
-  - {fileID: 369840956138873099}
-  - {fileID: 3398218526400327406}
-  - {fileID: 4129737151347121418}
-  - {fileID: 1437071982601876175}
-  - {fileID: 6871826642579318230}
-  - {fileID: 3856415001731863788}
-  - {fileID: 3803920779314268428}
-  - {fileID: 1081642170216795164}
-  - {fileID: 3226704901451162503}
-  - {fileID: 8096307423543928444}
-  - {fileID: 1820235100822720574}
-  - {fileID: 7860678203009426200}
-  <ParentNetworkObject>k__BackingField: {fileID: 0}
-  <ChildNetworkObjects>k__BackingField: []
-  _isNetworked: 1
-  _isGlobal: 0
-  _initializeOrder: 0
-  _predictedSpawningType: 0
-  _defaultDespawnType: 0
-  NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 9
-  <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 0
-  <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 7807759643866311769
-  _sceneNetworkObjects: []
---- !u!114 &6137983469652884338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 369840954656545533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 3
-  _addedNetworkObject: {fileID: 6129773666652159440}
-  _networkObjectCache: {fileID: 6129773666652159440}
-  _synchronizeParent: 0
-  _packing:
-    Position: 1
-    Rotation: 1
-    Scale: 0
-  _interpolation: 2
-  _extrapolation: 2
-  _enableTeleport: 0
-  _teleportThreshold: 1
-  _clientAuthoritative: 1
-  _sendToOwner: 1
-  _interval: 1
-  _synchronizePosition: 1
-  _positionSnapping:
-    X: 0
-    Y: 0
-    Z: 0
-  _synchronizeRotation: 1
-  _rotationSnapping:
-    X: 0
-    Y: 0
-    Z: 0
-  _synchronizeScale: 1
-  _scaleSnapping:
-    X: 0
-    Y: 0
-    Z: 0
---- !u!114 &3603607439789168262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 369840954656545533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 4
-  _addedNetworkObject: {fileID: 6129773666652159440}
-  _networkObjectCache: {fileID: 6129773666652159440}
-  IgnoredParameters: []
-  _animator: {fileID: 369840954656545522}
-  _smoothFloats: 1
-  _interpolation: 2
-  _clientAuthoritative: 1
-  _sendToOwner: 0
---- !u!114 &5315509052088990360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 369840954656545533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _overrideType: 3
-  _updateHostVisibility: 1
-  _observerConditions: []
 --- !u!1 &369840954659146908
 GameObject:
   m_ObjectHideFlags: 0
@@ -4177,7 +4238,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369840955101811800}
-  m_LocalRotation: {x: 0.64074206, y: 0.027517779, z: -0.0040500592, w: 0.7672522}
+  m_LocalRotation: {x: 0.64074206, y: 0.02751778, z: -0.0040500592, w: 0.76725227}
   m_LocalPosition: {x: 0.39930925, y: -0.00000035762787, z: -1.2739676e-10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6181,7 +6242,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369840955410512827}
-  m_LocalRotation: {x: 0.70157355, y: 0.0117245205, z: 0.71220475, w: -0.020529738}
+  m_LocalRotation: {x: 0.70157355, y: 0.011724527, z: 0.71220475, w: -0.02052975}
   m_LocalPosition: {x: 0.17076287, y: 0.0807216, z: 0.13465576}
   m_LocalScale: {x: 1.0000371, y: 1, z: 1.0000026}
   m_ConstrainProportionsScale: 0
@@ -6310,7 +6371,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369840955415053327}
-  m_LocalRotation: {x: 0.021577278, y: -0.14047071, z: -0.28933373, w: -0.94661945}
+  m_LocalRotation: {x: 0.021577278, y: -0.14047073, z: -0.28933373, w: -0.9466195}
   m_LocalPosition: {x: 0.10396597, y: -0.0039899945, z: -0.02672651}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6536,7 +6597,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &369840955499229006
 Transform:
   m_ObjectHideFlags: 0
@@ -6544,7 +6605,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369840955499229005}
-  m_LocalRotation: {x: -0.45473436, y: 0.24922861, z: -0.5952248, w: 0.61384803}
+  m_LocalRotation: {x: -0.4547343, y: 0.24922858, z: -0.59522474, w: 0.613848}
   m_LocalPosition: {x: 0.096000575, y: 0.055000134, z: -0.040999852}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7893,7 +7954,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369840955642117958}
-  m_LocalRotation: {x: 0.041124124, y: 0.012242859, z: -0.34638095, w: -0.9371121}
+  m_LocalRotation: {x: 0.041124128, y: 0.01224286, z: -0.34638098, w: -0.93711215}
   m_LocalPosition: {x: 0.037912134, y: 0.0000033043325, z: -0.000000049360096}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9262,7 +9323,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369840955841756477}
-  m_LocalRotation: {x: -0.5811001, y: 0.6301286, z: -0.35070032, w: -0.377187}
+  m_LocalRotation: {x: -0.58110005, y: 0.6301286, z: -0.3507003, w: -0.37718698}
   m_LocalPosition: {x: -0.058011733, y: -0.041914493, z: -0.07447155}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10085,7 +10146,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369840955980113776}
-  m_LocalRotation: {x: 0.9950196, y: -0.099679105, z: 0.0000004564474, w: -0.00000010082148}
+  m_LocalRotation: {x: 0.9950197, y: -0.09967911, z: 0.00000045644742, w: -0.00000010082149}
   m_LocalPosition: {x: -0.10393268, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11383,7 +11444,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369840956189094828}
-  m_LocalRotation: {x: 0.99518615, y: -0.09800236, z: 0.0000000043810293, w: 2.1519846e-10}
+  m_LocalRotation: {x: 0.9951862, y: -0.09800237, z: 0.0000000043810298, w: 2.1519847e-10}
   m_LocalPosition: {x: -0.18151172, y: -0.000000029802322, z: 0.000000013969839}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11953,7 +12014,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369840956302921213}
-  m_LocalRotation: {x: 0.8544094, y: 0.5102052, z: 0.056543775, w: -0.08048601}
+  m_LocalRotation: {x: 0.85440946, y: 0.5102052, z: 0.05654378, w: -0.08048601}
   m_LocalPosition: {x: 0.3771233, y: 0.00000014901161, z: -0.0000008493662}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -15314,7 +15375,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7530958685586775292
 Transform:
   m_ObjectHideFlags: 0
