@@ -262,8 +262,8 @@ namespace StarterAssets
                 _animator.SetLayerWeight(0, 0);
             }
                 
-            pistolRig.weight = Mathf.Lerp(pistolRig.weight, pistolRig.weight, Time.deltaTime * 100f);
-            rifleRig.weight = Mathf.Lerp(rifleRig.weight, rifleRig.weight, Time.deltaTime * 100f);
+            //pistolRig.weight = Mathf.Lerp(pistolRig.weight, pistolRig.weight, Time.deltaTime * 100f);
+            //rifleRig.weight = Mathf.Lerp(rifleRig.weight, rifleRig.weight, Time.deltaTime * 100f);
         }
 
         private void LateUpdate()
@@ -363,13 +363,29 @@ namespace StarterAssets
 
             if (shooterController.ReturnGuntype() == 0)
             {
-                if (!isAiming && !firedBullet)
-                    _animator.SetLayerWeight(1, 0);
+                if (!isAiming)
+                {
+                    if(!firedBullet)
+                    {
+                        _animator.SetLayerWeight(1, 0);
+                        _animator.SetLayerWeight(3, 0);
+                    }
+                    
+                }
+                    
             }
             else
             {
-                if (!isAiming && !firedBullet)
-                    _animator.SetLayerWeight(3, 0);
+                if (!isAiming)
+                {
+                    if (!firedBullet)
+                    {
+                        _animator.SetLayerWeight(1, 0);
+                        _animator.SetLayerWeight(3, 0);
+                    }
+                       
+                }
+                   
             }
             
 
@@ -710,7 +726,7 @@ namespace StarterAssets
         }
         public void ShotFired(bool state)
         {
-            fireBulletTime = 1.5f;
+            fireBulletTime = 1.2f;
             firedBullet = state;
             if (shooterController.ReturnGuntype() == 0)
             {
@@ -728,6 +744,6 @@ namespace StarterAssets
         {
             firing = state;
         }
-        
+       
     }
 }

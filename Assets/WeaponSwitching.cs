@@ -68,6 +68,7 @@ public class WeaponSwitching : MonoBehaviour
             SelectedWeapon();
         }
         shooterController.Equip(selectedWeapon);
+        shooterController.GunChanged();
     }
     
 }

@@ -1630,7 +1630,7 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 9
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 394288251
+  _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 15891369391496135281
   _sceneNetworkObjects: []
@@ -14525,13 +14525,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 0.7
+  m_Weight: 0.4
   m_Data:
-    m_ConstrainedObject: {fileID: 369840956135728464}
+    m_ConstrainedObject: {fileID: 0}
     m_SourceObjects:
       m_Length: 1
       m_Item0:
-        transform: {fileID: 369840955740907589}
+        transform: {fileID: 369840956135728464}
         weight: 1
       m_Item1:
         transform: {fileID: 0}
@@ -14554,7 +14554,7 @@ MonoBehaviour:
       m_Item7:
         transform: {fileID: 0}
         weight: 0
-    m_Offset: {x: -5.74, y: -50.43, z: 8.2}
+    m_Offset: {x: -9.6, y: -45.3, z: 24}
     m_MinLimit: -180
     m_MaxLimit: 180
     m_AimAxis: 0
@@ -15352,7 +15352,7 @@ MonoBehaviour:
   prefabFlashLight: {fileID: 4171051858075953094, guid: 25a6bd588ee932f4f8be552fd0fae250,
     type: 3}
   damage: 30
-  timeBetweenShooting: 0.05
+  timeBetweenShooting: 0.08
   spread: 0.02
   range: 10000
   reloadTime: 1

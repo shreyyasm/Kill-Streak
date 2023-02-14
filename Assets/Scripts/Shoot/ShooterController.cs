@@ -250,4 +250,9 @@ public class ShooterController : NetworkBehaviour
     {
         return gunType;
     }
+    public void GunChanged()
+    {
+        animator.SetLayerWeight(3, 0);
+        animator.SetLayerWeight(1, 0);
+    }
 }
