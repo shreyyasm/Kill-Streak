@@ -36,6 +36,7 @@ public class ShooterController : NetworkBehaviour
     [SerializeField] private float aimRigWeight;
     [SerializeField] GameObject fPSController;
     [SerializeField] ScreenTouch screenTouch;
+    [SerializeField] WeaponSwitching weaponSwitching;
 
     //Offsets
     public Vector3 vfxSpawnOffset;
@@ -47,6 +48,7 @@ public class ShooterController : NetworkBehaviour
     //Conditions
     bool FPSMode;
     bool Aiming = false;
+    bool gunChanging = false;
 
     //Camera's Reference
     public GameObject fpsVirtualCamera;
@@ -106,7 +108,7 @@ public class ShooterController : NetworkBehaviour
         //Aim();
         //Fire();
         equippedWeapon = GetInventory().GetEquipped();
-
+        gunChanging = weaponSwitching.GunSwaping();
     }
     public void Equip(int index = 0)
     {      
@@ -187,13 +189,17 @@ public class ShooterController : NetworkBehaviour
 
     public void Fire(float input)
     {
-        //animator.SetLayerWeight(1, 1);
-        equippedWeapon.FireBullet(FPSMode,input);
-        if(input == 1)
-            thirdPersonController.ShotFired(true); 
+        if(!gunChanging)
+        {
+            equippedWeapon.FireBullet(FPSMode, input);
+            if (input == 1)
+                thirdPersonController.ShotFired(true);
             thirdPersonController.FiringContinous(true);
-        if(input == 0)
-            thirdPersonController.FiringContinous(false);
+            if (input == 0)
+                thirdPersonController.FiringContinous(false);
+        }
+        //animator.SetLayerWeight(1, 1);
+        
         ////Show Flash
         //particles.Emit(5);
 

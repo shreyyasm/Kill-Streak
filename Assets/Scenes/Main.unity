@@ -589,8 +589,30 @@ PrefabInstance:
       propertyPath: <SceneId>k__BackingField
       value: 1693455146036072328
       objectReference: {fileID: 0}
+    - target: {fileID: 6129773666652159440, guid: 17a4ad1d38fdbfc41a70b11eed43dfff,
+        type: 3}
+      propertyPath: _sceneNetworkObjects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129773666652159440, guid: 17a4ad1d38fdbfc41a70b11eed43dfff,
+        type: 3}
+      propertyPath: _sceneNetworkObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 99903552}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17a4ad1d38fdbfc41a70b11eed43dfff, type: 3}
+--- !u!114 &99903552 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6129773666652159440, guid: 17a4ad1d38fdbfc41a70b11eed43dfff,
+    type: 3}
+  m_PrefabInstance: {fileID: 99903550}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &131189484
 PrefabInstance:
   m_ObjectHideFlags: 0

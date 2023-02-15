@@ -130,7 +130,7 @@ namespace StarterAssets
         public bool firing = false;
         public bool running;
         public int gunType;
-        public bool ChangingGun;
+        public bool changingGun;
         float fireBulletTime = 0f;
 
         public float sensitivity = 100f;
@@ -142,6 +142,7 @@ namespace StarterAssets
         Vector3 move;
         float mouseX , mouseY;
         [SerializeField] ShooterController shooterController;
+        [SerializeField] WeaponSwitching weaponSwitching;
         private bool IsCurrentDeviceMouse
         {
             get
@@ -216,7 +217,8 @@ namespace StarterAssets
                 return;
 
            
-            JumpAndGravity();
+            if(!changingGun)
+                JumpAndGravity();
             GroundedCheck();
             
     
@@ -262,7 +264,7 @@ namespace StarterAssets
                 _animator.SetLayerWeight(2, 1);
                 _animator.SetLayerWeight(0, 0);
             }
-                
+            changingGun = weaponSwitching.GunSwaping();   
             //pistolRig.weight = Mathf.Lerp(pistolRig.weight, pistolRig.weight, Time.deltaTime * 100f);
             //rifleRig.weight = Mathf.Lerp(rifleRig.weight, rifleRig.weight, Time.deltaTime * 100f);
         }
@@ -354,7 +356,7 @@ namespace StarterAssets
             // set target speed based on move speed, sprint speed and if sprint is pressed
             //float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
            
-            if (direction.z > 0.2f && !isAiming && !firedBullet)
+            if (direction.z > 0.2f && !isAiming && !firedBullet && !changingGun)
             {
            
                     MoveSpeed = 7f;               

@@ -1047,6 +1047,7 @@ MonoBehaviour:
   sensitivity: 100
   direction: {x: 0, y: 0, z: 0}
   shooterController: {fileID: 369840954656545416}
+  weaponSwitching: {fileID: 688732149129076785}
 --- !u!114 &369840954656545416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1082,6 +1083,7 @@ MonoBehaviour:
   aimRigWeight: 0
   fPSController: {fileID: 369840955574070733}
   screenTouch: {fileID: 6457140742733778780}
+  weaponSwitching: {fileID: 688732149129076785}
   vfxSpawnOffset: {x: 0.43, y: 0.31, z: 0}
   offset: {x: 0, y: -0.1, z: 0}
   fpsVirtualCamera: {fileID: 369840956138873097}
