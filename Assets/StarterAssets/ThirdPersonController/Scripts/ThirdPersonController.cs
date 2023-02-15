@@ -128,8 +128,9 @@ namespace StarterAssets
         bool inFPSMode = false;
         public bool firedBullet = false;
         public bool firing = false;
-        bool running;
+        public bool running;
         public int gunType;
+        public bool ChangingGun;
         float fireBulletTime = 0f;
 
         public float sensitivity = 100f;

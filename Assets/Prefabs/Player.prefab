@@ -453,11 +453,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 369840955499229006}
   - {fileID: 7530958685586775292}
+  - {fileID: 369840955499229006}
   m_Father: {fileID: 369840956232603509}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.023058414, y: -0.43873444, z: -0.03658283}
 --- !u!114 &688732149129076785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,6 +472,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedWeapon: 0
   shooterController: {fileID: 369840954656545416}
+  gunChanging: 0
+  pistolRig: {fileID: 4449690505680419422}
+  rifleRig: {fileID: 7860678202927487248}
+  animator: {fileID: 369840954656545533}
 --- !u!114 &6262795548537162297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -925,7 +929,7 @@ GameObject:
   - component: {fileID: 6137983469652884338}
   - component: {fileID: 3603607439789168262}
   - component: {fileID: 5315509052088990360}
-  - component: {fileID: 3537678574518900760}
+  - component: {fileID: 99903570}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -1037,7 +1041,9 @@ MonoBehaviour:
   cameraRoot: {fileID: 369840955538360135}
   firedBullet: 0
   firing: 0
+  running: 0
   gunType: 0
+  ChangingGun: 0
   sensitivity: 100
   direction: {x: 0, y: 0, z: 0}
   shooterController: {fileID: 369840954656545416}
@@ -1461,8 +1467,8 @@ MonoBehaviour:
   - {fileID: 1081642170216795164}
   - {fileID: 3226704901451162503}
   - {fileID: 8096307423543928444}
-  - {fileID: 1820235100822720574}
   - {fileID: 7860678203009426200}
+  - {fileID: 1820235100822720574}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -1476,8 +1482,7 @@ MonoBehaviour:
   _scenePathHash: 394288251
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 7807759643866311769
-  _sceneNetworkObjects:
-  - {fileID: 6129773666652159440}
+  _sceneNetworkObjects: []
 --- !u!114 &6137983469652884338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1556,7 +1561,7 @@ MonoBehaviour:
   _overrideType: 3
   _updateHostVisibility: 1
   _observerConditions: []
---- !u!114 &3537678574518900760
+--- !u!114 &99903570
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1624,15 +1629,6 @@ MonoBehaviour:
     Hand Grab Weapon_hint
   - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/SOCKET_Muzzle
   - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SM_Wep_Pistol_Heavy_Mag_01
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SM_Wep_Pistol_Heavy_Slide_01
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SM_Wep_Pistol_Heavy_Slide_01/SM_Wep_Pistol_Heavy_Hammer_01
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SM_Wep_Pistol_Heavy_Trigger_01
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SpawnBulletPosition
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/GameObject
-  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/TPP
-    SpawnPosition
   - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04
   - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04/SM_Wep_Rifle_Assault_Flash_04
   - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04/SM_Wep_Rifle_Assault_Mag_04
@@ -1642,6 +1638,15 @@ MonoBehaviour:
   - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04/Spawn
     Bullet Position
   - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/SM_Wep_Rifle_Assault_04/TPP
+    SpawnPosition
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SM_Wep_Pistol_Heavy_Mag_01
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SM_Wep_Pistol_Heavy_Slide_01
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SM_Wep_Pistol_Heavy_Slide_01/SM_Wep_Pistol_Heavy_Hammer_01
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SM_Wep_Pistol_Heavy_Trigger_01
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/SpawnBulletPosition
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/GameObject
+  - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Inventory/Pistol/TPP
     SpawnPosition
   - Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/Second
     Hand Grab Weapon_target
@@ -1874,7 +1879,7 @@ MonoBehaviour:
   - Ultimate UI Canvas/Ultimate Joystick/JoystickSizeFolder/BaseHighlight
   - Ultimate UI Canvas/Ultimate Joystick/JoystickSizeFolder/Joystick
   - Ultimate UI Canvas/Ultimate Joystick/JoystickSizeFolder/JoystickHighlight
-  showBones: 0000000004000000060000000700000008000000090000000a0000000b0000001700000018000000190000001a0000003d0000003e0000004300000044000000450000004600000048000000490000004a0000004b000000
+  showBones: 00000000060000000700000008000000090000000a0000000b0000001700000018000000190000001a0000003d0000003e0000004300000044000000450000004600000048000000490000004a0000004b000000
   foldoutBones: ec000000ea000000e9000000e6000000e4000000e3000000e1000000e0000000df000000de000000da000000d9000000d7000000d6000000d4000000d3000000d1000000d0000000ce000000cd000000cc000000cb000000ca000000c9000000c4000000c3000000c1000000c0000000be000000bd000000bb000000ba000000b8000000b7000000b6000000b5000000b4000000b3000000b2000000b1000000b0000000af000000ab000000a9000000a6000000a5000000a4000000a00000009d0000009c0000009a0000009900000097000000960000009500000091000000900000008f0000008b000000890000008700000086000000840000008300000082000000810000007f0000007d0000007c0000007b00000078000000770000007600000075000000740000004b0000004a0000004900000048000000460000004500000044000000430000003e0000003d000000240000002300000021000000200000001f0000001d0000001c0000001b0000001a00000019000000180000001700000015000000140000001200000011000000100000000e0000000d0000000c0000000b0000000a0000000900000008000000070000000600000004000000030000000200000000000000
   mirrorBones: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1700000018000000190000001a0000001b0000001c0000001d000000ffffffff1f0000002000000021000000ffffffff23000000240000002500000008000000090000000a0000000b0000000c0000000d0000000e000000ffffffff100000001100000012000000ffffffff140000001500000016000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff48000000490000004a0000004b0000004c0000004300000044000000450000004600000047000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7a00000079000000ffffffffffffffff7f000000800000007d0000007e000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc9000000ca000000cb000000cc000000cd000000ce000000cf000000d0000000d1000000d2000000d3000000d4000000d5000000d6000000d7000000d8000000d9000000da000000db000000ffffffffdc000000dd000000b3000000b4000000b5000000b6000000b7000000b8000000b9000000ba000000bb000000bc000000bd000000be000000bf000000c0000000c1000000c2000000c3000000c4000000c5000000c7000000c8000000ffffffffffffffffffffffffffffffffffffffffe9000000ea000000eb000000ec000000ed000000ee000000e3000000e4000000e5000000e6000000e7000000e8000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   mirrorBlendShape: []
@@ -1941,7 +1946,7 @@ MonoBehaviour:
     parentPath: 
   originalIkData: []
   selectionData: []
-  lastSelectAnimationClip: {fileID: 7400000, guid: cd9485d9e24f4cf488f27cb0ddfd34e5,
+  lastSelectAnimationClip: {fileID: 7400000, guid: ed29a93d33e1c6045852bdeaa046b93b,
     type: 2}
   handPoseList: []
   blendShapeList: []
@@ -6242,7 +6247,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369840955410512827}
-  m_LocalRotation: {x: 0.70157355, y: 0.011724527, z: 0.71220475, w: -0.02052975}
+  m_LocalRotation: {x: 0.70157355, y: 0.011724542, z: 0.71220475, w: -0.02052978}
   m_LocalPosition: {x: 0.17076287, y: 0.0807216, z: 0.13465576}
   m_LocalScale: {x: 1.0000371, y: 1, z: 1.0000026}
   m_ConstrainProportionsScale: 0
@@ -6605,7 +6610,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369840955499229005}
-  m_LocalRotation: {x: -0.4547343, y: 0.24922858, z: -0.59522474, w: 0.613848}
+  m_LocalRotation: {x: -0.49038857, y: 0.27613497, z: -0.58174336, w: 0.58723354}
   m_LocalPosition: {x: 0.096000575, y: 0.055000134, z: -0.040999852}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6617,8 +6622,8 @@ Transform:
   - {fileID: 150232535237730559}
   - {fileID: 369840955611748192}
   m_Father: {fileID: 7974162596924076983}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -15.164, y: 61.388, z: -97.271}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -14.754, y: 67.726, z: -99.392}
 --- !u!33 &369840955499228993
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6695,7 +6700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fac7bf2cbb2d7f49883bea46f043e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 16
+  _componentIndexCache: 17
   _addedNetworkObject: {fileID: 6129773666652159440}
   _networkObjectCache: {fileID: 6129773666652159440}
   gunType: 0
@@ -15375,7 +15380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7530958685586775292
 Transform:
   m_ObjectHideFlags: 0
@@ -15396,7 +15401,7 @@ Transform:
   - {fileID: 807574714111918929}
   - {fileID: 766621455853469909}
   m_Father: {fileID: 7974162596924076983}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 7.661, y: 60.228, z: -93.196}
 --- !u!33 &7558701794938984702
 MeshFilter:
@@ -15570,7 +15575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fac7bf2cbb2d7f49883bea46f043e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 17
+  _componentIndexCache: 16
   _addedNetworkObject: {fileID: 6129773666652159440}
   _networkObjectCache: {fileID: 6129773666652159440}
   gunType: 1
@@ -16743,7 +16748,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1.3500366, y: 1.3500061}
+  m_AnchoredPosition: {x: 1.3499756, y: 1.3500061}
   m_SizeDelta: {x: 270, y: 270}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &8278497867833367557
