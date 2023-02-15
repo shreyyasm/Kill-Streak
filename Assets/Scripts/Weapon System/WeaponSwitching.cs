@@ -8,11 +8,20 @@ public class WeaponSwitching : MonoBehaviour
     //Index of selected weapon
     public int selectedWeapon;
     [SerializeField] ShooterController shooterController;
+    [SerializeField] WeaponInventory weaponInventory;
     bool gunChanged = false;
     public bool gunChanging = false;
     [SerializeField] private Rig pistolRig;
     [SerializeField] private Rig rifleRig;
     public GameObject animator;
+
+    [SerializeField] GameObject realPistol;
+    [SerializeField] GameObject fakePistol;
+    [SerializeField] GameObject realRifle;
+    [SerializeField] GameObject fakeRifle;
+
+    bool running = false;
+    bool gunInHand = true;
     // Start is called before the first frame update
     void Start()
     {        
@@ -22,6 +31,7 @@ public class WeaponSwitching : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GunSwaping();
         if (animator.GetComponent<Animator>().GetCurrentAnimatorStateInfo(4).IsName("Rifle To Pistol Locomotions") && animator.GetComponent<Animator>().GetCurrentAnimatorStateInfo(4).normalizedTime > 1f)
         {
             gunChanging = false;          
@@ -52,13 +62,11 @@ public class WeaponSwitching : MonoBehaviour
                 animator.GetComponent<Animator>().SetBool("Gun Changing", false);
                 if (selectedWeapon == 1)
                 {
-                    pistolRig.weight = 1f;
+                    if(!running)
+                        pistolRig.weight = 1f;
+                    else
+                        pistolRig.weight = 0f;
                     rifleRig.weight = 0f;
-                }
-                else
-                {
-                    pistolRig.weight = 0f;
-                    rifleRig.weight = 1f;
                 }
 
             }
@@ -80,7 +88,8 @@ public class WeaponSwitching : MonoBehaviour
 
 
         }
-        GunSwaping();
+        
+        weaponInventory.GunCheck(gunInHand);
     }
     void SelectedWeapon()
     {
@@ -89,54 +98,115 @@ public class WeaponSwitching : MonoBehaviour
         {
             if (i == selectedWeapon)
             {
-                weapon.gameObject.SetActive(true);
+                //weapon.gameObject.SetActive(true);
             }
             else
             {
-                weapon.gameObject.SetActive(false);
+                //weapon.gameObject.SetActive(false);
             }
 
             i++;
         }
     }
     public void ChangeGunIndex()
-    {
-        gunChanging = true;       
-        int previousSelectedWeapon = selectedWeapon;
-        if (!gunChanged)
+    {       
+        if(!gunChanging)
         {
-            gunChanged = true;
-            if (selectedWeapon >= transform.childCount - 1)
+            gunChanging = true;
+            int previousSelectedWeapon = selectedWeapon;
+            if (!gunChanged)
             {
-                selectedWeapon = 0;
+                gunChanged = true;
+                if (selectedWeapon >= transform.childCount - 1)
+                {
+                    selectedWeapon = 0;
+                }
+                else
+                {
+                    selectedWeapon++;
+                }
             }
             else
             {
-                selectedWeapon++;
+                gunChanged = false;
+                if (selectedWeapon <= transform.childCount - 1)
+                {
+                    selectedWeapon = 0;
+                }
+                else
+                {
+                    selectedWeapon--;
+                }
             }
-        }
-        else
-        {
-            gunChanged = false;
-            if (selectedWeapon <= transform.childCount - 1)
+            if (previousSelectedWeapon != selectedWeapon)
             {
-                selectedWeapon = 0;
+                SelectedWeapon();
             }
-            else
-            {
-                selectedWeapon--;
-            }
-        }
-        if (previousSelectedWeapon != selectedWeapon)
-        {
-            SelectedWeapon();
-        }
-        shooterController.Equip(selectedWeapon);
-        shooterController.GunChanged();
-       
+            shooterController.Equip(selectedWeapon);
+            shooterController.GunChanged();
+        }           
     }
     public bool GunSwaping()
     {
         return gunChanging;
     }
+    public void GunSwapVisualTake()
+    {
+
+        if (animator.GetComponent<Animator>().GetLayerWeight(4) == 1)
+        {
+            gunInHand = false;
+            if (selectedWeapon == 1)
+            {
+                realRifle.SetActive(false);
+                fakeRifle.SetActive(true);
+
+            }
+            else
+            {
+                realPistol.SetActive(false);
+                fakePistol.SetActive(true);
+            }
+        }
+        if (animator.GetComponent<Animator>().GetLayerWeight(5) == 1)
+        {
+            gunInHand = false;
+            fakeRifle.SetActive(false);
+            realRifle.SetActive(true);
+        }
+        
+    }
+    public void GunHandTrue()
+    {
+        if (animator.GetComponent<Animator>().GetLayerWeight(4) == 1)
+        {
+            gunInHand = true;
+            if (selectedWeapon == 1)
+            {
+                fakePistol.SetActive(false);
+                realPistol.SetActive(true);
+            }
+            else
+            {
+                fakeRifle.SetActive(false);
+                realRifle.SetActive(true);
+            }
+        }
+        if(animator.GetComponent<Animator>().GetLayerWeight(5) == 1)
+        {
+            
+            gunInHand = false;          
+            realPistol.SetActive(false);
+            fakePistol.SetActive(true);
+        }
+            
+        
+
+    }
+    public void CheckRunning(bool state)
+    {
+        running = state;
+    }
+   
+   
 }

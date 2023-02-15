@@ -264,7 +264,8 @@ namespace StarterAssets
                 _animator.SetLayerWeight(2, 1);
                 _animator.SetLayerWeight(0, 0);
             }
-            changingGun = weaponSwitching.GunSwaping();   
+            changingGun = weaponSwitching.GunSwaping();
+            weaponSwitching.CheckRunning(running);
             //pistolRig.weight = Mathf.Lerp(pistolRig.weight, pistolRig.weight, Time.deltaTime * 100f);
             //rifleRig.weight = Mathf.Lerp(rifleRig.weight, rifleRig.weight, Time.deltaTime * 100f);
         }
@@ -759,6 +760,13 @@ namespace StarterAssets
             //if(_animationBlend <= 0)
             //_animator.SetBool("Rifle Idle Firing", state);
         }
-       
+       public void GunSwapingGunChange()
+       {
+            weaponSwitching.GunSwapVisualTake();
+       }
+        public void GunInHand()
+        {
+            weaponSwitching.GunHandTrue();
+        }
     }
 }

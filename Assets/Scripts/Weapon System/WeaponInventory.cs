@@ -14,14 +14,15 @@ public class WeaponInventory : MonoBehaviour
     /// Currently equipped index.
     private int equippedIndex = -1;
 
+    bool gunInHand = false;
     public void Init(int equippedAtStart = 0)
     {
         //Cache all weapons. Beware that weapons need to be parented to the object this component is on!
         weapons = GetComponentsInChildren<WeaponManager>(true);
 
         //Disable all weapons. This makes it easier for us to only activate the one we need.
-        foreach (WeaponManager weapon in weapons)
-            weapon.gameObject.SetActive(false);
+        //foreach (WeaponManager weapon in weapons)
+            //weapon.gameObject.SetActive(false);
 
         //Equip.
         Equip(equippedAtStart);
@@ -42,15 +43,16 @@ public class WeaponInventory : MonoBehaviour
             return equipped;
 
         //Disable the currently equipped weapon, if we have one.
-        if (equipped != null)
-            equipped.gameObject.SetActive(false);
+        //if (equipped != null && !gunInHand)
+            //equipped.gameObject.SetActive(false);
 
         //Update index.
         equippedIndex = index;
         //Update equipped.
         equipped = weapons[equippedIndex];
         //Activate the newly-equipped weapon.
-        equipped.gameObject.SetActive(true);
+        //if(gunInHand)
+        //    equipped.gameObject.SetActive(true);
 
         //Return.
         return equipped;
@@ -76,7 +78,10 @@ public class WeaponInventory : MonoBehaviour
         //Return.
         return newIndex;
     }
-
+    public void GunCheck(bool state)
+    {
+        gunInHand = state;
+    }
     public WeaponManager GetEquipped() => equipped;
     public int GetEquippedIndex() => equippedIndex;
 }
