@@ -22,6 +22,7 @@ public class WeaponSwitching : MonoBehaviour
 
     bool running = false;
     bool gunInHand = true;
+    [SerializeField] float smoothSpeed = 80f;
     // Start is called before the first frame update
     void Start()
     {        
@@ -43,19 +44,24 @@ public class WeaponSwitching : MonoBehaviour
            if(selectedWeapon == 1)
            {
                 //anim.SetLayerWeight(4,1);
-                anim.SetLayerWeight(4, Mathf.Lerp(anim.GetLayerWeight(4), 1f, Time.deltaTime * 80f));
-                anim.SetLayerWeight(5, Mathf.Lerp(anim.GetLayerWeight(5), 0f, Time.deltaTime * 80f));
+                anim.SetLayerWeight(4, Mathf.Lerp(anim.GetLayerWeight(4), 1f, Time.deltaTime * smoothSpeed));
+                anim.SetLayerWeight(5, Mathf.Lerp(anim.GetLayerWeight(5), 0f, Time.deltaTime * smoothSpeed));
                 anim.SetBool("Gun Changing", true);
-                rifleRig.weight = 0f;
-                pistolRig.weight = 0f;
+
+                rifleRig.weight = Mathf.Lerp(1, 0,  Time.deltaTime * smoothSpeed);
+                pistolRig.weight = Mathf.Lerp(1, 0, Time.deltaTime * smoothSpeed);
+                //rifleRig.weight = 0f;
+                //pistolRig.weight = 0f;
            }
            else
            {
-                anim.SetLayerWeight(5, Mathf.Lerp(anim.GetLayerWeight(5), 1f, Time.deltaTime * 80f));
-                anim.SetLayerWeight(4, Mathf.Lerp(anim.GetLayerWeight(4), 0f, Time.deltaTime * 80f));
+                anim.SetLayerWeight(5, Mathf.Lerp(anim.GetLayerWeight(5), 1f, Time.deltaTime * smoothSpeed));
+                anim.SetLayerWeight(4, Mathf.Lerp(anim.GetLayerWeight(4), 0f, Time.deltaTime * smoothSpeed));
                 anim.SetBool("Gun Changing", true);
-                rifleRig.weight = 0f;
-                pistolRig.weight = 0f;
+                rifleRig.weight = Mathf.Lerp(1, 0, Time.deltaTime * smoothSpeed);
+                pistolRig.weight = Mathf.Lerp(1, 0, Time.deltaTime * smoothSpeed);
+               // rifleRig.weight = 0f;
+                //pistolRig.weight = 0f;
            }
             
         }
@@ -63,31 +69,31 @@ public class WeaponSwitching : MonoBehaviour
         {
             if(selectedWeapon == 1)
             {
-                anim.SetLayerWeight(4, Mathf.Lerp(anim.GetLayerWeight(4), 0f, Time.deltaTime * 80f));
+                anim.SetLayerWeight(4, Mathf.Lerp(anim.GetLayerWeight(4), 0f, Time.deltaTime * smoothSpeed));
                 anim.SetBool("Gun Changing", false);
                 if (selectedWeapon == 1)
                 {
                     if(!running)
-                        pistolRig.weight = 1f;
+                        pistolRig.weight = Mathf.Lerp(1, 1, Time.deltaTime * smoothSpeed);
                     else
-                        pistolRig.weight = 0f;
-                    rifleRig.weight = 0f;
+                        pistolRig.weight = Mathf.Lerp(1, 0, Time.deltaTime * smoothSpeed);
+                    rifleRig.weight = Mathf.Lerp(1, 0, Time.deltaTime * smoothSpeed);
                 }
 
             }
             else
             {
-                anim.SetLayerWeight(5, Mathf.Lerp(anim.GetLayerWeight(5), 0f, Time.deltaTime * 80f));
+                anim.SetLayerWeight(5, Mathf.Lerp(anim.GetLayerWeight(5), 0f, Time.deltaTime * smoothSpeed));
                 anim.SetBool("Gun Changing", false);
                 if (selectedWeapon == 1)
                 {
-                    pistolRig.weight = 1f;
-                    rifleRig.weight = 0f;
+                    pistolRig.weight = Mathf.Lerp(1, 1, Time.deltaTime * smoothSpeed);
+                    rifleRig.weight = Mathf.Lerp(1, 0, Time.deltaTime * smoothSpeed);
                 }
                 else
                 {
-                    pistolRig.weight = 0f;
-                    rifleRig.weight = 1f;
+                    pistolRig.weight = Mathf.Lerp(1, 0, Time.deltaTime * smoothSpeed);
+                    rifleRig.weight = Mathf.Lerp(1, 1, Time.deltaTime * smoothSpeed);
                 }
             }
 
