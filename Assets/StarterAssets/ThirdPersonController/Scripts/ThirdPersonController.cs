@@ -143,6 +143,7 @@ namespace StarterAssets
         float mouseX , mouseY;
         [SerializeField] ShooterController shooterController;
         [SerializeField] WeaponSwitching weaponSwitching;
+        [SerializeField] float smoothSpeed = 80f;
         private bool IsCurrentDeviceMouse
         {
             get
@@ -233,6 +234,7 @@ namespace StarterAssets
                     firedBullet = false;                   
                 }
             }
+            
             Move();
             if (shooterController.ReturnGuntype() == 0)
             {
@@ -256,13 +258,18 @@ namespace StarterAssets
             //if(screenTouch.rightFingerID != -1)
             if (shooterController.ReturnGuntype() == 0)
             {
-                _animator.SetLayerWeight(0, 1);
-                _animator.SetLayerWeight(2, 0);
+                
+                _animator.SetLayerWeight(4, Mathf.Lerp(_animator.GetLayerWeight(4), 1f, Time.deltaTime * smoothSpeed));
+                _animator.SetLayerWeight(2, Mathf.Lerp(_animator.GetLayerWeight(2), 0f, Time.deltaTime * smoothSpeed));
+                //_animator.SetLayerWeight(0, 1);
+                //_animator.SetLayerWeight(2, 0);
             }
             else
             {
-                _animator.SetLayerWeight(2, 1);
-                _animator.SetLayerWeight(0, 0);
+                _animator.SetLayerWeight(2, Mathf.Lerp(_animator.GetLayerWeight(2), 1f, Time.deltaTime * smoothSpeed));
+                _animator.SetLayerWeight(0, Mathf.Lerp(_animator.GetLayerWeight(0), 0f, Time.deltaTime * smoothSpeed));
+                //_animator.SetLayerWeight(2, 1);
+                //_animator.SetLayerWeight(0, 0);
             }
             changingGun = weaponSwitching.GunSwaping();
             weaponSwitching.CheckRunning(running);
@@ -371,15 +378,19 @@ namespace StarterAssets
                 {
                     if(!firedBullet)
                     {
-                        _animator.SetLayerWeight(1, 0);
-                        _animator.SetLayerWeight(3, 0);
+                        _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime * smoothSpeed));
+                        _animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
+                        //_animator.SetLayerWeight(1, 0);
+                       // _animator.SetLayerWeight(3, 0);
                     }
                     
                 }
                 else
                 {
-                    _animator.SetLayerWeight(1, 1);
-                    _animator.SetLayerWeight(3, 0);
+                    _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f, Time.deltaTime * smoothSpeed));
+                    _animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
+                    //_animator.SetLayerWeight(1, 1);
+                    //_animator.SetLayerWeight(3, 0);
                 }
                     
             }
@@ -389,15 +400,19 @@ namespace StarterAssets
                 {
                     if (!firedBullet)
                     {
-                        _animator.SetLayerWeight(1, 0);
-                        _animator.SetLayerWeight(3, 0);
+                        _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime * smoothSpeed));
+                        _animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
+                        //_animator.SetLayerWeight(1, 0);
+                        //_animator.SetLayerWeight(3, 0);
                     }
                        
                 }
                 else
                 {
-                    _animator.SetLayerWeight(3, 1);
-                    _animator.SetLayerWeight(1, 0);
+                    _animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 1f, Time.deltaTime * smoothSpeed));
+                    _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime * smoothSpeed));
+                    //_animator.SetLayerWeight(3, 1);
+                    //_animator.SetLayerWeight(1, 0);
                     
                 }
 
@@ -467,9 +482,10 @@ namespace StarterAssets
 
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
-            // move the player
-            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) * neutralize +
-                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+                // move the player
+                _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) * neutralize +
+                                 new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+            
 
             // update animator if using character
             if (_hasAnimator)
@@ -744,13 +760,17 @@ namespace StarterAssets
             firedBullet = state;
             if (shooterController.ReturnGuntype() == 0)
             {
-                _animator.SetLayerWeight(1, 1);
-                _animator.SetLayerWeight(3, 0);
+                _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f, Time.deltaTime * smoothSpeed));
+                _animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
+                //_animator.SetLayerWeight(1, 1);
+                //_animator.SetLayerWeight(3, 0);
             }
             else
             {
-                _animator.SetLayerWeight(3, 1); 
-                _animator.SetLayerWeight(1, 0);
+                _animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 1f, Time.deltaTime * smoothSpeed));
+                _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime * smoothSpeed));
+                //_animator.SetLayerWeight(3, 1); 
+                //_animator.SetLayerWeight(1, 0);
             }
                 
         }
@@ -760,13 +780,13 @@ namespace StarterAssets
             //if(_animationBlend <= 0)
             //_animator.SetBool("Rifle Idle Firing", state);
         }
-       public void GunSwapingGunChange()
+       public void GunSwapingGunChangeIn()
        {
-            weaponSwitching.GunSwapVisualTake();
+            weaponSwitching.GunSwapVisualTakeIn();
        }
-        public void GunInHand()
+        public void GunSwapingGunChangeOut()
         {
-            weaponSwitching.GunHandTrue();
+            weaponSwitching.GunSwapVisualTakeOut();
         }
     }
 }

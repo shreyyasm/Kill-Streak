@@ -31,8 +31,10 @@ public class WeaponSwitching : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Animator anim = animator.GetComponent<Animator>();
+        ChangeGunIndex();
         GunSwaping();
-        if (animator.GetComponent<Animator>().GetCurrentAnimatorStateInfo(4).IsName("Rifle To Pistol Locomotions") && animator.GetComponent<Animator>().GetCurrentAnimatorStateInfo(4).normalizedTime > 1f)
+        if (anim.GetCurrentAnimatorStateInfo(4).IsName("Rifle To Pistol Locomotions") && anim.GetCurrentAnimatorStateInfo(4).normalizedTime > 1f)
         {
             gunChanging = false;          
         }
@@ -40,15 +42,18 @@ public class WeaponSwitching : MonoBehaviour
         {
            if(selectedWeapon == 1)
            {
-                animator.GetComponent<Animator>().SetLayerWeight(4, 1);
-                animator.GetComponent<Animator>().SetBool("Gun Changing", true);
+                //anim.SetLayerWeight(4,1);
+                anim.SetLayerWeight(4, Mathf.Lerp(anim.GetLayerWeight(4), 1f, Time.deltaTime * 80f));
+                anim.SetLayerWeight(5, Mathf.Lerp(anim.GetLayerWeight(5), 0f, Time.deltaTime * 80f));
+                anim.SetBool("Gun Changing", true);
                 rifleRig.weight = 0f;
                 pistolRig.weight = 0f;
            }
            else
            {
-                animator.GetComponent<Animator>().SetLayerWeight(5, 1);
-                animator.GetComponent<Animator>().SetBool("Gun Changing", true);
+                anim.SetLayerWeight(5, Mathf.Lerp(anim.GetLayerWeight(5), 1f, Time.deltaTime * 80f));
+                anim.SetLayerWeight(4, Mathf.Lerp(anim.GetLayerWeight(4), 0f, Time.deltaTime * 80f));
+                anim.SetBool("Gun Changing", true);
                 rifleRig.weight = 0f;
                 pistolRig.weight = 0f;
            }
@@ -58,8 +63,8 @@ public class WeaponSwitching : MonoBehaviour
         {
             if(selectedWeapon == 1)
             {
-                animator.GetComponent<Animator>().SetLayerWeight(4, 0);
-                animator.GetComponent<Animator>().SetBool("Gun Changing", false);
+                anim.SetLayerWeight(4, Mathf.Lerp(anim.GetLayerWeight(4), 0f, Time.deltaTime * 80f));
+                anim.SetBool("Gun Changing", false);
                 if (selectedWeapon == 1)
                 {
                     if(!running)
@@ -72,8 +77,8 @@ public class WeaponSwitching : MonoBehaviour
             }
             else
             {
-                animator.GetComponent<Animator>().SetLayerWeight(5, 0);
-                animator.GetComponent<Animator>().SetBool("Gun Changing", false);
+                anim.SetLayerWeight(5, Mathf.Lerp(anim.GetLayerWeight(5), 0f, Time.deltaTime * 80f));
+                anim.SetBool("Gun Changing", false);
                 if (selectedWeapon == 1)
                 {
                     pistolRig.weight = 1f;
@@ -112,45 +117,49 @@ public class WeaponSwitching : MonoBehaviour
     {       
         if(!gunChanging)
         {
-            gunChanging = true;
-            int previousSelectedWeapon = selectedWeapon;
-            if (!gunChanged)
+            if(Input.GetMouseButtonDown(1))
             {
-                gunChanged = true;
-                if (selectedWeapon >= transform.childCount - 1)
+                gunChanging = true;
+                int previousSelectedWeapon = selectedWeapon;
+                if (!gunChanged)
                 {
-                    selectedWeapon = 0;
+                    gunChanged = true;
+                    if (selectedWeapon >= transform.childCount - 1)
+                    {
+                        selectedWeapon = 0;
+                    }
+                    else
+                    {
+                        selectedWeapon++;
+                    }
                 }
                 else
                 {
-                    selectedWeapon++;
+                    gunChanged = false;
+                    if (selectedWeapon <= transform.childCount - 1)
+                    {
+                        selectedWeapon = 0;
+                    }
+                    else
+                    {
+                        selectedWeapon--;
+                    }
                 }
-            }
-            else
-            {
-                gunChanged = false;
-                if (selectedWeapon <= transform.childCount - 1)
+                if (previousSelectedWeapon != selectedWeapon)
                 {
-                    selectedWeapon = 0;
+                    SelectedWeapon();
                 }
-                else
-                {
-                    selectedWeapon--;
-                }
+                shooterController.Equip(selectedWeapon);
+                shooterController.GunChanged();
             }
-            if (previousSelectedWeapon != selectedWeapon)
-            {
-                SelectedWeapon();
-            }
-            shooterController.Equip(selectedWeapon);
-            shooterController.GunChanged();
+            
         }           
     }
     public bool GunSwaping()
     {
         return gunChanging;
     }
-    public void GunSwapVisualTake()
+    public void GunSwapVisualTakeIn()
     {
 
         if (animator.GetComponent<Animator>().GetLayerWeight(4) == 1)
@@ -176,7 +185,7 @@ public class WeaponSwitching : MonoBehaviour
         }
         
     }
-    public void GunHandTrue()
+    public void GunSwapVisualTakeOut()
     {
         if (animator.GetComponent<Animator>().GetLayerWeight(4) == 1)
         {
