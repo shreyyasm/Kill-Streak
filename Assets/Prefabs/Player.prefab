@@ -562,7 +562,7 @@ Transform:
   - {fileID: 369840955499229006}
   m_Father: {fileID: 369840956232603509}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0.023058625, y: -0.43873432, z: -0.03658349}
+  m_LocalEulerAnglesHint: {x: 0.023058414, y: -0.43873444, z: -0.03658283}
 --- !u!114 &688732149129076785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1332,7 +1332,11 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Elbow_R'\n\tTransform 'Neck'\n\tTransform 'Elbow_L'\n\tTransform
+    'Head'\n\tTransform 'Hand_L'\n\tTransform 'Shoulder_L'\n\tTransform 'Clavicle_R'\n\tTransform
+    'Shoulder_R'\n\tTransform 'Spine_01'\n\tTransform 'Hips'\n\tand more ..."
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -2082,8 +2086,8 @@ MonoBehaviour:
     parentPath: 
   originalIkData: []
   selectionData: []
-  lastSelectAnimationClip: {fileID: 7400000, guid: ed29a93d33e1c6045852bdeaa046b93b,
-    type: 2}
+  lastSelectAnimationClip: {fileID: -203655887218126122, guid: 18abe6e32ae3f1a4cb8f5e8ceff5b5dc,
+    type: 3}
   handPoseList: []
   blendShapeList: []
 --- !u!1 &369840954659146908

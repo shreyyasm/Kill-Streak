@@ -33,7 +33,7 @@ public class WeaponSwitching : MonoBehaviour
     void Update()
     {
         Animator anim = animator.GetComponent<Animator>();
-        //ChangeGunIndexNew();
+        ChangeGunIndexNew();
         GunSwaping();
         if (anim.GetCurrentAnimatorStateInfo(4).IsName("Rifle To Pistol Locomotions") && anim.GetCurrentAnimatorStateInfo(4).normalizedTime > 1f)
         {
