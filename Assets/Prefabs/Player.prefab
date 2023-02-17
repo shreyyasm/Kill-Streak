@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 0.8
+  m_Weight: 1
   m_Data:
     m_ConstrainedObject: {fileID: 369840956232603509}
     m_SourceObjects:
@@ -73,7 +73,7 @@ MonoBehaviour:
       m_Item7:
         transform: {fileID: 0}
         weight: 0
-    m_Offset: {x: 0, y: 33.5, z: 0}
+    m_Offset: {x: 0, y: 23, z: 0}
     m_MinLimit: -180
     m_MaxLimit: 180
     m_AimAxis: 0
@@ -1598,8 +1598,7 @@ MonoBehaviour:
   _scenePathHash: 394288251
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 7807759643866311769
-  _sceneNetworkObjects:
-  - {fileID: 6129773666652159440}
+  _sceneNetworkObjects: []
 --- !u!114 &6137983469652884338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13525,7 +13524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 0.9
+  m_Weight: 1
   m_Data:
     m_ConstrainedObject: {fileID: 369840956135728464}
     m_SourceObjects:
@@ -17848,7 +17847,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1.3499756, y: 1.3500061}
+  m_AnchoredPosition: {x: 1.3500366, y: 1.3500061}
   m_SizeDelta: {x: 270, y: 270}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &8278497867833367557

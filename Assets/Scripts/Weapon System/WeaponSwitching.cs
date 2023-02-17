@@ -33,7 +33,7 @@ public class WeaponSwitching : MonoBehaviour
     void Update()
     {
         Animator anim = animator.GetComponent<Animator>();
-        ChangeGunIndex();
+        //ChangeGunIndexNew();
         GunSwaping();
         if (anim.GetCurrentAnimatorStateInfo(4).IsName("Rifle To Pistol Locomotions") && anim.GetCurrentAnimatorStateInfo(4).normalizedTime > 1f)
         {
@@ -123,7 +123,46 @@ public class WeaponSwitching : MonoBehaviour
     {       
         if(!gunChanging)
         {
-            if(Input.GetMouseButtonDown(1))
+
+            gunChanging = true;
+            int previousSelectedWeapon = selectedWeapon;
+            if (!gunChanged)
+            {
+                gunChanged = true;
+                if (selectedWeapon >= transform.childCount - 1)
+                {
+                    selectedWeapon = 0;
+                }
+                else
+                {
+                    selectedWeapon++;
+                }
+            }
+            else
+            {
+                gunChanged = false;
+                if (selectedWeapon <= transform.childCount - 1)
+                {
+                    selectedWeapon = 0;
+                }
+                else
+                {
+                    selectedWeapon--;
+                }
+            }
+            if (previousSelectedWeapon != selectedWeapon)
+            {
+                SelectedWeapon();
+            }
+            shooterController.Equip(selectedWeapon);
+            shooterController.GunChanged();
+        }           
+    }
+    public void ChangeGunIndexNew()
+    {
+        if (!gunChanging)
+        {
+            if (Input.GetMouseButtonDown(1))
             {
                 gunChanging = true;
                 int previousSelectedWeapon = selectedWeapon;
@@ -158,8 +197,8 @@ public class WeaponSwitching : MonoBehaviour
                 shooterController.Equip(selectedWeapon);
                 shooterController.GunChanged();
             }
-            
-        }           
+
+        }
     }
     public bool GunSwaping()
     {

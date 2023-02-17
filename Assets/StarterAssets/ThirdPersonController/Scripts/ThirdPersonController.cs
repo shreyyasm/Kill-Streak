@@ -218,8 +218,10 @@ namespace StarterAssets
                 return;
 
            
-            if(!changingGun)
+            ////if(!changingGun)
                 JumpAndGravity();
+            //if(changingGun)
+            //    Grounded = false;
             GroundedCheck();
             
     

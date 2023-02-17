@@ -944,7 +944,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Pistol To Rifle Locomotions
-  m_Speed: -2.3
+  m_Speed: -2.4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1107095128534894323}
@@ -1794,7 +1794,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Rifle To Pistol Locomotions
-  m_Speed: 2.3
+  m_Speed: 2.4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6043894905739900460}
