@@ -50,8 +50,8 @@ public class WeaponSwitching : MonoBehaviour
 
                 //rifleRig.weight = Mathf.Lerp(1, 0,  Time.deltaTime * smoothSpeed);
                 //pistolRig.weight = Mathf.Lerp(1, 0, Time.deltaTime * smoothSpeed);
-                rifleRig.weight = 0f;
-                pistolRig.weight = 0f;
+                //rifleRig.weight = 0f;
+                //pistolRig.weight = 0f;
            }
            else
            {
@@ -60,8 +60,8 @@ public class WeaponSwitching : MonoBehaviour
                 anim.SetBool("Gun Changing", true);
                 //rifleRig.weight = Mathf.Lerp(1, 0, Time.deltaTime * smoothSpeed);
                 //pistolRig.weight = Mathf.Lerp(1, 0, Time.deltaTime * smoothSpeed);
-                rifleRig.weight = 0f;
-                pistolRig.weight = 0f;
+                //rifleRig.weight = 0f;
+                //pistolRig.weight = 0f;
            }
             
         }
@@ -71,30 +71,30 @@ public class WeaponSwitching : MonoBehaviour
             {
                 anim.SetLayerWeight(4, 0);
                 anim.SetBool("Gun Changing", false);
-                if (selectedWeapon == 1)
-                {
-                    if(!running)
-                        pistolRig.weight = 1f;
-                    else
-                        pistolRig.weight = 0f;
-                    rifleRig.weight = 0f;
-                }
+                //if (selectedWeapon == 1)
+                //{
+                //    if(!running)
+                //        pistolRig.weight = 1f;
+                //    else
+                //        pistolRig.weight = 0f;
+                //    rifleRig.weight = 0f;
+                //}
 
             }
             else
             {
                 anim.SetLayerWeight(5,0);
                 anim.SetBool("Gun Changing", false);
-                if (selectedWeapon == 1)
-                {
-                    pistolRig.weight = 1f;
-                    rifleRig.weight = 0f;
-                }
-                else
-                {
-                    pistolRig.weight = 0f;
-                    rifleRig.weight = 1f;
-                }
+                //if (selectedWeapon == 1)
+                //{
+                //    pistolRig.weight = 1f;
+                //    rifleRig.weight = 0f;
+                //}
+                //else
+                //{
+                //    pistolRig.weight = 0f;
+                //    rifleRig.weight = 1f;
+                //}
             }
 
 

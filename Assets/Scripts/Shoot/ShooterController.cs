@@ -67,6 +67,7 @@ public class ShooterController : NetworkBehaviour
 
     bool cursorLocked;
     bool holdingButtonFire;
+    bool changingGun = false;
     float lastShotTime;
     private WeaponManager equippedWeapon;
 
@@ -107,6 +108,20 @@ public class ShooterController : NetworkBehaviour
         AimMovenment();
         //Aim();
         //Fire();
+        if (changingGun)
+        {          
+            Aiming = false;
+            animator.SetLayerWeight(1, 0);
+            animator.SetLayerWeight(3, 0);
+            thirdPersonController.Aiming(false);
+            screenTouch.SetSensitivity(8);
+            if (!FPSMode)
+            {
+                aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = false;
+                thirdPersonController.SetSensitivity(normalSensitivity);
+            }
+        }
+           
         equippedWeapon = GetInventory().GetEquipped();
         gunChanging = weaponSwitching.GunSwaping();
     }
@@ -149,41 +164,43 @@ public class ShooterController : NetworkBehaviour
     }
     public void Aim()
     {
-        if (!Aiming)
-        {            
-            Aiming = true;
-            thirdPersonController.Aiming(true);
-            if (!FPSMode)
+        if(!changingGun)
+        {
+            if (!Aiming)
             {
-                aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = true;
-                thirdPersonController.SetSensitivity(aimSensitivity);
-                screenTouch.SetSensitivity(4);
+                Aiming = true;
+                thirdPersonController.Aiming(true);
+                if (!FPSMode)
+                {
+                    aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = true;
+                    thirdPersonController.SetSensitivity(aimSensitivity);
+                    screenTouch.SetSensitivity(4);
+                }
+                if (FPSMode)
+                {
+                    socket.transform.localPosition = vfxSpawnOffset;
+                }
+                if (gunType == 0)
+                    animator.SetLayerWeight(1, 1);
+                else
+                    animator.SetLayerWeight(3, 1);
             }
-            if (FPSMode)
-            {
-                socket.transform.localPosition = vfxSpawnOffset;
-            }
-            if(gunType == 0)
-                animator.SetLayerWeight(1, 1);
             else
-                animator.SetLayerWeight(3, 1);
-        }
-        else
-        {           
-            Aiming = false;
-            thirdPersonController.Aiming(false);
-            screenTouch.SetSensitivity(8);
-            if (!FPSMode)
             {
-                aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = false;
-                thirdPersonController.SetSensitivity(normalSensitivity);
+                Aiming = false;
+                thirdPersonController.Aiming(false);
+                screenTouch.SetSensitivity(8);
+                if (!FPSMode)
+                {
+                    aimVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = false;
+                    thirdPersonController.SetSensitivity(normalSensitivity);
+                }
+                if (gunType == 0)
+                    animator.SetLayerWeight(1, 0);
+                else
+                    animator.SetLayerWeight(3, 0);
             }
-            if (gunType == 0)
-                animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 100f));
-            else
-                animator.SetLayerWeight(3, Mathf.Lerp(animator.GetLayerWeight(3), 0f, Time.deltaTime * 100f));
         }
-        
         
     }
 
@@ -193,8 +210,11 @@ public class ShooterController : NetworkBehaviour
         {
             equippedWeapon.FireBullet(FPSMode, input);
             if (input == 1)
+            {
                 thirdPersonController.ShotFired(true);
-            thirdPersonController.FiringContinous(true);
+                thirdPersonController.FiringContinous(true);
+            }
+                
             if (input == 0)
                 thirdPersonController.FiringContinous(false);
         }
@@ -260,5 +280,9 @@ public class ShooterController : NetworkBehaviour
     {
         animator.SetLayerWeight(3, 0);
         animator.SetLayerWeight(1, 0);
+    }
+    public void CheckGunChanging(bool state)
+    {
+        changingGun = state;
     }
 }

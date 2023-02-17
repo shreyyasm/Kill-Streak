@@ -9,7 +9,7 @@ using UnityEngine.Animations.Rigging;
 
 public class WeaponManager : NetworkBehaviour
     {
-        enum GunType { Pistol, Rifle }
+        enum GunType {  Rifle = 0, Pistol = 1 }
         [SerializeField] GunType gunType;
 
         [Tooltip("Projectile Prefab. This is the prefab spawned when the weapon shoots.")]

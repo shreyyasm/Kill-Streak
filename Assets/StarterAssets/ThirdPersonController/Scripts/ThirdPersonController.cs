@@ -234,14 +234,24 @@ namespace StarterAssets
                     firedBullet = false;                   
                 }
             }
-            
             Move();
             if (shooterController.ReturnGuntype() == 0)
             {
                 if (!running)
                 {
-                    pistolRig.weight = 1f;
-                    rifleRig.weight = 0f;
+                    if(!changingGun)
+                    {
+                        rifleRig.weight = 1f;
+                        pistolRig.weight = 0f;
+                        
+                    }
+                    else
+                    {
+                        pistolRig.weight = 0f;
+                        rifleRig.weight = 0f;
+
+                    }
+                   
                 }
             }
 
@@ -249,9 +259,19 @@ namespace StarterAssets
             {
                 if (!running)
                 {
-                    rifleRig.weight = 1f;
-                    pistolRig.weight = 0f;
+                    if(!changingGun)
+                    {
+                        pistolRig.weight = 1f;
+                        rifleRig.weight = 0f;
+                       
+                    }
+                    else
+                    {
+                        pistolRig.weight = 0f;
+                        rifleRig.weight = 0f;
+                    }
                 }
+                
 
             }
             //MoveBasic();
@@ -259,20 +279,21 @@ namespace StarterAssets
             if (shooterController.ReturnGuntype() == 0)
             {
                 
-                _animator.SetLayerWeight(4, Mathf.Lerp(_animator.GetLayerWeight(4), 1f, Time.deltaTime * smoothSpeed));
-                _animator.SetLayerWeight(2, Mathf.Lerp(_animator.GetLayerWeight(2), 0f, Time.deltaTime * smoothSpeed));
-                //_animator.SetLayerWeight(0, 1);
-                //_animator.SetLayerWeight(2, 0);
+                //_animator.SetLayerWeight(4, Mathf.Lerp(_animator.GetLayerWeight(4), 1f, Time.deltaTime * smoothSpeed));
+                //_animator.SetLayerWeight(2, Mathf.Lerp(_animator.GetLayerWeight(2), 0f, Time.deltaTime * smoothSpeed));
+                _animator.SetLayerWeight(0, 1);
+                _animator.SetLayerWeight(2, 0);
             }
             else
             {
-                _animator.SetLayerWeight(2, Mathf.Lerp(_animator.GetLayerWeight(2), 1f, Time.deltaTime * smoothSpeed));
-                _animator.SetLayerWeight(0, Mathf.Lerp(_animator.GetLayerWeight(0), 0f, Time.deltaTime * smoothSpeed));
-                //_animator.SetLayerWeight(2, 1);
-                //_animator.SetLayerWeight(0, 0);
+                //_animator.SetLayerWeight(2, Mathf.Lerp(_animator.GetLayerWeight(2), 1f, Time.deltaTime * smoothSpeed));
+                //_animator.SetLayerWeight(0, Mathf.Lerp(_animator.GetLayerWeight(0), 0f, Time.deltaTime * smoothSpeed));
+                _animator.SetLayerWeight(2, 1);
+                _animator.SetLayerWeight(0, 0);
             }
             changingGun = weaponSwitching.GunSwaping();
             weaponSwitching.CheckRunning(running);
+            shooterController.CheckGunChanging(changingGun);
             //pistolRig.weight = Mathf.Lerp(pistolRig.weight, pistolRig.weight, Time.deltaTime * 100f);
             //rifleRig.weight = Mathf.Lerp(rifleRig.weight, rifleRig.weight, Time.deltaTime * 100f);
         }
@@ -378,19 +399,19 @@ namespace StarterAssets
                 {
                     if(!firedBullet)
                     {
-                        _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime * smoothSpeed));
-                        _animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
-                        //_animator.SetLayerWeight(1, 0);
-                       // _animator.SetLayerWeight(3, 0);
+                        //_animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime * smoothSpeed));
+                        //_animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
+                        _animator.SetLayerWeight(1, 0);
+                        _animator.SetLayerWeight(3, 0);
                     }
                     
                 }
                 else
                 {
-                    _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f, Time.deltaTime * smoothSpeed));
-                    _animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
-                    //_animator.SetLayerWeight(1, 1);
-                    //_animator.SetLayerWeight(3, 0);
+                    //_animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f, Time.deltaTime * smoothSpeed));
+                    //_animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
+                    _animator.SetLayerWeight(1, 1);
+                    _animator.SetLayerWeight(3, 0);
                 }
                     
             }
@@ -400,19 +421,19 @@ namespace StarterAssets
                 {
                     if (!firedBullet)
                     {
-                        _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime * smoothSpeed));
-                        _animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
-                        //_animator.SetLayerWeight(1, 0);
-                        //_animator.SetLayerWeight(3, 0);
+                        //_animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime * smoothSpeed));
+                        //_animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
+                        _animator.SetLayerWeight(1, 0);
+                        _animator.SetLayerWeight(3, 0);
                     }
                        
                 }
                 else
                 {
-                    _animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 1f, Time.deltaTime * smoothSpeed));
-                    _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime * smoothSpeed));
-                    //_animator.SetLayerWeight(3, 1);
-                    //_animator.SetLayerWeight(1, 0);
+                    //_animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 1f, Time.deltaTime * smoothSpeed));
+                    //_animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime * smoothSpeed));
+                    _animator.SetLayerWeight(3, 1);
+                    _animator.SetLayerWeight(1, 0);
                     
                 }
 
@@ -497,18 +518,18 @@ namespace StarterAssets
                 {
                     running = true;
                     pistolRig.weight = 0f;
-                   // rifleRig.weight = 0f;
+                    rifleRig.weight = 0f;
                    
                 }
                 else
                 {
                     running = false;
 
-                    if (shooterController.ReturnGuntype() == 0)
-                        pistolRig.weight = 1f;
+                    if(shooterController.ReturnGuntype() == 0)
+                        rifleRig.weight = 1f;
 
                     else
-                        rifleRig.weight = 1f;
+                        pistolRig.weight = 1f;
 
                 }
 
@@ -760,17 +781,17 @@ namespace StarterAssets
             firedBullet = state;
             if (shooterController.ReturnGuntype() == 0)
             {
-                _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f, Time.deltaTime * smoothSpeed));
-                _animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
-                //_animator.SetLayerWeight(1, 1);
-                //_animator.SetLayerWeight(3, 0);
+                //_animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f, Time.deltaTime * smoothSpeed));
+                //_animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
+                _animator.SetLayerWeight(1, 1);
+                _animator.SetLayerWeight(3, 0);
             }
             else
             {
-                _animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 1f, Time.deltaTime * smoothSpeed));
-                _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime * smoothSpeed));
-                //_animator.SetLayerWeight(3, 1); 
-                //_animator.SetLayerWeight(1, 0);
+                //_animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 1f, Time.deltaTime * smoothSpeed));
+                //_animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime * smoothSpeed));
+                _animator.SetLayerWeight(3, 1); 
+                _animator.SetLayerWeight(1, 0);
             }
                 
         }
