@@ -103,15 +103,16 @@ public class WeaponManager : NetworkBehaviour
             }
             shooterController.GunType((int)gunType);
             //SetText
-            //text.SetText(bulletsLeft + " / " + magazineSize);
-        }
+            text.SetText("Bullets "+bulletsLeft + " / " + magazineSize);
+            if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
+    }
         public void FireBullet(bool FPSMODE, float input)
         {
             inFPSMode = FPSMODE;
             //if (allowButtonHold) shooting = Input.GetMouseButton(0);
             //else shooting = Input.GetMouseButtonDown(0);
 
-            //if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
+            
 
             //Shoot
             if (allowButtonHold)
