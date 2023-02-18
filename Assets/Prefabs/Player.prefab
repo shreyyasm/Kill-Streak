@@ -1595,7 +1595,7 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 3
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 394288251
+  _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 7807759643866311769
   _sceneNetworkObjects: []
@@ -6857,7 +6857,7 @@ MonoBehaviour:
   range: 10000
   reloadTime: 1
   timeBetweenShots: 0
-  magazineSize: 12
+  magazineSize: 1000
   bulletsPerTap: 1
   allowButtonHold: 0
   offset: {x: 0, y: -0.1, z: 0}
@@ -16613,7 +16613,7 @@ MonoBehaviour:
   range: 10000
   reloadTime: 1
   timeBetweenShots: 0
-  magazineSize: 30
+  magazineSize: 1000
   bulletsPerTap: 1
   allowButtonHold: 1
   offset: {x: 0, y: -0.1, z: 0}
@@ -16906,7 +16906,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5298008036475235015
 RectTransform:
   m_ObjectHideFlags: 0
