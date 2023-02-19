@@ -181,6 +181,7 @@ namespace StarterAssets
         }
         private void Awake()
         {
+            
             // get a reference to our main camera
             if (_mainCamera == null)
             {

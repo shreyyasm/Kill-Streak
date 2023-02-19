@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d175e4138651a804b8bb980974557f21, type: 3}
-  m_Name: Rifle
+  m_Script: {fileID: 11500000, guid: 519ba32d49173fe4f9489334dd9513d9, type: 3}
+  m_Name: Pistol Ammoconfig
   m_EditorClassIdentifier: 
-  Hitmask:
-    serializedVersion: 2
-    m_Bits: 196609
-  Spread: {x: 0.2, y: 0.2, z: 0.2}
-  FireRate: 0.1
+  MaxAmmo: 60
+  ClipSize: 20
+  CurrentAmmo: 60
+  CurrentClipAmmo: 20

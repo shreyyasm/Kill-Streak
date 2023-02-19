@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94aae89d0e9d6b643b1dac9ee61b6262, type: 3}
-  m_Name: Pistol
+  m_Name: Pistol trailConfig
   m_EditorClassIdentifier: 
   Material: {fileID: 2100000, guid: fc90e75401f65404a8dd6be2d7eafc19, type: 2}
   WidthCurve:
@@ -19,12 +19,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.008130021
       value: 0.05
-      inSlope: 0.0069769826
-      outSlope: 0.0069769826
+      inSlope: -0.003289819
+      outSlope: -0.003289819
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.069105685
+      outWeight: 0.047425464
     - serializedVersion: 3
       time: 0.9440298
       value: 0
@@ -41,8 +41,8 @@ MonoBehaviour:
   MinVertexDistance: 0.1
   Color:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 0}
+    key0: {r: 1, g: 0.7921569, b: 0.24313726, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 0.5588235}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -58,8 +58,8 @@ MonoBehaviour:
     ctime6: 0
     ctime7: 0
     atime0: 0
-    atime1: 65535
-    atime2: 0
+    atime1: 51657
+    atime2: 65535
     atime3: 0
     atime4: 0
     atime5: 0
@@ -67,6 +67,6 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 0
     m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
+    m_NumAlphaKeys: 3
   MissDistance: 50
   SimulationSpeed: 50

@@ -12,12 +12,17 @@ public class GunScriptableObject : ScriptableObject
     public Vector3 SpawnPoint;
     public Vector3 SpawnRotation;
 
+    public DamageConfigScriptableObject DamageConfig;
+    public AmmoConfigScriptableObject AmmoConfig;
     public ShootConfigurationScriptableObject ShootConfig;
     public TrailConfigScriptableObject TrailConfig;
 
     private MonoBehaviour ActionMonoBehaviour;
     private GameObject Model;
     private float LastShootTime;
+    private float InitialClickTime;
+    private float StopShootingTime;
+    private bool LastFrameWantedToShoot;
     private ParticleSystem ShootSystem;
     private ObjectPool<TrailRenderer> TrailPool;
 
@@ -26,6 +31,9 @@ public class GunScriptableObject : ScriptableObject
         this.ActionMonoBehaviour = ActiveMonoBehaviour;
         LastShootTime = 0;
         TrailPool = new ObjectPool<TrailRenderer>(CreateTrail);
+
+        AmmoConfig.CurrentClipAmmo = AmmoConfig.ClipSize;
+        AmmoConfig.CurrentAmmo = AmmoConfig.MaxAmmo;
 
         Model = Instantiate(ModelPrefab);
         Model.transform.SetParent(Parent, false);
@@ -37,28 +45,33 @@ public class GunScriptableObject : ScriptableObject
 
     public void Shoot()
     {
+        if(Time.time - LastShootTime - ShootConfig.FireRate > Time.deltaTime)
+        {
+            InitialClickTime = Time.time;
+            float lastDuration = Mathf.Clamp(
+                (StopShootingTime - InitialClickTime),
+                0,
+                ShootConfig.MaxSpeedTime);
+            float lerpTime = (ShootConfig.RecoilRecoverySpeed - (Time.time - StopShootingTime))
+                / ShootConfig.RecoilRecoverySpeed;
+
+            InitialClickTime = Time.time - Mathf.Lerp(0,lastDuration, Mathf.Clamp01(lerpTime));
+
+        }
         if(Time.time > ShootConfig.FireRate + LastShootTime)
         {
             LastShootTime = Time.time;
             ShootSystem.Play();
-            Vector3 shootDirection = ShootSystem.transform.forward
-                + new Vector3(
-                    Random.Range(
-                        -ShootConfig.Spread.x,
-                        ShootConfig.Spread.x
-                        ),
-                    Random.Range(
-                        -ShootConfig.Spread.y,
-                        ShootConfig.Spread.y
-                        ),
-                    Random.Range(
-                        -ShootConfig.Spread.z,
-                        ShootConfig.Spread.z
-                        ));
-            shootDirection.Normalize();
+            Vector3 spreadAmount = ShootConfig.GetSpread(Time.time - InitialClickTime);
+            Model.transform.forward += Model.transform.TransformDirection(spreadAmount);
+
+            Vector3 ShootDirection = Model.transform.forward;
+
+            AmmoConfig.CurrentClipAmmo--;
+
             if(Physics.Raycast(
                 ShootSystem.transform.position,
-                shootDirection,
+                ShootDirection,
                 out RaycastHit hit,
                 float.MaxValue,
                 ShootConfig.Hitmask))
@@ -75,10 +88,39 @@ public class GunScriptableObject : ScriptableObject
                 ActionMonoBehaviour.StartCoroutine(
                     PlayTrail(
                         ShootSystem.transform.position,
-                        ShootSystem.transform.position + (shootDirection * TrailConfig.MissDistance),
+                        ShootSystem.transform.position + (ShootDirection * TrailConfig.MissDistance),
                         new RaycastHit()
                     ));
             }
+        }
+    }
+    public bool CanReload()
+    {
+        return AmmoConfig.CanReload();
+    }
+    public void EndReload()
+    {
+        AmmoConfig.Reload();
+    }
+    public void Tick(bool WantsToShoot)
+    {
+        Model.transform.localRotation = Quaternion.Lerp(
+            Model.transform.localRotation,
+            Quaternion.Euler(SpawnRotation),
+            Time.deltaTime * ShootConfig.RecoilRecoverySpeed);
+        if(WantsToShoot)
+        {
+            LastFrameWantedToShoot = true;
+            if(AmmoConfig.CurrentClipAmmo > 0)
+            {
+                Shoot();
+            }
+           
+        }
+        else if(!WantsToShoot && LastFrameWantedToShoot)
+        {
+            StopShootingTime = Time.time;
+            LastFrameWantedToShoot = false;
         }
     }
     IEnumerator PlayTrail(Vector3 StartPoint, Vector3 EndPoint, RaycastHit Hit)
@@ -106,6 +148,11 @@ public class GunScriptableObject : ScriptableObject
         if (Hit.collider != null)
         {
             //imapct system
+            if(Hit.collider.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.TakeDamage(DamageConfig.GetDamage(distance));
+                Debug.Log("Hit");
+            }
         }
         yield return new WaitForSeconds(TrailConfig.Duration);
         yield return null;
