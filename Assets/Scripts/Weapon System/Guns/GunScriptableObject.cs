@@ -16,15 +16,18 @@ public class GunScriptableObject : ScriptableObject
     public AmmoConfigScriptableObject AmmoConfig;
     public ShootConfigurationScriptableObject ShootConfig;
     public TrailConfigScriptableObject TrailConfig;
+    public AudioConfigScriptableObject AudioConfig;
 
     private MonoBehaviour ActionMonoBehaviour;
     private GameObject Model;
+    private AudioSource ShootingAudioSource;
     private float LastShootTime;
     private float InitialClickTime;
     private float StopShootingTime;
     private bool LastFrameWantedToShoot;
     private ParticleSystem ShootSystem;
     private ObjectPool<TrailRenderer> TrailPool;
+    [SerializeField] GameObject bloodImpactPrefabs;
 
     public void Spawn(Transform Parent, MonoBehaviour ActiveMonoBehaviour)
     {
@@ -41,9 +44,11 @@ public class GunScriptableObject : ScriptableObject
         Model.transform.localRotation = Quaternion.Euler(SpawnRotation);
 
         ShootSystem = Model.GetComponentInChildren<ParticleSystem>();
+        ShootingAudioSource = Model.GetComponent<AudioSource>();
     }
-
-    public void Shoot()
+    Vector3 aimDir;
+    Vector3 mouseWorldPosition;
+    public void TryToShoot()
     {
         if(Time.time - LastShootTime - ShootConfig.FireRate > Time.deltaTime)
         {
@@ -59,28 +64,55 @@ public class GunScriptableObject : ScriptableObject
 
         }
         if(Time.time > ShootConfig.FireRate + LastShootTime)
-        {
+        {      
             LastShootTime = Time.time;
+
+            if (AmmoConfig.CurrentClipAmmo == 0)
+            {
+                AudioConfig.PlayOutOfAmmoClip(ShootingAudioSource);
+                return;
+            }
+
             ShootSystem.Play();
+            AudioConfig.PlayShootingClip(ShootingAudioSource, AmmoConfig.CurrentClipAmmo == 1);
+
             Vector3 spreadAmount = ShootConfig.GetSpread(Time.time - InitialClickTime);
             Model.transform.forward += Model.transform.TransformDirection(spreadAmount);
+            
 
+            //Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            //Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+
+            //if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, ShootConfig.Hitmask))
+            //{
+            //    //debugTransform.position = raycastHit.point;
+            //    Model.transform.LookAt(raycastHit.point);
+            //}
+            Vector3 screenCenterPoint = new Vector3(Screen.width / 2f, Screen.height / 2f);
+            Camera.main.transform.forward += Camera.main.transform.TransformDirection(spreadAmount);
+            Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint) ;
+
+            //if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, ShootConfig.Hitmask))
+            //{
+            //    //debugTransform.position = raycastHit.point;
+            //    mouseWorldPosition = raycastHit.point;
+            //    aimDir = (mouseWorldPosition - Model.transform.position) + Model.transform.forward;
+            //}
             Vector3 ShootDirection = Model.transform.forward;
+            //mouseWorldPosition = Vector3.zero;
+
+
 
             AmmoConfig.CurrentClipAmmo--;
 
-            if(Physics.Raycast(
-                ShootSystem.transform.position,
-                ShootDirection,
-                out RaycastHit hit,
-                float.MaxValue,
-                ShootConfig.Hitmask))
+            if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, ShootConfig.Hitmask))
             {
+                //Model.transform.rotation = hit.transform.rotation;
                 ActionMonoBehaviour.StartCoroutine(
                     PlayTrail(
                         ShootSystem.transform.position,
-                        hit.point,
-                        hit
+                         raycastHit.point,
+                         raycastHit
                     ));
             }
             else
@@ -98,6 +130,10 @@ public class GunScriptableObject : ScriptableObject
     {
         return AmmoConfig.CanReload();
     }
+    public void StartReloading()
+    {
+        AudioConfig.PlayReloadClip(ShootingAudioSource);
+    }
     public void EndReload()
     {
         AmmoConfig.Reload();
@@ -111,10 +147,7 @@ public class GunScriptableObject : ScriptableObject
         if(WantsToShoot)
         {
             LastFrameWantedToShoot = true;
-            if(AmmoConfig.CurrentClipAmmo > 0)
-            {
-                Shoot();
-            }
+            TryToShoot();
            
         }
         else if(!WantsToShoot && LastFrameWantedToShoot)
@@ -147,8 +180,12 @@ public class GunScriptableObject : ScriptableObject
 
         if (Hit.collider != null)
         {
+            GameObject VFX = Instantiate(bloodImpactPrefabs, Hit.transform.position,
+                Quaternion.identity);
+            //SpawnVFX(VFX.gameObject, this);
+           //DespawnBullet();
             //imapct system
-            if(Hit.collider.TryGetComponent(out IDamageable damageable))
+            if (Hit.collider.TryGetComponent(out IDamageable damageable))
             {
                 damageable.TakeDamage(DamageConfig.GetDamage(distance));
                 Debug.Log("Hit");

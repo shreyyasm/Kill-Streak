@@ -91,7 +91,8 @@ public class WeaponManager : NetworkBehaviour
             particles = flash.GetComponent<ParticleSystem>();
             
         }
-        private void Update()
+   
+    private void Update()
         {
             spawnedFlashLightPrefab.transform.localPosition = offset;
             //MyInput();
@@ -102,9 +103,9 @@ public class WeaponManager : NetworkBehaviour
                 bulletSpawnPosition.transform.localPosition = vfxSpawnOffset;
             }
             shooterController.GunType((int)gunType);
-            //SetText
-            //text.SetText("Bullets "+bulletsLeft + " / " + magazineSize);
-            //if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
+        //SetText
+        //text.SetText("Bullets "+bulletsLeft + " / " + magazineSize);
+        //if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
     }
         public void FireBullet(bool FPSMODE, float input)
         {

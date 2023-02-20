@@ -32,7 +32,7 @@ public class PlayerAction : MonoBehaviour
 
         if (ShouldManualReload() || ShouldAutoReload())
         {
-            //GunSelector.ActiveGun.StartReloading();
+            GunSelector.ActiveGun.StartReloading();
             IsReloading = true;
             PlayerAnimator.SetTrigger("Reload");
             //InverseKinematics.HandIKAmount = 0.25f;

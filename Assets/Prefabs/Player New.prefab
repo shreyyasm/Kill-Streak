@@ -7942,7 +7942,8 @@ MonoBehaviour:
   _scenePathHash: 394288251
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 15891369391496135281
-  _sceneNetworkObjects: []
+  _sceneNetworkObjects:
+  - {fileID: 7725903799504524285}
 --- !u!114 &7712633507376764255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8480,8 +8481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GunSelector: {fileID: 4478469456866918225}
-  AmmoConfig: {fileID: 11400000, guid: 92206e180190e8e49bd4d688847bdd38, type: 2}
-  AutoReload: 1
+  AutoReload: 0
   InverseKinematics: {fileID: 4478469456866918224}
   PlayerAnimator: {fileID: 4253447940391531743}
 --- !u!1 &4253447940394132145
