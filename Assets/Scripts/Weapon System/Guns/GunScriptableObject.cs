@@ -29,7 +29,11 @@ public class GunScriptableObject : ScriptableObject
     private ObjectPool<TrailRenderer> TrailPool;
     private ObjectPool<Bullet> BulletPool;
     private bool LastFrameWantedToShoot;
-
+    public bool Automatic;
+    bool Fired;
+    GameObject fpsVirtualCamera;
+    GameObject aimVirtualCamera;
+    GameObject followVirtualCamera;
     /// <summary>
     /// Spawns the Gun Model into the scene
     /// </summary>
@@ -61,6 +65,10 @@ public class GunScriptableObject : ScriptableObject
 
         ShootingAudioSource = Model.GetComponent<AudioSource>();
         ShootSystem = Model.GetComponentInChildren<ParticleSystem>();
+
+        aimVirtualCamera = GameObject.FindWithTag("Aim Camera");
+        followVirtualCamera = GameObject.FindWithTag("Follow Camera");
+        //fpsVirtualCamera = GameObject.FindWithTag("FPS Camera");
     }
 
     /// <summary>
@@ -78,7 +86,10 @@ public class GunScriptableObject : ScriptableObject
         if (WantsToShoot)
         {
             LastFrameWantedToShoot = true;
-            TryToShoot();
+            if(Automatic)
+                TryToShoot();
+            else
+                TryToShootManual();
         }
 
         if (!WantsToShoot && LastFrameWantedToShoot)
@@ -156,8 +167,12 @@ public class GunScriptableObject : ScriptableObject
             Camera.main.transform.forward += Camera.main.transform.TransformDirection(spreadAmount);
             ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
-            AmmoConfig.CurrentClipAmmo--;
+            followVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+            aimVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+            //fpsVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
 
+            AmmoConfig.CurrentClipAmmo--;
+            Fired = false;
             if (ShootConfig.IsHitscan)
             {
                 DoHitscanShoot(shootDirection);
@@ -168,7 +183,62 @@ public class GunScriptableObject : ScriptableObject
             }
         }
     }
+    private void TryToShootManual()
+    {
+        if(Fired)
+        {
+            if (Time.time - LastShootTime - ShootConfig.FireRate > Time.deltaTime)
+            {
+                float lastDuration = Mathf.Clamp(
+                    0,
+                    (StopShootingTime - InitialClickTime),
+                    ShootConfig.MaxSpreadTime
+                );
+                float lerpTime = (ShootConfig.RecoilRecoverySpeed - (Time.time - StopShootingTime))
+                    / ShootConfig.RecoilRecoverySpeed;
 
+                InitialClickTime = Time.time - Mathf.Lerp(0, lastDuration, Mathf.Clamp01(lerpTime));
+            }
+
+            if (Time.time > ShootConfig.FireRate + LastShootTime)
+            {
+                LastShootTime = Time.time;
+                if (AmmoConfig.CurrentClipAmmo == 0)
+                {
+                    AudioConfig.PlayOutOfAmmoClip(ShootingAudioSource);
+                    return;
+                }
+
+                ShootSystem.Play();
+                AudioConfig.PlayShootingClip(ShootingAudioSource, AmmoConfig.CurrentClipAmmo == 1);
+
+                Vector3 spreadAmount = ShootConfig.GetSpread(Time.time - InitialClickTime);
+                Model.transform.forward += Model.transform.TransformDirection(spreadAmount);
+
+                Vector3 shootDirection = ShootSystem.transform.forward;
+
+                Vector3 screenCenterPoint = new Vector3(Screen.width / 2f, Screen.height / 2f);
+                Camera.main.transform.forward += Camera.main.transform.TransformDirection(spreadAmount);
+                ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+
+                followVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+                aimVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+                //fpsVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+                AmmoConfig.CurrentClipAmmo--;
+                Fired = false;
+
+                if (ShootConfig.IsHitscan)
+                {
+                    DoHitscanShoot(shootDirection);
+                }
+                else
+                {
+                    DoProjectileShoot(shootDirection);
+                }
+            }
+        }
+  
+    }
     /// <summary>
     /// Generates a live Bullet instance that is launched in the <paramref name="ShootDirection"/> direction
     /// with velocity from <see cref="ShootConfigScriptableObject.BulletSpawnForce"/>.
@@ -391,5 +461,14 @@ public class GunScriptableObject : ScriptableObject
     private Bullet CreateBullet()
     {
         return Instantiate(ShootConfig.BulletPrefab);
+    }
+    public void FireCheck()
+    {
+        Fired = true;
+    }
+    public bool ReturnFireCheck()
+    {
+
+        return Fired;
     }
 }

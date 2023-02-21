@@ -42,14 +42,14 @@ public class CameraSwitch : NetworkBehaviour
         //if (!inFPSMode)
         //    fpsCamera.transform.rotation = MainCamera.transform.rotation;
 
-        foreach (Transform gears in playerGears)
-        {
-            var childGameObjects = gears.GetComponentsInChildren<Transform>();
-            foreach (Transform allObjects in childGameObjects)
-            {
-                allObjects.gameObject.layer = LayerMask.NameToLayer("HideItself");
-            }          
-        }
+        //foreach (Transform gears in playerGears)
+        //{
+        //    var childGameObjects = gears.GetComponentsInChildren<Transform>();
+        //    foreach (Transform allObjects in childGameObjects)
+        //    {
+        //        allObjects.gameObject.layer = LayerMask.NameToLayer("HideItself");
+        //    }          
+        //}
               
     }
     public void ChangeMode()

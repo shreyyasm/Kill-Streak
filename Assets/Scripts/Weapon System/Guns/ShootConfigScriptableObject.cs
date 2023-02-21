@@ -19,6 +19,7 @@ public class ShootConfigScriptableObject : ScriptableObject
     public float SpreadMultiplier = 0.1f;
     public Texture2D SpreadTexture;
 
+
     /**
      * Calculates and returns the offset from "forward" that should be applied for the bullet
      * based on <param name="ShootTime"/>. The closer to <see cref="MaxSpreadTime"/> this is, the

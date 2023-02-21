@@ -21,17 +21,6 @@ public class ShooterController : NetworkBehaviour
     [SerializeField] LayerMask aimcolliderLayerMask;
     [SerializeField] Transform debugTransform;
 
-    //Bullet Content
-    [SerializeField] GameObject bulletPrefab;   
-    [SerializeField] AudioClip audioClipFire;
-    [SerializeField] GameObject flashPrefab;
-    [SerializeField] GameObject prefabFlashLight;
-
-    //Gun Socket
-    [SerializeField] Transform socket;
-    [SerializeField] Transform socketBeforePos;
-    [SerializeField] Transform spawnBulletPosition;
-    
     //outer References
     [SerializeField] private float aimRigWeight;
     [SerializeField] GameObject fPSController;
@@ -39,8 +28,6 @@ public class ShooterController : NetworkBehaviour
     [SerializeField] WeaponSwitching weaponSwitching;
 
     //Offsets
-    public Vector3 vfxSpawnOffset;
-    public Vector3 offset;
     Vector3 aimDir;
     Quaternion rotation;
     Vector3 mouseWorldPosition;
@@ -56,8 +43,6 @@ public class ShooterController : NetworkBehaviour
     GameObject followVirtualCamera;
 
     //References
-    private ParticleSystem particles;
-    private Light flashLight;
     private StarterAssetsInputs starterAssetsInputs;
     private ThirdPersonController thirdPersonController;
     private Animator animator;
@@ -65,9 +50,7 @@ public class ShooterController : NetworkBehaviour
     
     public GameObject spawnedObject;
 
-    bool cursorLocked;
-    bool holdingButtonFire;
-    bool changingGun = false;
+    public bool changingGun = false;
     float lastShotTime;
     private WeaponManager equippedWeapon;
 
@@ -81,22 +64,7 @@ public class ShooterController : NetworkBehaviour
         aimVirtualCamera = GameObject.FindWithTag("Aim Camera");
         followVirtualCamera = GameObject.FindWithTag("Follow Camera");
         
-
-        //Instansiate Flash 
-        audioSource = GetComponent<AudioSource>();
-        GameObject flash = Instantiate(flashPrefab, socket);
-        flash.transform.localPosition = default;
-        flash.transform.localEulerAngles = default;
-        flash.SetActive(true);
-
-        //Instansiate FlashLight 
-        GameObject spawnedFlashLightPrefab = Instantiate(prefabFlashLight, socket);
-        spawnedFlashLightPrefab.transform.localPosition = offset;
-        spawnedFlashLightPrefab.transform.localEulerAngles = default;
-        flashLight = spawnedFlashLightPrefab.GetComponent<Light>();
-        flashLight.enabled = false;
-
-        particles = flash.GetComponent<ParticleSystem>();
+      
         inventory.Init();
         if ((equippedWeapon = inventory.GetEquipped()) == null)
             return;
@@ -131,7 +99,6 @@ public class ShooterController : NetworkBehaviour
     }
     public void AimMovenment()
     {
-        socket.transform.position = socketBeforePos.transform.position;
         //aimVirtualCamera.transform.position = followVirtualCamera.transform.position;
         mouseWorldPosition = Vector3.zero;
 
@@ -178,7 +145,7 @@ public class ShooterController : NetworkBehaviour
                 }
                 if (FPSMode)
                 {
-                    socket.transform.localPosition = vfxSpawnOffset;
+                    //socket.transform.localPosition = vfxSpawnOffset;
                 }
                 if (gunType == 0)
                     animator.SetLayerWeight(1, 1);
@@ -237,10 +204,10 @@ public class ShooterController : NetworkBehaviour
     public void SpawnBulletServerRPC(Vector3 aimDir, Quaternion rotation, ShooterController script)
     {
 
-        //Instansiate Bullet
-        GameObject projectile = Instantiate(bulletPrefab, spawnBulletPosition.position, rotation);
-        ServerManager.Spawn(projectile, base.Owner);
-        SetSpawnBullet(projectile, script);
+        ////Instansiate Bullet
+        //GameObject projectile = Instantiate(bulletPrefab, spawnBulletPosition.position, rotation);
+        //ServerManager.Spawn(projectile, base.Owner);
+        //SetSpawnBullet(projectile, script);
     }
     
     [ObserversRpc]
@@ -260,13 +227,6 @@ public class ShooterController : NetworkBehaviour
     {
         FPSMode = state;
     }  
-    private IEnumerator DisableFlashLight()
-    {
-        //Wait.
-        yield return new WaitForSeconds(0.1f);
-        //Disable.
-        flashLight.enabled = false;
-    }
     public int gunType;
     public void GunType(int CurrentGunType)
     {

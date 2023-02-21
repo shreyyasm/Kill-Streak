@@ -1,5 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+using StarterAssets;
 using UnityEngine.InputSystem;
+using FishNet.Object;
+using UnityEngine.Animations.Rigging;
+using FishNet;
 
 [DisallowMultipleComponent]
 public class PlayerAction : MonoBehaviour
@@ -12,24 +19,34 @@ public class PlayerAction : MonoBehaviour
     private PlayerIK InverseKinematics;
     [SerializeField]
     private Animator PlayerAnimator;
-    private bool IsReloading;
+    [SerializeField]
+    private ThirdPersonController thirdPersonController;
+    [SerializeField]
+    private ShooterController shooterController;
+    public bool IsReloading;
+    private bool IsShooting;
+
+    //Camera's Reference
+    public GameObject fpsVirtualCamera;
+    GameObject aimVirtualCamera;
+    GameObject followVirtualCamera;
 
     private void Awake()
     {
-        
+        aimVirtualCamera = GameObject.FindWithTag("Aim Camera");
+        followVirtualCamera = GameObject.FindWithTag("Follow Camera");
     }
     private void Update()
     {
-        if(GunSelector.ActiveGun != null)
+        if (GunSelector.ActiveGun != null)
         {
-            GunSelector.ActiveGun.Tick(Mouse.current.leftButton.isPressed);
+            GunSelector.ActiveGun.Tick(IsShooting);
         }
         //GunSelector.ActiveGun.Tick(
         //    !IsReloading
         //    && Application.isFocused && Mouse.current.leftButton.isPressed
         //    && GunSelector.ActiveGun != null
-        //);
-
+        //);      
         if (ShouldManualReload() || ShouldAutoReload())
         {
             GunSelector.ActiveGun.StartReloading();
@@ -38,6 +55,8 @@ public class PlayerAction : MonoBehaviour
             //InverseKinematics.HandIKAmount = 0.25f;
             //InverseKinematics.ElbowIKAmount = 0.25f;
         }
+        thirdPersonController.ReloadCheck(IsReloading);
+       
     }
 
     private bool ShouldManualReload()
@@ -61,5 +80,37 @@ public class PlayerAction : MonoBehaviour
         //InverseKinematics.HandIKAmount = 1f;
         //InverseKinematics.ElbowIKAmount = 1f;
         IsReloading = false;
+    }
+    public void Shoot(float input)
+    {
+        if (GunSelector.ActiveGun.AmmoConfig.CurrentClipAmmo > 0)
+            GunSelector.ActiveGun.FireCheck();
+        if (!shooterController.changingGun)
+        {
+            if (input == 1)
+            {
+                IsShooting = true;
+                thirdPersonController.ShotFired(true);
+                thirdPersonController.FiringContinous(true);
+                //InvokeRepeating("CameraShake", 0, GunSelector.ActiveGun.ShootConfig.FireRate);
+            }
+            else
+            {
+                IsShooting = false;
+                thirdPersonController.FiringContinous(false);
+                //CancelInvoke("CameraShake");
+            }
+        }
+    }
+    public void CameraShake()
+    {
+        if (GunSelector.ActiveGun.AmmoConfig.CurrentClipAmmo == 0)
+            return;
+        
+            followVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+            aimVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+            fpsVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
+        
+            
     }
 }

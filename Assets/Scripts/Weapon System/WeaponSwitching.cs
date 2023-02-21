@@ -9,15 +9,15 @@ public class WeaponSwitching : MonoBehaviour
     public int selectedWeapon;
     [SerializeField] ShooterController shooterController;
     [SerializeField] WeaponInventory weaponInventory;
+
     bool gunChanged = false;
     public bool gunChanging = false;
-    [SerializeField] private Rig pistolRig;
-    [SerializeField] private Rig rifleRig;
     public GameObject animator;
+    public Transform realRifle;
+    public Transform realPistol;
+    
 
-    [SerializeField] GameObject realPistol;
-    [SerializeField] GameObject fakePistol;
-    [SerializeField] GameObject realRifle;
+    [SerializeField] GameObject fakePistol; 
     [SerializeField] GameObject fakeRifle;
 
     bool running = false;
@@ -26,6 +26,8 @@ public class WeaponSwitching : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {        
+        realRifle = this.gameObject.transform.GetChild(0);
+        realPistol = this.gameObject.transform.GetChild(1);
         SelectedWeapon();
     }
 
@@ -109,11 +111,11 @@ public class WeaponSwitching : MonoBehaviour
         {
             if (i == selectedWeapon)
             {
-                //weapon.gameObject.SetActive(true);
+                weapon.gameObject.SetActive(true);
             }
             else
             {
-                //weapon.gameObject.SetActive(false);
+                weapon.gameObject.SetActive(false);
             }
 
             i++;
@@ -152,53 +154,11 @@ public class WeaponSwitching : MonoBehaviour
             }
             if (previousSelectedWeapon != selectedWeapon)
             {
-                SelectedWeapon();
+                //SelectedWeapon();
             }
             shooterController.Equip(selectedWeapon);
             shooterController.GunChanged();
         }           
-    }
-    public void ChangeGunIndexNew()
-    {
-        if (!gunChanging)
-        {
-            if (Input.GetMouseButtonDown(1))
-            {
-                gunChanging = true;
-                int previousSelectedWeapon = selectedWeapon;
-                if (!gunChanged)
-                {
-                    gunChanged = true;
-                    if (selectedWeapon >= transform.childCount - 1)
-                    {
-                        selectedWeapon = 0;
-                    }
-                    else
-                    {
-                        selectedWeapon++;
-                    }
-                }
-                else
-                {
-                    gunChanged = false;
-                    if (selectedWeapon <= transform.childCount - 1)
-                    {
-                        selectedWeapon = 0;
-                    }
-                    else
-                    {
-                        selectedWeapon--;
-                    }
-                }
-                if (previousSelectedWeapon != selectedWeapon)
-                {
-                    SelectedWeapon();
-                }
-                shooterController.Equip(selectedWeapon);
-                shooterController.GunChanged();
-            }
-
-        }
     }
     public bool GunSwaping()
     {
@@ -212,13 +172,13 @@ public class WeaponSwitching : MonoBehaviour
             gunInHand = false;
             if (selectedWeapon == 1)
             {
-                realRifle.SetActive(false);
+                realRifle.gameObject.SetActive(false);
                 fakeRifle.SetActive(true);
 
             }
             else
             {
-                realPistol.SetActive(false);
+                realPistol.gameObject.SetActive(false);
                 fakePistol.SetActive(true);
             }
         }
@@ -226,7 +186,7 @@ public class WeaponSwitching : MonoBehaviour
         {
             gunInHand = false;
             fakeRifle.SetActive(false);
-            realRifle.SetActive(true);
+            realRifle.gameObject.SetActive(true);
         }
         
     }
@@ -238,19 +198,19 @@ public class WeaponSwitching : MonoBehaviour
             if (selectedWeapon == 1)
             {
                 fakePistol.SetActive(false);
-                realPistol.SetActive(true);
+                realPistol.gameObject.SetActive(true);
             }
             else
             {
                 fakeRifle.SetActive(false);
-                realRifle.SetActive(true);
+                realRifle.gameObject.SetActive(true);
             }
         }
         if(animator.GetComponent<Animator>().GetLayerWeight(5) == 1)
         {
             
             gunInHand = false;          
-            realPistol.SetActive(false);
+            realPistol.gameObject.SetActive(false);
             fakePistol.SetActive(true);
         }
             

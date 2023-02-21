@@ -131,6 +131,7 @@ namespace StarterAssets
         public bool running;
         public int gunType;
         public bool changingGun;
+        public bool isReloading;
         float fireBulletTime = 0f;
 
         public float sensitivity = 100f;
@@ -238,23 +239,28 @@ namespace StarterAssets
                 }
             }
             Move();
-            if (shooterController.ReturnGuntype() == 0)
+            if (weaponSwitching.selectedWeapon == 0)
             {
                 if (!running)
                 {
                     if(!changingGun)
                     {
-                        rifleRig.weight = 1f;
-                        pistolRig.weight = 0f;
-                        
+                        if(!isReloading)
+                        {
+                            rifleRig.weight = 1f;
+                            pistolRig.weight = 0f;
+                        }
+                        else
+                        {
+                            pistolRig.weight = 0f;
+                            rifleRig.weight = 0f;
+                        }
                     }
                     else
                     {
                         pistolRig.weight = 0f;
                         rifleRig.weight = 0f;
-
-                    }
-                   
+                    }              
                 }
             }
 
@@ -264,9 +270,16 @@ namespace StarterAssets
                 {
                     if(!changingGun)
                     {
-                        pistolRig.weight = 1f;
-                        rifleRig.weight = 0f;
-                       
+                        if (!isReloading)
+                        {
+                            pistolRig.weight = 1f;
+                            rifleRig.weight = 0f;
+                        }
+                        else
+                        {
+                            pistolRig.weight = 0f;
+                            rifleRig.weight = 0f;
+                        }
                     }
                     else
                     {
@@ -274,12 +287,10 @@ namespace StarterAssets
                         rifleRig.weight = 0f;
                     }
                 }
-                
-
             }
             //MoveBasic();
             //if(screenTouch.rightFingerID != -1)
-            if (shooterController.ReturnGuntype() == 0)
+            if (weaponSwitching.selectedWeapon == 0)
             {
                 
                 //_animator.SetLayerWeight(4, Mathf.Lerp(_animator.GetLayerWeight(4), 1f, Time.deltaTime * smoothSpeed));
@@ -308,7 +319,7 @@ namespace StarterAssets
             if(!inFPSMode)
             {
                 CameraRotation();
-                CameraRotationOld();
+                //CameraRotationOld();
             }
                 
  
@@ -411,7 +422,7 @@ namespace StarterAssets
             // set target speed based on move speed, sprint speed and if sprint is pressed
             //float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
            
-            if (direction.z > 0.2f && !isAiming && !firedBullet && !changingGun)
+            if (direction.z > 0.2f && !isAiming && !firedBullet && !changingGun && !isReloading)
             {
            
                     MoveSpeed = 7f;               
@@ -419,7 +430,7 @@ namespace StarterAssets
             else
                 MoveSpeed = 5;
 
-            if (shooterController.ReturnGuntype() == 0)
+            if (weaponSwitching.selectedWeapon == 0)
             {
                 if (!isAiming)
                 {
@@ -551,7 +562,7 @@ namespace StarterAssets
                 {
                     running = false;
 
-                    if(shooterController.ReturnGuntype() == 0)
+                    if(weaponSwitching.selectedWeapon == 0)
                         rifleRig.weight = 1f;
 
                     else
@@ -805,7 +816,7 @@ namespace StarterAssets
         {
             fireBulletTime = 1.3f;
             firedBullet = state;
-            if (shooterController.ReturnGuntype() == 0)
+            if (weaponSwitching.selectedWeapon == 0)
             {
                 //_animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f, Time.deltaTime * smoothSpeed));
                 //_animator.SetLayerWeight(3, Mathf.Lerp(_animator.GetLayerWeight(3), 0f, Time.deltaTime * smoothSpeed));
@@ -834,6 +845,10 @@ namespace StarterAssets
         public void GunSwapingGunChangeOut()
         {
             weaponSwitching.GunSwapVisualTakeOut();
+        }
+        public void ReloadCheck(bool state)
+        {
+            isReloading = state;
         }
     }
 }
