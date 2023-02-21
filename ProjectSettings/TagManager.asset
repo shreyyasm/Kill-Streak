@@ -19,6 +19,8 @@ TagManager:
   - ExplosiveBarrel
   - GasTank
   - Metal
+  - FX
+  - World
   layers:
   - Default
   - TransparentFX
@@ -39,7 +41,7 @@ TagManager:
   - OtherPlayers
   - Buildings
   - Enemy
-  - 
+  - Bullets
   - 
   - 
   - 

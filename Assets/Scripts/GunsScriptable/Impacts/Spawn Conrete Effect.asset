@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048a8b2eb8d9b424494cdf120ab6f4f3, type: 3}
   m_Name: Spawn Conrete Effect
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 1067471869909948, guid: 5e02303289b3c494e8e185be0fbbd405, type: 3}
+  Prefab: {fileID: 1879272669879180, guid: 9e7572afddc8ddd4b8222ae78f50b3fe, type: 3}
   Probability: 1
   RandomizeRotation: 0
   RandomizedRotationMultiplier: {x: 0, y: 0, z: 0}
