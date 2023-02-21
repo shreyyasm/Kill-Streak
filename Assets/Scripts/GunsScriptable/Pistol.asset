@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43eeabcab19880a4786fb6358d2d558f, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
+  ImpactType: {fileID: 11400000, guid: f7eef5de491260746a3abff1060f655c, type: 2}
   Type: 1
   Name: Pistol
   ModelPrefab: {fileID: 1508934165754910, guid: 68317e2c4c57a6e45be7063240f91cbb,
@@ -23,3 +24,4 @@ MonoBehaviour:
   ShootConfig: {fileID: 11400000, guid: 44a065215dbfef2468917059ba45f90f, type: 2}
   TrailConfig: {fileID: 11400000, guid: 9a197b8afa186fa42921115bb381f594, type: 2}
   AudioConfig: {fileID: 11400000, guid: bec573dcba660ed4aa492212a22ed2a4, type: 2}
+  bloodImpactPrefabs: {fileID: 0}

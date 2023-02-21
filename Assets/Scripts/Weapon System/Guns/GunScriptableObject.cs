@@ -6,6 +6,7 @@ using UnityEngine.Pool;
 [CreateAssetMenu(fileName = "Gun", menuName = "Guns/Gun", order = 0)]
 public class GunScriptableObject : ScriptableObject
 {
+    public ImpactType ImpactType;
     public GunType Type;
     public string Name;
     public GameObject ModelPrefab;
@@ -180,8 +181,7 @@ public class GunScriptableObject : ScriptableObject
 
         if (Hit.collider != null)
         {
-            GameObject VFX = Instantiate(bloodImpactPrefabs, Hit.transform.position,
-                Quaternion.identity);
+            SurfaceManager.Instance.HandleImpact(Hit.transform.gameObject, EndPoint, Hit.normal, ImpactType,0);
             //SpawnVFX(VFX.gameObject, this);
            //DespawnBullet();
             //imapct system
