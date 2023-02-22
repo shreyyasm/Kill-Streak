@@ -905,9 +905,9 @@ RectTransform:
   m_Father: {fileID: 1091228573026373505}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -174.29999, y: 823.61993}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -174.29999, y: -76.380066}
   m_SizeDelta: {x: 241.04749, y: 69.765015}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7660379669303489046
@@ -932,7 +932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.30588236}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7846,7 +7846,7 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 9
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 1060800187
+  _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 15891369391496135281
   _sceneNetworkObjects: []
@@ -16341,7 +16341,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1.3500366, y: 1.3499756}
+  m_AnchoredPosition: {x: 1.3500366, y: 1.3500061}
   m_SizeDelta: {x: 270, y: 270}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &5531996824084148776
