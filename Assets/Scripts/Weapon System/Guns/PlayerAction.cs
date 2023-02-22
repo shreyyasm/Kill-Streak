@@ -47,7 +47,7 @@ public class PlayerAction : MonoBehaviour
         //    && Application.isFocused && Mouse.current.leftButton.isPressed
         //    && GunSelector.ActiveGun != null
         //);      
-        if (ShouldManualReload() || ShouldAutoReload())
+        if (ShouldAutoReload())
         {
             GunSelector.ActiveGun.StartReloading();
             IsReloading = true;
@@ -58,11 +58,19 @@ public class PlayerAction : MonoBehaviour
         thirdPersonController.ReloadCheck(IsReloading);
        
     }
-
-    private bool ShouldManualReload()
+    public void ManualReload()
     {
-        return !IsReloading
-            && Keyboard.current.rKey.wasReleasedThisFrame
+        if(ShouldManualReload())
+        {
+            GunSelector.ActiveGun.StartReloading();
+            IsReloading = true;
+            PlayerAnimator.SetTrigger("Reload");
+        }
+        
+    }
+    public bool ShouldManualReload()
+    {
+        return !IsReloading            
             && GunSelector.ActiveGun.CanReload();
     }
 
