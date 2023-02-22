@@ -43,7 +43,7 @@ public class SurfaceManager : MonoBehaviour
             List<TextureAlpha> activeTextures = GetActiveTexturesFromTerrain(terrain, HitPoint);
             foreach (TextureAlpha activeTexture in activeTextures)
             {
-                SurfaceType surfaceType = Surfaces.Find(surface => surface.Albedo == activeTexture.Texture);
+                SurfaceType surfaceType = Surfaces.Find(surface => activeTexture.Texture);
                 if (surfaceType != null)
                 {
                     foreach (Surface.SurfaceImpactTypeEffect typeEffect in surfaceType.Surface.ImpactTypeEffects)
@@ -68,9 +68,9 @@ public class SurfaceManager : MonoBehaviour
         }
         else if (HitObject.TryGetComponent<Renderer>(out Renderer renderer))
         {
-            Texture activeTexture = GetActiveTextureFromRenderer(renderer, TriangleIndex);
+            //Texture activeTexture = GetActiveTextureFromRenderer(renderer, TriangleIndex);
 
-            SurfaceType surfaceType = Surfaces.Find(surface => surface.Albedo == activeTexture);
+            SurfaceType surfaceType = Surfaces.Find(surface => renderer);
             if (surfaceType != null)
             {
                 foreach (Surface.SurfaceImpactTypeEffect typeEffect in surfaceType.Surface.ImpactTypeEffects)
