@@ -8394,6 +8394,7 @@ MonoBehaviour:
   PlayerAnimator: {fileID: 4253447940391531743}
   thirdPersonController: {fileID: 4253447940391531684}
   shooterController: {fileID: 4253447940391531685}
+  weaponSwitch: {fileID: 4010567634032283164}
   IsReloading: 0
   fpsVirtualCamera: {fileID: 4253447941338615588}
 --- !u!1 &4253447940394132145
@@ -16340,7 +16341,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1.3500366, y: 1.3500366}
+  m_AnchoredPosition: {x: 1.3500366, y: 1.3499756}
   m_SizeDelta: {x: 270, y: 270}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &5531996824084148776

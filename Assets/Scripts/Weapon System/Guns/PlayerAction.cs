@@ -23,6 +23,8 @@ public class PlayerAction : MonoBehaviour
     private ThirdPersonController thirdPersonController;
     [SerializeField]
     private ShooterController shooterController;
+    [SerializeField]
+    private WeaponSwitching weaponSwitch;
     public bool IsReloading;
     private bool IsShooting;
 
@@ -46,9 +48,19 @@ public class PlayerAction : MonoBehaviour
         //    !IsReloading
         //    && Application.isFocused && Mouse.current.leftButton.isPressed
         //    && GunSelector.ActiveGun != null
-        //);      
+        //);
+        if(!IsReloading)
+            PlayerAnimator.SetLayerWeight(6, 0);
+
+        if (weaponSwitch.gunChanging)
+            IsReloading = false;
+
         if (ShouldAutoReload())
         {
+            if (weaponSwitch.gunChanging)
+                return;
+
+            PlayerAnimator.SetLayerWeight(6, 1);
             GunSelector.ActiveGun.StartReloading();
             IsReloading = true;
             PlayerAnimator.SetTrigger("Reload");
@@ -62,6 +74,10 @@ public class PlayerAction : MonoBehaviour
     {
         if(ShouldManualReload())
         {
+            
+            if (weaponSwitch.gunChanging)
+                return;
+            PlayerAnimator.SetLayerWeight(6, 1);
             GunSelector.ActiveGun.StartReloading();
             IsReloading = true;
             PlayerAnimator.SetTrigger("Reload");
@@ -118,7 +134,7 @@ public class PlayerAction : MonoBehaviour
             followVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
             aimVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
             fpsVirtualCamera.GetComponent<CinemachineShake>().ShakeCamera(1f, 0.1f);
-        
-            
+     
     }
+
 }

@@ -422,7 +422,7 @@ namespace StarterAssets
             // set target speed based on move speed, sprint speed and if sprint is pressed
             //float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
            
-            if (direction.z > 0.2f && !isAiming && !firedBullet && !changingGun && !isReloading)
+            if (direction.z > 0.2f && !isAiming && !firedBullet && !changingGun)
             {
            
                     MoveSpeed = 7f;               
